@@ -95,6 +95,9 @@ namespace Alkamous.View
                 //DGVProducts.Columns[4].ReadOnly = true;
                 //DGVProducts.Columns[5].ReadOnly = true;
                 DGVProducts.Columns[6].ReadOnly = true;
+
+                for (int i = 0; i < DGVProducts.Columns.Count; i++)
+                    DGVProducts.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
             catch (Exception ex)
             {
@@ -159,6 +162,10 @@ namespace Alkamous.View
                 //DGVProductsConsumable.Columns[4].ReadOnly = true;
                 //DGVProductsConsumable.Columns[5].ReadOnly = true;
                 DGVProductsConsumable.Columns[6].ReadOnly = true;
+
+                for (int i = 0; i < DGVProductsConsumable.Columns.Count; i++)
+                    DGVProductsConsumable.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
             }
             catch (Exception ex)
             {
@@ -172,7 +179,6 @@ namespace Alkamous.View
         private void DGVColumnHeaderTextAndWidthTermsInvo()
         {
             Model.CTB_Terms_Invoices MCTB_Terms_Invoices = new Model.CTB_Terms_Invoices("ctr2");
-
 
 
             using (dtTermsInvoices = new DataTable())
@@ -214,6 +220,9 @@ namespace Alkamous.View
 
             //DGVTermsInvose.Columns[1].Width = (int)(DGVTermsInvose.Width * 0.5);
             //DGVTermsInvose.Columns[2].Width = (int)(DGVTermsInvose.Width * 0.5);
+
+            for (int i = 0; i < DGVTermsInvose.Columns.Count; i++)
+                DGVTermsInvose.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
         }
 

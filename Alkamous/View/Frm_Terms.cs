@@ -26,6 +26,18 @@ namespace Alkamous.View
             }
         }
 
+        private void ReColoreDGV(DataGridView dataGridView)
+        {
+
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                if (row.Index % 2 == 0)
+                {
+                    dataGridView.Rows[row.Index].DefaultCellStyle.BackColor = Color.WhiteSmoke;
+                }
+            }
+        }
+
         private void DGVColumnHeaderTextAndWidth()
         {
 
@@ -61,34 +73,25 @@ namespace Alkamous.View
             // Manually set the height of any rows that exceed the default maximum height
             DGVTerms.RowTemplate.Height = 50; // set a default height for rows
 
+            for (int i = 0; i < DGVTerms.Columns.Count; i++)
+                DGVTerms.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 
-            foreach (DataGridViewRow row in DGVTerms.Rows)
-            {
-                if (row.Index % 2 == 0)
-                {
-                    DGVTerms.Rows[row.Index].DefaultCellStyle.BackColor = Color.WhiteSmoke;
-                }
-            }
         }
 
 
-        private void LoadData(string Search = "..........")
+        private void LoadData(string Search = "")
         {
             try
             {
-                DataTable ResultOfData = null;
-                if (Search == "..........")
-                {
-                    ResultOfData = OperationsofTerms.Get_AllTerms();
-                }
-                else
-                {
-                    ResultOfData = OperationsofTerms.Get_AllTerm_BySearch(Search);
-                }
+
+                var ResultOfData = string.IsNullOrEmpty(Search)
+                  ? OperationsofTerms.Get_AllTerms()
+                  : OperationsofTerms.Get_AllTerm_BySearch(Search);                              
 
                 DGVTerms.DataSource = ResultOfData;
                 LbCount.Text = DGVTerms.RowCount.ToString();
+                ReColoreDGV(DGVTerms);
             }
             catch (Exception ex)
             {

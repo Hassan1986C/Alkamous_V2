@@ -96,8 +96,6 @@ namespace Alkamous.View
 
 
 
-
-
                 DGVProducts.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
                 // Manually set the height of any rows that exceed the default maximum height
@@ -111,6 +109,9 @@ namespace Alkamous.View
                 //DGVProducts.Columns[4].ReadOnly = true;
                 //DGVProducts.Columns[5].ReadOnly = true;
                 DGVProducts.Columns[6].ReadOnly = true;
+
+                for (int i = 0; i < DGVProducts.Columns.Count; i++)
+                    DGVProducts.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 
             }
@@ -178,7 +179,8 @@ namespace Alkamous.View
                 DGVProductsConsumable.Columns[6].ReadOnly = true;
 
 
-
+                for (int i = 0; i < DGVProductsConsumable.Columns.Count; i++)
+                    DGVProductsConsumable.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             }
             catch (Exception ex)
@@ -237,7 +239,8 @@ namespace Alkamous.View
             //DGVTermsInvose.Columns[1].Width = (int)(DGVTermsInvose.Width * 0.5);
             //DGVTermsInvose.Columns[2].Width = (int)(DGVTermsInvose.Width * 0.5);
 
-
+            for (int i = 0; i < DGVTermsInvose.Columns.Count; i++)
+                DGVTermsInvose.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
         }
 
