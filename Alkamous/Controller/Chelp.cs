@@ -332,7 +332,7 @@ namespace Alkamous.Controller
         }
         #endregion
 
-        #region Fix WordTemplate Files
+        #region Fix WordTemplate Files docx
         public static void FixWordTempletefiles()
         {
             string basePathFolderTemp = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Temp");
