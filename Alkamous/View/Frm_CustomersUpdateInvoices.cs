@@ -74,7 +74,7 @@ namespace Alkamous.View
                 DGVProducts.Columns[5].HeaderText = "Price";
                 DGVProducts.Columns[6].HeaderText = "Amount";
 
-                //DGVProducts.Columns[0].Width = 50;
+               // DGVProducts.Columns[0].Width = 50;
                 //DGVProducts.Columns[1].Width = 100;
                 //DGVProducts.Columns[2].Width = 100;
                 //DGVProducts.Columns[3].Width = 30;
@@ -619,7 +619,7 @@ namespace Alkamous.View
                         cTB_Invoices.Invoice_Price = DGVProducts.Rows[i].Cells[5].Value.ToString();
                         cTB_Invoices.Invoice_Amount = DGVProducts.Rows[i].Cells[6].Value.ToString();
 
-                        OperationsofInvoices.Add_NewInvoiceLIST(cTB_Invoices);
+                       await OperationsofInvoices.AddNewAsync(cTB_Invoices);
                     }
 
                     OperationsofInvoices.InsertBulk();

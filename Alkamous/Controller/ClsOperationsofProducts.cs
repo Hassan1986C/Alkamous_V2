@@ -55,7 +55,7 @@ namespace Alkamous.Controller
             return result == 1;
         }
 
-        public DataTable Get_AllProduct_BySearch(string search, int PageNumber = 1, int PageSize = 50)
+        public DataTable Get_AllProduct_BySearch(string search, int PageNumber = 1, int PageSize = 5000)
         {
             SortedList SL = new SortedList
             {
@@ -98,7 +98,7 @@ namespace Alkamous.Controller
             return dt;
         }
 
-        public async Task<DataTable> Get_AllProduct(int PageNumber = 1, int PageSize = 500000)
+        public async Task<DataTable> Get_AllProduct(int PageNumber = 1, int PageSize = 5000)
         {
             SortedList SL = new SortedList
             {

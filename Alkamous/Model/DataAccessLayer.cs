@@ -255,7 +255,46 @@ namespace Alkamous.Model
                 throw;
             }
         }
-        
+
+        #region this function checks if the connection parameter is correct and connection done
+        public bool Is_SQLServer_connection_setting_successful(string txtServerName, string txtDataBase, string txtPassword, string txtUserName, string ConnectTimeout, string txtPort)
+        {
+            try
+            {
+                string serverAddress = txtServerName;
+                if (!string.IsNullOrEmpty(txtPort))
+                {
+                    serverAddress = $"{txtServerName},{txtPort}";
+                }
+
+                string connectionString = $"data source={serverAddress};initial catalog={txtDataBase};Password={txtPassword};Persist Security Info=True;User ID={txtUserName};Connect Timeout = {ConnectTimeout}";
+
+                string cmdText = "SELECT 1"; // A simple query to check connection and database access.
+
+                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand sqlCommand = new SqlCommand(cmdText, sqlConnection))
+                    {
+                        sqlCommand.CommandTimeout = 5;
+                        sqlConnection.Open();
+                        object obj = sqlCommand.ExecuteScalar();
+
+                        if (obj == null || obj.ToString() != "1")
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        #endregion
+
+
         public bool Is_SQLServer_connection_setting_successful()
         {
             return Is_SQLServer_connection_setting_successful(_serverName, _database, _password, _userId, _connectTimeout);           

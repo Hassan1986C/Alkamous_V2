@@ -24,8 +24,8 @@ namespace Alkamous.InterfaceForAllClass
     {
         DataTable Get_MaxCustomer_AutoNum();
         int Get_CountCustomer();
-        Task<DataTable> Get_AllCustomer(int PageNumber = 1, int PageSize = 50);
-        Task<DataTable> Get_AllCustomer_BySearch(string Customer_Invoice_Number, int PageNumber = 1, int PageSize = 50);
+        Task<DataTable> Get_AllCustomer(int PageNumber = 1, int PageSize = 500);
+        Task<DataTable> Get_AllCustomer_BySearch(string Customer_Invoice_Number, int PageNumber = 1, int PageSize = 500);
         DataTable Get_CustomerDetails_ByCustomer_Invoice_Number(string Customer_Invoice_Number);
         DataTable Get_AllCustomer_ByCustomer_Invoice_Number(string Customer_Invoice_Number);
         Task<bool> Check_Customer_Invoice_NumberNotDuplicate(string Customer_Invoice_Number);
@@ -52,7 +52,7 @@ namespace Alkamous.InterfaceForAllClass
         void Add_NewTerms_InvoiceLIST(CTB_Terms_Invoices item);
         void InsertBulk();
         void Delete_Terms_Invoice(string Term_Invoice_Number);
-        DataTable Get_AllTerms_Invoice(int PageNumber = 1, int PageSize = 50);
+        DataTable Get_AllTerms_Invoice(int PageNumber = 1, int PageSize = 500);
         DataTable Get_AllTerms_Invoice_ByTerm_Invoice_Number(string Term_Invoice_Number);
     }
 

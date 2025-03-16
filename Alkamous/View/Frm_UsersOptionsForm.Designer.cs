@@ -35,7 +35,7 @@
             this.BtnExportPathWord = new System.Windows.Forms.Button();
             this.BtnFixWordTempletefiles = new System.Windows.Forms.Button();
             this.BtnBackUpAndRestorData = new System.Windows.Forms.Button();
-            this.BtnArrangeProducts = new System.Windows.Forms.Button();
+            this.BtnUpdateVersion = new System.Windows.Forms.Button();
             this.BtnForgetPassword = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -160,22 +160,22 @@
             this.BtnBackUpAndRestorData.UseVisualStyleBackColor = false;
             this.BtnBackUpAndRestorData.Click += new System.EventHandler(this.BtnBackUpAndRestorData_Click);
             // 
-            // BtnArrangeProducts
+            // BtnUpdateVersion
             // 
-            this.BtnArrangeProducts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(77)))), ((int)(((byte)(178)))));
-            this.BtnArrangeProducts.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnArrangeProducts.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.BtnArrangeProducts.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.BtnArrangeProducts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnArrangeProducts.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnArrangeProducts.ForeColor = System.Drawing.Color.White;
-            this.BtnArrangeProducts.Location = new System.Drawing.Point(449, 516);
-            this.BtnArrangeProducts.Name = "BtnArrangeProducts";
-            this.BtnArrangeProducts.Size = new System.Drawing.Size(250, 200);
-            this.BtnArrangeProducts.TabIndex = 17;
-            this.BtnArrangeProducts.Text = "Arrange products";
-            this.BtnArrangeProducts.UseVisualStyleBackColor = false;
-            this.BtnArrangeProducts.Click += new System.EventHandler(this.BtnArrangeProducts_Click);
+            this.BtnUpdateVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(77)))), ((int)(((byte)(178)))));
+            this.BtnUpdateVersion.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnUpdateVersion.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.BtnUpdateVersion.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.BtnUpdateVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnUpdateVersion.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnUpdateVersion.ForeColor = System.Drawing.Color.White;
+            this.BtnUpdateVersion.Location = new System.Drawing.Point(818, 520);
+            this.BtnUpdateVersion.Name = "BtnUpdateVersion";
+            this.BtnUpdateVersion.Size = new System.Drawing.Size(250, 200);
+            this.BtnUpdateVersion.TabIndex = 17;
+            this.BtnUpdateVersion.Text = "Update Version";
+            this.BtnUpdateVersion.UseVisualStyleBackColor = false;
+            this.BtnUpdateVersion.Click += new System.EventHandler(this.BtnUpdateVersion_Click);
             // 
             // BtnForgetPassword
             // 
@@ -186,7 +186,7 @@
             this.BtnForgetPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnForgetPassword.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnForgetPassword.ForeColor = System.Drawing.Color.White;
-            this.BtnForgetPassword.Location = new System.Drawing.Point(818, 502);
+            this.BtnForgetPassword.Location = new System.Drawing.Point(449, 520);
             this.BtnForgetPassword.Name = "BtnForgetPassword";
             this.BtnForgetPassword.Size = new System.Drawing.Size(250, 200);
             this.BtnForgetPassword.TabIndex = 18;
@@ -201,7 +201,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1168, 746);
             this.Controls.Add(this.BtnForgetPassword);
-            this.Controls.Add(this.BtnArrangeProducts);
+            this.Controls.Add(this.BtnUpdateVersion);
             this.Controls.Add(this.BtnBackUpAndRestorData);
             this.Controls.Add(this.BtnFixWordTempletefiles);
             this.Controls.Add(this.BtnExportPathWord);
@@ -226,7 +226,7 @@
         private System.Windows.Forms.Button BtnExportPathWord;
         private System.Windows.Forms.Button BtnFixWordTempletefiles;
         private System.Windows.Forms.Button BtnBackUpAndRestorData;
-        private System.Windows.Forms.Button BtnArrangeProducts;
+        private System.Windows.Forms.Button BtnUpdateVersion;
         private System.Windows.Forms.Button BtnForgetPassword;
     }
 }

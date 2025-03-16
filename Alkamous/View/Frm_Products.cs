@@ -33,8 +33,6 @@ namespace Alkamous.View
             }
         }
 
-
-
         private void ReColoreDGV(DataGridView dataGridView)
         {
 
@@ -116,7 +114,7 @@ namespace Alkamous.View
                 return null;
             }
         }
-
+               
         private async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             await LoadData(TxtSearch.Text);
@@ -125,6 +123,7 @@ namespace Alkamous.View
         private async void Frm_Products_Load(object sender, EventArgs e)
         {
             var ResultOfData = await LoadData();
+                        
             if (ResultOfData.Status == TaskStatus.RanToCompletion)
             {
                 DGVColumnHeaderTextAndWidth();
@@ -274,8 +273,6 @@ namespace Alkamous.View
             }
         }
 
-
-
         private void DGVProducts_DoubleClick(object sender, EventArgs e)
         {
             SelectProductAndSendParameterToForms();
@@ -288,7 +285,6 @@ namespace Alkamous.View
                 SelectProductAndSendParameterToForms();
             }
         }
-
 
         private void BtnMultiSelectItem_CheckedChanged(object sender, EventArgs e)
         {

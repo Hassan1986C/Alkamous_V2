@@ -1,8 +1,7 @@
 ﻿
 using Alkamous.Controller;
 using System;
-using System.IO;
-using System.IO.Compression;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Alkamous.View
@@ -114,19 +113,43 @@ namespace Alkamous.View
             }
         }
 
-
-
-
-
-        private void BtnArrangeProducts_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("No thing Yet", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-        }
+     
 
         private void BtnForgetPassword_Click(object sender, EventArgs e)
         {
             Chelp chelp = new Chelp();
             chelp.ShowForm(new Frm_UserForgetPassword());
+        }
+
+        private void BtnUpdateVersion_Click(object sender, EventArgs e)
+        {
+            // Version version = Assembly.GetEntryAssembly().GetName().Version;
+            string version = VersionLabel;
+
+
+            //MessageBox.Show($"latest update - No Update Available Yet  {Environment.NewLine}" +
+            //    $"{version}", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+
+            MessageBox.Show($"latest update - No Update Available Yet", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+        }
+
+        public string VersionLabel
+        {
+            get
+            {
+                if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
+                {
+                    Version ver = System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion;
+                    return $"Product Name: {Assembly.GetEntryAssembly().GetName().Name},{Environment.NewLine}" +
+                           $"Version: {ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}";
+                }
+                else
+                {
+                    var ver = Assembly.GetExecutingAssembly().GetName().Version;
+                    return $"Product Name: {Assembly.GetEntryAssembly().GetName().Name},{Environment.NewLine} " +
+                           $"Version: {ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}";
+                }
+            }
         }
     }
 }

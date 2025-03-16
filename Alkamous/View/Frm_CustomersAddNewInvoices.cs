@@ -1,4 +1,5 @@
 ﻿using Alkamous.Controller;
+using Alkamous.InterfaceForAllClass;
 using System;
 using System.Data;
 using System.Drawing;
@@ -59,7 +60,7 @@ namespace Alkamous.View
                     dtProducts.Columns.Add("Invoice_Unit");
                     dtProducts.Columns.Add(MCTB_Products.product_Price);
                     dtProducts.Columns.Add("Invoice_Amount");
-
+                   
                     DGVProducts.DataSource = dtProducts;
                 }
 
@@ -72,6 +73,13 @@ namespace Alkamous.View
                 DGVProducts.Columns[5].HeaderText = "Price";
                 DGVProducts.Columns[6].HeaderText = "Amount";
 
+                //DGVProducts.Columns[0].Width = 50;  // Code
+                //DGVProducts.Columns[1].Width = 200; // Product En
+                //DGVProducts.Columns[2].Width = 200; // Product Ar
+                //DGVProducts.Columns[3].Width = 40;  // QTY
+                //DGVProducts.Columns[4].Width = 40;  // Unit
+                //DGVProducts.Columns[5].Width = 60;  // Price
+                //DGVProducts.Columns[6].Width = 100; // Amount
 
                 // Set the font and alignment for the first column                
                 DGVProducts.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -254,6 +262,7 @@ namespace Alkamous.View
                 SenderName == "TxtProduct_Price" || SenderName == "TxtAmount")
             {
                 AddDataToDatagradviweAfterCheck();
+               
             }
             else
             {
@@ -264,7 +273,7 @@ namespace Alkamous.View
 
         private void AddDataToDatagradviweAfterCheck()
         {
-           // TxtAmount.Text = Chelp.CalculateAmount(TxtQTY.Text, TxtProduct_Price.Text, TxtCustomer_Currency.Text);
+           
             TxtAmount.Text = Chelp.CalculateAmount(TxtQTY.Text, TxtProduct_Price.Text);
 
             foreach (var textBox in new[] { TxtProduct_Id, TxtProduct_Unit, TxtQTY, TxtProduct_Price, TxtAmount })
@@ -548,21 +557,21 @@ namespace Alkamous.View
             {
                 Model.CTB_Customers MTB_Customers = new Model.CTB_Customers
                 {
-                    Customer_Invoice_Number = TxtCustomer_Invoice.Text,
-                    Customer_Company = TxtCustomer_Company.Text,
-                    Customer_Name = TxtCustomer_Name.Text,
-                    Customer_Mob = TxtCustomer_Mob.Text,
-                    Customer_Email = TxtCustomer_Email.Text,
-                    Customer_Currency = TxtCustomer_Currency.Text,
+                    Customer_Invoice_Number = TxtCustomer_Invoice.Text.Trim(),
+                    Customer_Company = TxtCustomer_Company.Text.Trim(),
+                    Customer_Name = TxtCustomer_Name.Text.Trim(),
+                    Customer_Mob = TxtCustomer_Mob.Text.Trim(),
+                    Customer_Email = TxtCustomer_Email.Text.Trim(),
+                    Customer_Currency = TxtCustomer_Currency.Text.Trim(),
                     Customer_ExchangeRate = TxtExchange.Text != "" ? TxtExchange.Text : "0",
                     Customer_Taxes = TxtTaxes.Text != "" ? TxtTaxes.Text : "0",
-                    Customer_DateTime = TxtCustomer_DateTime.Text,
-                    Customer_Quote_Valid = TxtCustomer_Quote_Valid.Text,
-                    Customer_Payment_Terms = TxtCustomer_Payment_Terms.Text,
-                    Customer_Discount = TxtDiscount.Text,
+                    Customer_DateTime = TxtCustomer_DateTime.Text.Trim(),
+                    Customer_Quote_Valid = TxtCustomer_Quote_Valid.Text.Trim(),
+                    Customer_Payment_Terms = TxtCustomer_Payment_Terms.Text.Trim(),
+                    Customer_Discount = TxtDiscount.Text.Trim(),
                     Customer_BankAccount = txtSelectAcount.SelectedItem.ToString(),
-                    Customer_Language = TxtCustomer_Language.Text,
-                    Customer_Note = TXTValOfPaymentInAdv.Text
+                    Customer_Language = TxtCustomer_Language.Text.Trim(),
+                    Customer_Note = TXTValOfPaymentInAdv.Text.Trim()    
                 };
 
                 //return OperationsofCustomers.Add_Customer(MTB_Customers);

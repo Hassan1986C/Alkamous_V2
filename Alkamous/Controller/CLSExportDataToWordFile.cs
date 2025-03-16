@@ -19,7 +19,8 @@ namespace Alkamous.Controller
 
         #endregion
 
-        #region Declare Variables For Microsoft.Office.Interop.Word            
+        #region Declare Variables For Microsoft.Office.Interop.Word 
+        
         Microsoft.Office.Interop.Word.Application _wordApp = null;
         Microsoft.Office.Interop.Word.Document _aDoc = null;
         Microsoft.Office.Interop.Word.Table _table = null;
@@ -27,6 +28,11 @@ namespace Alkamous.Controller
 
         #endregion
 
+        /// <summary>
+        /// Exports invoice data to a Word document
+        /// </summary>
+        /// <param name="InvoiceNumber">The invoice number to export</param>
+        /// <param name="isHeaderAndFooter">Whether to include header and footer</param>
         public void ExportDataToWord(string InvoiceNumber,bool isHeaderAndFooter = true)
         {
 
@@ -39,6 +45,7 @@ namespace Alkamous.Controller
             {
                 _wordApp = new Microsoft.Office.Interop.Word.Application { Visible = false };
                 _aDoc = _wordApp.Documents.Open(fileName, ReadOnly: false, Visible: false);
+
                 _aDoc.Activate();
                 _replaceBookmarks = _aDoc.Bookmarks;
 
@@ -46,7 +53,7 @@ namespace Alkamous.Controller
                 Cursor.Current = Cursors.WaitCursor;
                 View.Frm_Customers.FrmCustomer.LbWaitSaveFile.Visible = true;
 
-                #region Customer info and Invoice Number with rest info
+                #region Customer info and Invoice Number with rest info Table index [1] as Bookmarks
 
                 DataTable dtTB_CustomerReport = new DataTable();
                 dtTB_CustomerReport = OperationsofCustomers.Get_CustomerDetails_ByCustomer_Invoice_Number(InvoiceNumber);
@@ -65,6 +72,7 @@ namespace Alkamous.Controller
                 string Customer_BankAccount = dtTB_CustomerReport.Rows[0]["Customer_BankAccount"].ToString();
                 string Customer_Language = dtTB_CustomerReport.Rows[0]["Customer_Language"].ToString();
                 string PaymentASTermsCostem = dtTB_CustomerReport.Rows[0]["Customer_Note"].ToString();
+                // Parse payment percentage with fallback to 100
                 int Customer_ValOfPaymentInAdv = int.TryParse(PaymentASTermsCostem, out Customer_ValOfPaymentInAdv) ? Customer_ValOfPaymentInAdv : 100;
 
                 // Generate Export File Name -> Quotation #123 For ALKAMOUS
@@ -582,8 +590,13 @@ namespace Alkamous.Controller
                                   Append(Environment.NewLine);
                     }
 
+                    //foreach (DataRow row in dtTB_Terms_InvoicesReport.Rows)
+                    //{
+                    //    builderEN.Append("  -  ").Append(row["Term_En"]).AppendLine();
+                    //    builderAR.Append("  -  ").Append(row["Term_Ar"]).AppendLine();
+                    //}
 
-
+                    // Add total in words (Arabic or English based on selected language)
                     if (Customer_Language == "English")
                     {
                         _replaceBookmarks["Terms_and_conditions_Arabic"].Range.Delete();
