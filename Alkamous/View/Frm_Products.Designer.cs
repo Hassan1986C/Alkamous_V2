@@ -35,6 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.BtnMultiSelectItem = new System.Windows.Forms.CheckBox();
             this.BtnFavorite = new System.Windows.Forms.CheckBox();
+            this.Lbwait = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProducts)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,6 +65,7 @@
             this.DGVProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVProducts.Size = new System.Drawing.Size(1058, 711);
             this.DGVProducts.TabIndex = 1;
+            this.DGVProducts.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DGVProducts_Scroll);
             this.DGVProducts.DoubleClick += new System.EventHandler(this.DGVProducts_DoubleClick);
             this.DGVProducts.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DGVProducts_KeyDown);
             // 
@@ -101,7 +103,7 @@
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(223, 9);
+            this.label1.Location = new System.Drawing.Point(290, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(631, 19);
             this.label1.TabIndex = 5;
@@ -113,7 +115,7 @@
             this.BtnMultiSelectItem.AutoSize = true;
             this.BtnMultiSelectItem.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnMultiSelectItem.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnMultiSelectItem.Location = new System.Drawing.Point(171, 42);
+            this.BtnMultiSelectItem.Location = new System.Drawing.Point(179, 41);
             this.BtnMultiSelectItem.Name = "BtnMultiSelectItem";
             this.BtnMultiSelectItem.Size = new System.Drawing.Size(167, 31);
             this.BtnMultiSelectItem.TabIndex = 28;
@@ -127,7 +129,7 @@
             this.BtnFavorite.AutoSize = true;
             this.BtnFavorite.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnFavorite.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnFavorite.Location = new System.Drawing.Point(21, 42);
+            this.BtnFavorite.Location = new System.Drawing.Point(35, 41);
             this.BtnFavorite.Name = "BtnFavorite";
             this.BtnFavorite.Size = new System.Drawing.Size(118, 31);
             this.BtnFavorite.TabIndex = 29;
@@ -135,11 +137,25 @@
             this.BtnFavorite.UseVisualStyleBackColor = true;
             this.BtnFavorite.CheckedChanged += new System.EventHandler(this.BtnFavorite_CheckedChanged);
             // 
+            // Lbwait
+            // 
+            this.Lbwait.AutoSize = true;
+            this.Lbwait.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.Lbwait.Font = new System.Drawing.Font("Tahoma", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbwait.ForeColor = System.Drawing.SystemColors.Info;
+            this.Lbwait.Location = new System.Drawing.Point(380, 416);
+            this.Lbwait.Name = "Lbwait";
+            this.Lbwait.Size = new System.Drawing.Size(257, 48);
+            this.Lbwait.TabIndex = 30;
+            this.Lbwait.Text = "Please Wait";
+            this.Lbwait.Visible = false;
+            // 
             // Frm_Products
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1082, 806);
+            this.ClientSize = new System.Drawing.Size(1082, 810);
+            this.Controls.Add(this.Lbwait);
             this.Controls.Add(this.BtnFavorite);
             this.Controls.Add(this.BtnMultiSelectItem);
             this.Controls.Add(this.label1);
@@ -164,5 +180,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox BtnMultiSelectItem;
         private System.Windows.Forms.CheckBox BtnFavorite;
+        private System.Windows.Forms.Label Lbwait;
     }
 }

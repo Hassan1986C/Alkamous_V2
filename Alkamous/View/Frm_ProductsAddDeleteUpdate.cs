@@ -119,7 +119,7 @@ namespace Alkamous.View
             {
                 var ResultOfData = string.IsNullOrEmpty(Search)
                     ? await OperationsofProducts.Get_AllProduct(1, 5000000)
-                    : OperationsofProducts.Get_AllProduct_BySearch(Search, 1, 5000000);
+                    : await OperationsofProducts.Get_AllProduct_BySearch(Search, 1, 5000000);
 
 
                 // تأكد من أن الجدول يحتوي على أعمدة

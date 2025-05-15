@@ -75,7 +75,7 @@ namespace Alkamous.Controller
     </html>";
 
             string fromEmail = "hassanwin8.ha@gmail.com";
-            string password = "lypt uols hyab ospb";
+            string password = "fzmx pxyr hvba pqzi";
 
             try
             {

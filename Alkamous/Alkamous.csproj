@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Chelp.cs" />
+    <Compile Include="Controller\Class1.cs" />
     <Compile Include="Controller\ClsAESEncryption.cs" />
     <Compile Include="Controller\ClsDataBaseBackUpAndRestor.cs" />
     <Compile Include="Controller\CLSExportDataToWordFile.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Model\CTB_Customers.cs" />
     <Compile Include="Model\CTB_Invoices.cs" />
     <Compile Include="Model\CTB_Products.cs" />
+    <Compile Include="Model\CTB_Temp_Prodect.cs" />
     <Compile Include="Model\CTB_Terms.cs" />
     <Compile Include="Model\CTB_Terms_Invoices.cs" />
     <Compile Include="Model\CTB_Users.cs" />

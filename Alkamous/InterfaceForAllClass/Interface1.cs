@@ -78,7 +78,8 @@ namespace Alkamous.InterfaceForAllClass
     {      
         int Get_CountProduct();
         Task<DataTable> Get_AllProduct(int PageNumber = 1, int PageSize = 5000);
-        DataTable Get_AllProduct_BySearch(string search, int PageNumber = 1, int PageSize = 5000);
+        Task<DataTable> Get_AllProduct_BySearch(string search, int PageNumber = 1, int PageSize = 500000);
+        Task<DataTable> Get_AllProduct_BySearchFavorite(string search, int PageNumber = 1, int PageSize = 500000);
         DataTable Get_Product_product_Id(string product_Id, int PageNumber = 1, int PageSize = 5000);
         Task<DataTable> Get_DistinctProduct();
         bool Check_ProductIdNotDuplicate(string product_Id);
