@@ -29,7 +29,6 @@ namespace Alkamous.Controller
 
         }
 
-
         public async Task<bool> AddNewAsync(CTB_Products item)
         {
             SortedList SL = AssignValuesToSortedList(item, "Add_NewProduct");
@@ -50,12 +49,12 @@ namespace Alkamous.Controller
 
         public async Task<bool> UpdateAsync(CTB_Products item)
         {
-            SortedList SL = AssignValuesToSortedList(item, "Update_Product");           
+            SortedList SL = AssignValuesToSortedList(item, "Update_Product");
             int result = await DAL.RunProcedureasync(ProcedureName, SL);
             return result == 1;
         }
 
-        public DataTable Get_AllProduct_BySearch(string search, int PageNumber = 1, int PageSize = 5000)
+        public async Task<DataTable> Get_AllProduct_BySearch(string search, int PageNumber = 1, int PageSize = 500000)
         {
             SortedList SL = new SortedList
             {
@@ -66,10 +65,24 @@ namespace Alkamous.Controller
 
             };
 
-            DataTable dt = DAL.SelectDB(ProcedureName, SL);
+            DataTable dt =await DAL.SelectDBasync(ProcedureName, SL);
             return dt;
         }
 
+        public async Task<DataTable> Get_AllProduct_BySearchFavorite(string search, int PageNumber = 1, int PageSize = 500000)
+        {
+            SortedList SL = new SortedList
+            {
+                { "@Check", "Get_AllProduct_BySearchFavorite" },
+                {"@PageNumber",PageNumber },
+                {"@PageSize",PageSize},
+                {MTB_Products.product_NameAr,search },
+
+            };
+
+            DataTable dt = await DAL.SelectDBasync(ProcedureName, SL);
+            return dt;
+        }
 
         public int Get_CountProduct()
         {
@@ -81,7 +94,6 @@ namespace Alkamous.Controller
             DataTable dt = DAL.SelectDB(ProcedureName, SL);
             return Convert.ToInt32(dt.Rows[0][0].ToString());
         }
-
 
         public DataTable Get_Product_product_Id(string product_Id, int PageNumber = 1, int PageSize = 50)
         {
@@ -124,7 +136,6 @@ namespace Alkamous.Controller
             int result = Convert.ToInt16(dt.Rows[0][0]);
             return result > 0;
         }
-
 
         public async Task<DataTable> Get_DistinctProduct()
         {

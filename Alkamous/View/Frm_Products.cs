@@ -17,11 +17,18 @@ namespace Alkamous.View
         public static bool isAddNewInvoices, isMainQuotation;
         public static string ExChangeRate, Taxes, Currency;
 
+
+        // Define these class-level variables at the top of your form class
+        private int currentPage = 1;
+        private int pageSize = 50; // Consider reducing from 100 to improve performance
+        private bool isLoading = false;
+        private bool endOfData = false;
+        private Timer _searchTimer;
+
         public Frm_Products()
         {
             InitializeComponent();
-
-
+            
             try
             {
                 // مهنم لوضع اكون للبرنامج
@@ -45,40 +52,83 @@ namespace Alkamous.View
             }
         }
 
-        private void DGVColumnHeaderTextAndWidth()
+        private void InitializeDGVProducts()
         {
+            DGVProducts.AutoGenerateColumns = false;
+            DGVProducts.Columns.Clear();
+            CTB_Products MCTB_Products = new CTB_Products("ctr2");
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
 
+                Name = MCTB_Products.product_Id,
+                DataPropertyName = MCTB_Products.product_Id,
+                HeaderText = "Product ID",
+                Width = 10
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = MCTB_Products.product_NameEn,
+                DataPropertyName = MCTB_Products.product_NameEn,
+                HeaderText = "Product Name English",
+                Width = 60
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = MCTB_Products.product_NameAr,
+                DataPropertyName = MCTB_Products.product_NameAr,
+                HeaderText = "Product Name Arabic",
+                Width = 60
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = MCTB_Products.product_Price,
+                DataPropertyName = MCTB_Products.product_Price,
+                HeaderText = "Pric",
+                Width = 20
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = MCTB_Products.product_Unit,
+                DataPropertyName = MCTB_Products.product_Unit,
+                HeaderText = "Unit",
+                Width = 20
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = MCTB_Products.product_favorite,
+                DataPropertyName = MCTB_Products.product_favorite,
+                HeaderText = "Favorite",
+                Width = 20,
+                Visible = false
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "TotalCount",
+                DataPropertyName = "TotalCount",
+                HeaderText = "TotalCount",
+                Width = 20,
+                Visible = false
+            });
+
+            // Styling only
             DGVProducts.ColumnHeadersDefaultCellStyle.Padding = new Padding(0, 4, 0, 4);
-            //DGVProducts.EnableHeadersVisualStyles = false;
-            //DGVProducts.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkBlue;
-            //DGVProducts.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-
-
             DGVProducts.RowHeadersVisible = false;
-            DGVProducts.Columns[0].HeaderText = "Product ID";
-            DGVProducts.Columns[1].HeaderText = "Product Name English";
-            DGVProducts.Columns[2].HeaderText = "Product Name Arabic";
-            DGVProducts.Columns[3].HeaderText = "Pric";
-            DGVProducts.Columns[4].HeaderText = "Unit";
-            DGVProducts.Columns[5].HeaderText = "favorite";
 
-            DGVProducts.Columns[0].Width = 25;
-            DGVProducts.Columns[1].Width = 60;
-            DGVProducts.Columns[2].Width = 60;
-            DGVProducts.Columns[3].Width = 20;
-            DGVProducts.Columns[4].Width = 20;
-            
-            DGVProducts.Columns[5].Visible = false;
-
-            for (int i = 0; i < DGVProducts.Columns.Count; i++)            
+            for (int i = 0; i < DGVProducts.Columns.Count; i++)
+            {
                 DGVProducts.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            
+            }
 
-            DGVProducts.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            DGVProducts.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            DGVProducts.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            DGVProducts.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
+            DGVProducts.Columns[MCTB_Products.product_NameEn].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            DGVProducts.Columns[MCTB_Products.product_NameAr].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            DGVProducts.Columns[MCTB_Products.product_Price].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            DGVProducts.Columns[MCTB_Products.product_Unit].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
         private async Task<Task> LoadData(string Search = "")
@@ -87,15 +137,15 @@ namespace Alkamous.View
             {
 
                 var ResultOfData = string.IsNullOrEmpty(Search)
-                   ? await OperationsofProducts.Get_AllProduct(1, 500000)
-                   : OperationsofProducts.Get_AllProduct_BySearch(Search, 1, 50000);
+                   ? await OperationsofProducts.Get_AllProduct(1, 5000000)
+                   : await OperationsofProducts.Get_AllProduct_BySearch(Search, 1, 50000);
 
                 if (BtnFavorite.Checked)
                 {
                     // إنشاء DataView لتصفية البيانات
                     var filteredView = new DataView(ResultOfData)
                     {
-                        RowFilter = "product_favorite = 1" 
+                        RowFilter = "product_favorite = 1"
                     };
 
                     // تحويل DataView إلى DataTable للحصول على النتائج المفلترة
@@ -114,20 +164,90 @@ namespace Alkamous.View
                 return null;
             }
         }
-               
-        private async void TxtSearch_TextChanged(object sender, EventArgs e)
+
+        private async Task<DataTable> LoadData2(int page = 1, int pageSize = 100, string search = "")
         {
-            await LoadData(TxtSearch.Text);
+            try
+            {
+                DataTable resultOfData;
+                bool Isfavorite = BtnFavorite.Checked;
+                // Apply consistent pagination for both search and non-search scenarios
+                if (string.IsNullOrEmpty(search) && !Isfavorite)
+                {
+                    // No search term - get all products with pagination
+                    resultOfData = await OperationsofProducts.Get_AllProduct(page, pageSize);
+                }
+                else if (!Isfavorite)
+                {
+                    // Apply search with pagination
+                    resultOfData = await OperationsofProducts.Get_AllProduct_BySearch(search, page, pageSize);
+                }
+                else
+                {
+                    // Apply search + favorite with pagination
+                    resultOfData = await OperationsofProducts.Get_AllProduct_BySearchFavorite(search, page, pageSize);
+                }                
+
+                return resultOfData;
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                Chelp.WriteErrorLog(Name + " => " + methodName + " => " + ex.Message);
+                MessageBox.Show("Error loading data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        // Reset and perform a new search
+        private async Task PerformSearch()
+        {
+            // Reset pagination state
+            currentPage = 1;
+            endOfData = false;
+
+            // Clear the DataGridView
+            if (DGVProducts.DataSource != null)
+            {
+                ((DataTable)DGVProducts.DataSource).Clear();
+                DGVProducts.DataSource = null;
+            }
+
+            // Load first page of new search results
+            await LoadNextPageAsync();
+           
+        }
+        private void TxtSearch_TextChanged(object sender, EventArgs e)
+        {
+
+            // Set up debounce timer if not already created
+            if (_searchTimer == null)
+            {
+                _searchTimer = new Timer();
+                _searchTimer.Interval = 500; // 500ms delay
+                _searchTimer.Tick += async (s, args) =>
+                {
+                    _searchTimer.Stop();
+                    await PerformSearch();
+                };
+            }
+
+            // Restart the timer
+            _searchTimer.Stop();
+            _searchTimer.Start();
+
         }
 
         private async void Frm_Products_Load(object sender, EventArgs e)
         {
-            var ResultOfData = await LoadData();
-                        
-            if (ResultOfData.Status == TaskStatus.RanToCompletion)
-            {
-                DGVColumnHeaderTextAndWidth();
-            }
+
+            // Reset pagination state
+            currentPage = 1;
+            endOfData = false;
+
+            // Load initial data
+            await LoadNextPageAsync();           
+            InitializeDGVProducts();
         }
 
         #region  SelectProductAndSendParameterToForms
@@ -296,8 +416,94 @@ namespace Alkamous.View
         private async void BtnFavorite_CheckedChanged(object sender, EventArgs e)
         {
             BtnFavorite.ForeColor = BtnFavorite.Checked ? Color.Red : Color.Black;
-            await LoadData();
+            await PerformSearch();
         }
+
+        // Improved scroll handler 
+        private async void DGVProducts_Scroll(object sender, ScrollEventArgs e)
+        {
+            // Only handle vertical scrolling events
+            if (e.ScrollOrientation != ScrollOrientation.VerticalScroll)
+                return;
+
+            // Don't proceed if already loading or at end of data
+            if (isLoading || endOfData)
+                return;
+
+            var dgv = (DataGridView)sender;
+
+            // Calculate how close we are to the bottom - load when within 3 rows
+            int lastVisibleRowIndex = dgv.FirstDisplayedScrollingRowIndex + dgv.DisplayedRowCount(true) - 1;
+            int totalRows = dgv.RowCount;
+
+            // Load next page when scrolled near the bottom
+            if (totalRows > 0 && lastVisibleRowIndex >= totalRows - 3)
+            {
+                await LoadNextPageAsync();
+            }
+
+        }
+
+        private async Task LoadNextPageAsync()
+        {
+            if (isLoading || endOfData) return;
+
+            isLoading = true;
+
+            try
+            {
+                string searchText = TxtSearch.Text.Trim();
+
+                // Get the next page of data using the current page counter
+                var newData = await LoadData2(currentPage, pageSize, searchText);
+
+                // Check if we got any data back
+                if (newData == null || newData.Rows.Count == 0)
+                {
+                    endOfData = true;
+                    isLoading = false;
+                    LbCount.Text =DGVProducts.Rows.Count.ToString();
+                    return;
+                }
+
+                LbCount.Text = newData.Rows[0]["TotalCount"].ToString();
+                // For first page, just set as DataSource
+                if (DGVProducts.DataSource == null || currentPage == 1)
+                {
+                    DGVProducts.DataSource = newData;
+                }
+                else
+                {
+                    // For subsequent pages, append to existing DataSource
+                    DataTable currentData = (DataTable)DGVProducts.DataSource;
+
+                    // Check for and exclude any duplicate rows before adding
+                    foreach (DataRow newRow in newData.Rows)
+                    {
+                        // Get the product_Id to check for duplicates
+                        string productId = newRow["product_Id"].ToString();
+
+                        // Skip if we already have this product_Id
+                        if (currentData.Select($"product_Id = '{productId}'").Length == 0)
+                        {
+                            currentData.ImportRow(newRow);
+                        }
+                    }
+                }              
+               
+                // Increment current page for next load
+                currentPage++;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                isLoading = false;
+            }
+        }
+
 
     }
 }

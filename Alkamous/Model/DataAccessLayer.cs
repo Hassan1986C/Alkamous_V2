@@ -9,12 +9,26 @@ using Alkamous.InterfaceForAllClass;
 
 namespace Alkamous.Model
 {
+    /// <summary>
+    /// Data Access Layer (DAL) class that handles all database operations
+    /// Implements connection management, CRUD operations, and stored procedure execution
+    /// </summary>
     public class DataAccessLayer: IDataAccessLayer
     {
         #region Declare variables ( SqlConnection, SqlCommand,DataTable)
+        /// <summary>
+        /// SQL Connection instance for database connectivity
+        /// </summary>
         private readonly SqlConnection _sqlcon = new SqlConnection();
+        
+        /// <summary>
+        /// SQL Command instance for executing queries and stored procedures
+        /// </summary>
         private readonly SqlCommand _cmd = new SqlCommand();
 
+        /// <summary>
+        /// Database connection configuration parameters loaded from application settings
+        /// </summary>
         private readonly string _serverName = Properties.Settings.Default.ServerName;
         private readonly string _database = Properties.Settings.Default.Database;
         private readonly string _userId = Properties.Settings.Default.Userid;
@@ -23,8 +37,11 @@ namespace Alkamous.Model
 
         #endregion
 
-        #region Connection String this constructor initialize the connection object
-        // this constructor initialize the connection object
+        #region Connection String initialization
+        /// <summary>
+        /// Initializes a new instance of the DataAccessLayer class
+        /// Sets up the database connection and configures the command object
+        /// </summary>
         public DataAccessLayer()
         {
             SqlConnectionStringBuilder sqlConnectionString = new SqlConnectionStringBuilder
@@ -39,30 +56,36 @@ namespace Alkamous.Model
 
             _cmd.Connection = _sqlcon;
             _cmd.CommandType = CommandType.StoredProcedure;
-
-
         }
         #endregion
 
-        #region method to Open connection 
+        #region Connection Management Methods
+        /// <summary>
+        /// Opens the database connection if it's not already open
+        /// </summary>
         private void OpenCN()
         {
             if (_sqlcon.State != ConnectionState.Open)
                 _sqlcon.Open();
         }
-        #endregion
 
-        #region method to Close connection 
+        /// <summary>
+        /// Closes the database connection if it's open
+        /// </summary>
         private void CloseCN()
         {
             if (_sqlcon.State == ConnectionState.Open)
                 _sqlcon.Close();
-
         }
-
         #endregion
 
-        #region Method To Method To ADD Delelte Update By StordProseder
+        #region Stored Procedure Execution Methods
+        /// <summary>
+        /// Executes a stored procedure with parameters for INSERT, UPDATE, or DELETE operations
+        /// </summary>
+        /// <param name="StoredProcedureName">Name of the stored procedure to execute</param>
+        /// <param name="ParVal">Parameters for the stored procedure as key-value pairs</param>
+        /// <returns>Number of rows affected or error code</returns>
         public int RunProcedure(string StoredProcedureName, SortedList ParVal)
         {
             try
@@ -75,15 +98,10 @@ namespace Alkamous.Model
                      
                 OpenCN();
                 int rRusult = _cmd.ExecuteNonQuery();
-                CloseCN();
                 return rRusult;
-
-
             }
             catch (SqlException ex)
             {
-                CloseCN();
-
                 Chelp.WriteErrorLog("Error in RunProcedure: " + ex.Message);
                 return ex.Number;
             }
@@ -91,10 +109,14 @@ namespace Alkamous.Model
             {
                 CloseCN();
             }
-
         }
 
-        // Method is async
+        /// <summary>
+        /// Asynchronously executes a stored procedure with parameters
+        /// </summary>
+        /// <param name="StoredProcedureName">Name of the stored procedure to execute</param>
+        /// <param name="ParVal">Parameters for the stored procedure as key-value pairs</param>
+        /// <returns>Number of rows affected or error code</returns>
         public async Task<int> RunProcedureasync(string StoredProcedureName, SortedList ParVal)
         {
             try
@@ -106,29 +128,33 @@ namespace Alkamous.Model
                     _cmd.Parameters.AddWithValue(ParVal.GetKey(I).ToString(), ParVal.GetByIndex(I));
 
                 OpenCN();
-                int rRusult =await _cmd.ExecuteNonQueryAsync();
-                CloseCN();
+                int rRusult = await _cmd.ExecuteNonQueryAsync();
                 return rRusult;
-
-
             }
             catch (SqlException ex)
             {
-                CloseCN();
-
                 Chelp.WriteErrorLog("Error in RunProcedure: " + ex.Message);
                 return ex.Number;
             }
+            finally
+            {
+                CloseCN();
+            }
         }
-
         #endregion
 
-        #region Method To Method To ADD Delelte Update List<SortedList> By StordProseder
+        #region Bulk Operations
+        /// <summary>
+        /// Executes a stored procedure multiple times with different parameter sets
+        /// Useful for bulk insert, update, or delete operations
+        /// </summary>
+        /// <param name="StoredProcedureName">Name of the stored procedure to execute</param>
+        /// <param name="parameterValues">List of parameter sets for multiple executions</param>
+        /// <returns>Total number of rows affected across all executions</returns>
         public int RunProcedureBulk(string StoredProcedureName, List<SortedList> parameterValues)
         {
             try
             {
-
                 int totalRowsAffected = 0;
                 _cmd.CommandText = StoredProcedureName;
 
@@ -140,17 +166,14 @@ namespace Alkamous.Model
                     for (int i = 0; i < parameterList.Count; i++)                    
                         _cmd.Parameters.AddWithValue(parameterList.GetKey(i).ToString(), parameterList.GetByIndex(i));
                     
-
                     int rowsAffected = _cmd.ExecuteNonQuery();
                     totalRowsAffected += rowsAffected;
                 }
 
-                CloseCN();
                 return totalRowsAffected;
             }
             catch (SqlException ex)
             {
-                CloseCN();
                 Chelp.WriteErrorLog("Error in RunProcedure Bulk: " + ex.Message);
                 return ex.Number;
             }
@@ -161,7 +184,13 @@ namespace Alkamous.Model
         }
         #endregion
 
-        #region SelectDB and Read Data By StordProseder
+        #region Data Retrieval Methods
+        /// <summary>
+        /// Executes a stored procedure and returns the results as a DataTable
+        /// </summary>
+        /// <param name="StoredProcedureName">Name of the stored procedure to execute</param>
+        /// <param name="ParVal">Parameters for the stored procedure as key-value pairs</param>
+        /// <returns>DataTable containing the query results, or null if an error occurs</returns>
         public DataTable SelectDB(string StoredProcedureName, SortedList ParVal)
         {
             try
@@ -178,12 +207,9 @@ namespace Alkamous.Model
                         dt.Load(reader);                                        
                     return dt;
                 }
-
-
             }
             catch (SqlException ex)
             {
-                CloseCN();
                 Chelp.WriteErrorLog("Error in SelectDB: " + ex.Message);
                 return null;
             }
@@ -194,7 +220,12 @@ namespace Alkamous.Model
         }
         #endregion
 
-        // methode async
+        /// <summary>
+        /// Asynchronously executes a stored procedure and returns the results as a DataTable
+        /// </summary>
+        /// <param name="StoredProcedureName">Name of the stored procedure to execute</param>
+        /// <param name="ParVal">Parameters for the stored procedure as key-value pairs</param>
+        /// <returns>DataTable containing the query results, or null if an error occurs</returns>
         public async Task<DataTable> SelectDBasync(string StoredProcedureName, SortedList ParVal)
         {
             try

@@ -38,46 +38,83 @@ namespace Alkamous.View
             }
         }
 
-        private void DGVColumnHeaderTextAndWidth()
+        private void InitializeDGVProducts()
         {
+            DGVProducts.AutoGenerateColumns = false;
+            DGVProducts.Columns.Clear();
+            CTB_Products MCTB_Products = new CTB_Products("ctr2");
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                
+                Name = MCTB_Products.product_Id,
+                DataPropertyName = MCTB_Products.product_Id,
+                HeaderText = "Product ID",
+                Width = 10
+            });
 
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = MCTB_Products.product_NameEn,
+                DataPropertyName = MCTB_Products.product_NameEn,
+                HeaderText = "Product Name English",
+                Width = 60
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = MCTB_Products.product_NameAr,
+                DataPropertyName = MCTB_Products.product_NameAr,
+                HeaderText = "Product Name Arabic",
+                Width = 60
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = MCTB_Products.product_Price,
+                DataPropertyName = MCTB_Products.product_Price,
+                HeaderText = "Pric",
+                Width = 20
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = MCTB_Products.product_Unit,
+                DataPropertyName = MCTB_Products.product_Unit,
+                HeaderText = "Unit",
+                Width = 20
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = MCTB_Products.product_favorite,
+                DataPropertyName = MCTB_Products.product_favorite,
+                HeaderText = "Favorite",
+                Width = 20
+            });
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "TotalCount",
+                DataPropertyName = "TotalCount",
+                HeaderText = "TotalCount",
+                Width = 20,
+                Visible = false
+            });
+
+            // Styling only
             DGVProducts.ColumnHeadersDefaultCellStyle.Padding = new Padding(0, 4, 0, 4);
-            //DGVProducts.EnableHeadersVisualStyles = false;
-            //DGVProducts.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkBlue;
-            //DGVProducts.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-
-
-
             DGVProducts.RowHeadersVisible = false;
-            DGVProducts.Columns[0].HeaderText = "Product ID";
-            DGVProducts.Columns[1].HeaderText = "Product Name English";
-            DGVProducts.Columns[2].HeaderText = "Product Name Arabic";
-            DGVProducts.Columns[3].HeaderText = "Pric";
-            DGVProducts.Columns[4].HeaderText = "Unit";
-            DGVProducts.Columns[5].HeaderText = "Favorite";
-            
-            DGVProducts.Columns[0].Width = 25;
-            DGVProducts.Columns[1].Width = 60;
-            DGVProducts.Columns[2].Width = 60;
-            DGVProducts.Columns[3].Width = 15;
-            DGVProducts.Columns[4].Width = 15;
-            DGVProducts.Columns[5].Width = 50;
 
-
-            for (int i = 0; i < DGVProducts.Columns.Count; i++)            
+            for (int i = 0; i < DGVProducts.Columns.Count; i++)
+            {
                 DGVProducts.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            
+            }
 
-            DGVProducts.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            DGVProducts.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            DGVProducts.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            DGVProducts.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            DGVProducts.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
+            DGVProducts.Columns[MCTB_Products.product_NameEn].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            DGVProducts.Columns[MCTB_Products.product_NameAr].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            DGVProducts.Columns[MCTB_Products.product_Price].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            DGVProducts.Columns[MCTB_Products.product_Unit].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
-
-      
-
 
         private bool CheckDataEntry()
         {
@@ -119,7 +156,7 @@ namespace Alkamous.View
             {
                 var ResultOfData = string.IsNullOrEmpty(Search)
                     ? await OperationsofProducts.Get_AllProduct(1, 5000000)
-                    : OperationsofProducts.Get_AllProduct_BySearch(Search, 1, 5000000);
+                    : await OperationsofProducts.Get_AllProduct_BySearch(Search, 1, 5000000);
 
 
                 // تأكد من أن الجدول يحتوي على أعمدة
@@ -134,7 +171,7 @@ namespace Alkamous.View
 
                     // نسخ البيانات من العمود الأصلي إلى العمود الجديد كقيم نصية
                     foreach (DataRow row in ResultOfData.Rows)
-                    {                       
+                    {
                         if (row[columnName] != DBNull.Value && bool.TryParse(row[columnName].ToString(), out bool value))
                         {
                             row[newColumn.ColumnName] = value ? "Yes" : "No";
@@ -183,7 +220,7 @@ namespace Alkamous.View
             // we can say  ResultOfData.IsCompleted or the condation belwo
             if (ResultOfData.Status == TaskStatus.RanToCompletion)
             {
-                DGVColumnHeaderTextAndWidth();
+                InitializeDGVProducts();
             }
 
         }
