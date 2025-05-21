@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Alkamous.Model;
 
 namespace Alkamous.View
 {
@@ -12,11 +13,11 @@ namespace Alkamous.View
     {
         #region Declare variables
 
-        ClsOperationsofCustomers OperationsofCustomers = new ClsOperationsofCustomers();
-        readonly ClsOperationsofInvoices OperationsofInvoices = new ClsOperationsofInvoices();
-        readonly ClsOperationsofConsumable OperationsofConsumable = new ClsOperationsofConsumable();
-        readonly ClsOperationsofTermsInvoices OperationsofTermsInvoices = new ClsOperationsofTermsInvoices();
-        readonly ClsOperationsofBanks OperationsofBanks = new ClsOperationsofBanks();
+        readonly ClsOperationsofCustomers OperationsofCustomers = new ClsOperationsofCustomers(new DataAccessLayer());
+        readonly ClsOperationsofInvoices OperationsofInvoices = new ClsOperationsofInvoices(new DataAccessLayer());
+        readonly ClsOperationsofConsumable OperationsofConsumable = new ClsOperationsofConsumable(new DataAccessLayer());
+        readonly ClsOperationsofTermsInvoices OperationsofTermsInvoices = new ClsOperationsofTermsInvoices(new DataAccessLayer());
+        readonly ClsOperationsofBanks OperationsofBanks = new ClsOperationsofBanks(new DataAccessLayer());
 
         public static DataTable dtCustomer = new DataTable();
         public static DataTable dtProducts = new DataTable();
@@ -499,7 +500,7 @@ namespace Alkamous.View
             if (DataHaveBeenloaded == 0)
             {
                 Cursor.Current = Cursors.WaitCursor;
-                ClsOperationsofBanks bnk = new ClsOperationsofBanks();
+                ClsOperationsofBanks bnk = new ClsOperationsofBanks(new DataAccessLayer());
                 var result = bnk.Get_All();
 
                 txtSelectAcount.Items.Add("Select No Account Bank");
@@ -519,7 +520,7 @@ namespace Alkamous.View
         private void LoadAcountInfoByDefinition(string AcountBankSelected)
         {
 
-            ClsOperationsofBanks bnk = new ClsOperationsofBanks();
+            ClsOperationsofBanks bnk = new ClsOperationsofBanks(new DataAccessLayer());
 
 
             if (AcountBankSelected == "Select No Account Bank")

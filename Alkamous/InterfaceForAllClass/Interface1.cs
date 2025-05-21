@@ -10,7 +10,7 @@ namespace Alkamous.InterfaceForAllClass
     /// Generic interface for basic CRUD operations
     /// </summary>
     /// <typeparam name="T">The type of entity to perform operations on</typeparam>
-    interface IBaseOperation<T> where T : class
+    public interface IBaseOperation<T> where T : class
     {
         /// <summary>
         /// Adds a new entity to the database asynchronously
@@ -38,7 +38,7 @@ namespace Alkamous.InterfaceForAllClass
     /// Interface for customer information operations
     /// Handles basic customer data queries and validations
     /// </summary>
-    interface ICustomerInfo
+    public interface ICustomerInfo
     {
         /// <summary>
         /// Retrieves all customer information records
@@ -51,7 +51,7 @@ namespace Alkamous.InterfaceForAllClass
         /// </summary>
         /// <param name="Text">Search criteria</param>
         /// <returns>DataTable containing matching customer records</returns>
-        Task<DataTable> Get_BySearch(string Text);        
+        Task<DataTable> Get_BySearch(string Text);
 
         /// <summary>
         /// Checks if a customer record exists
@@ -71,7 +71,7 @@ namespace Alkamous.InterfaceForAllClass
     /// Interface for customer operations
     /// Handles detailed customer data management including invoices and pagination
     /// </summary>
-    interface ICustomers
+    public interface ICustomers
     {
         /// <summary>
         /// Gets the maximum auto-generated customer number
@@ -128,8 +128,8 @@ namespace Alkamous.InterfaceForAllClass
     /// Interface for invoice operations
     /// Handles creation and retrieval of invoice data
     /// </summary>
-    interface IInvoices
-    {       
+    public interface IInvoices
+    {
         /// <summary>
         /// Adds a new invoice to the list for bulk processing
         /// </summary>
@@ -139,7 +139,7 @@ namespace Alkamous.InterfaceForAllClass
         /// <summary>
         /// Performs bulk insert of all invoices in the list
         /// </summary>
-        void InsertBulk();        
+        void InsertBulk();
 
         /// <summary>
         /// Retrieves invoice information by invoice number
@@ -160,7 +160,7 @@ namespace Alkamous.InterfaceForAllClass
     /// Interface for consumable item operations
     /// Handles management of consumable products
     /// </summary>
-    interface IConsumable
+    public interface IConsumable
     {
         /// <summary>
         /// Adds a new consumable item to the list for bulk processing
@@ -191,7 +191,7 @@ namespace Alkamous.InterfaceForAllClass
     /// Interface for invoice terms operations
     /// Handles management of invoice terms and conditions
     /// </summary>
-    interface ITerms_Invoices
+    public interface ITerms_Invoices
     {
         /// <summary>
         /// Adds new invoice terms to the list for bulk processing
@@ -218,15 +218,15 @@ namespace Alkamous.InterfaceForAllClass
         DataTable Get_Terms_Invoice_ByTerms_Invoice_Number(string Terms_Invoice_Number);
     }
 
-    interface IBankAccounts
-    {     
+    public interface IBankAccounts
+    {
         DataTable Get_All();
         DataTable Get_BySearch(string Text);
         DataTable Get_ByBank_Definition(string Text);
         bool Check_Bank_DefinitionNotDuplicate(string Text);
     }
 
-    interface ITerms
+    public interface ITerms
     {
         bool Add_Term(string Term_En, string Term_Ar);
         void Add_TermLIST(CTB_Terms item);
@@ -236,8 +236,8 @@ namespace Alkamous.InterfaceForAllClass
         DataTable Get_AllTerms();
     }
 
-    interface IProducts
-    {      
+    public interface IProducts
+    {
         int Get_CountProduct();
         Task<DataTable> Get_AllProduct(int PageNumber = 1, int PageSize = 5000);
         Task<DataTable> Get_AllProduct_BySearch(string search, int PageNumber = 1, int PageSize = 500000);
@@ -253,28 +253,34 @@ namespace Alkamous.InterfaceForAllClass
     /// for All both
     /// </summary>
     /// <typeparam name="T">class Name person or employ or ..</typeparam>
-    interface IUsers<T> where T : class
-    {       
+    public interface IUsers<T> where T : class
+    {
         T Get_AllBySearch(string Text);
         T Get_ByID(string Text);
         List<T> Get_ALL();
         int Get_CountUsersLog();
     }
 
-    interface IBackUpAndRestor
+    public interface IBackUpAndRestor
     {
         Task<bool> DataBaseBackUp(string PathFileName);
         Task<bool> DataBaseRestore(string backupFilePath);
     }
 
-    interface IDataAccessLayer
+    public interface IDataAccessLayer
     {
         int RunProcedure(string StoredProcedureName, SortedList ParVal);
         int RunProcedureBulk(string StoredProcedureName, List<SortedList> parameterValues);
+        Task<int> RunProcedureasync(string StoredProcedureName, SortedList ParVal);
         DataTable SelectDB(string StoredProcedureName, SortedList ParVal);
         Task<DataTable> SelectDBasync(string StoredProcedureName, SortedList ParVal);
         bool Is_SQLServer_connection_setting_successful(string txtServerName, string txtDataBase, string txtPassword, string txtUserName, string ConnectTimeout);
         bool Is_SQLServer_connection_setting_successful();
     }
 
+    public interface ILazyLoading
+    {
+        Task<DataTable> LoadData(int page = 1, int pageSize = 100, string search = "");
+        Task LoadNextPageAsync();
+    }
 }

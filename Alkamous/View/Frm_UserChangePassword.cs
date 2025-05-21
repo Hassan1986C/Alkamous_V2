@@ -3,13 +3,14 @@ using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Alkamous.Model;
 
 namespace Alkamous.View
 {
     public partial class Frm_UserChangePassword : Form
     {
         Model.CTB_Users MTB_Users = new Model.CTB_Users();
-        ClsOperationsofUsers ClsOperationsofUsers = new ClsOperationsofUsers();
+        ClsOperationsofUsers ClsOperationsofUsers = new ClsOperationsofUsers(new DataAccessLayer());
 
         public Frm_UserChangePassword()
         {

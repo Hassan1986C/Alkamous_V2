@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.LbCount = new System.Windows.Forms.Label();
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.DGVProducts = new System.Windows.Forms.DataGridView();
@@ -50,6 +50,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.Btn_HintAndInfo = new System.Windows.Forms.Button();
             this.BtnCancelEdit = new System.Windows.Forms.Button();
+            this.BtnFavoriteSearch = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProducts)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -65,18 +66,17 @@
             this.LbCount.Size = new System.Drawing.Size(117, 41);
             this.LbCount.TabIndex = 7;
             this.LbCount.Text = "0";
-            this.LbCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.LbCount.Click += new System.EventHandler(this.LbCount_Click);
+            this.LbCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;           
             // 
             // TxtSearch
             // 
             this.TxtSearch.BackColor = System.Drawing.Color.White;
             this.TxtSearch.Font = new System.Drawing.Font("Century Gothic", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtSearch.ForeColor = System.Drawing.Color.Black;
-            this.TxtSearch.Location = new System.Drawing.Point(17, 460);
+            this.TxtSearch.Location = new System.Drawing.Point(207, 460);
             this.TxtSearch.MaxLength = 40;
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(944, 41);
+            this.TxtSearch.Size = new System.Drawing.Size(754, 41);
             this.TxtSearch.TabIndex = 5;
             this.TxtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TxtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
@@ -88,14 +88,14 @@
             this.DGVProducts.AllowUserToOrderColumns = true;
             this.DGVProducts.AllowUserToResizeRows = false;
             this.DGVProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DGVProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVProducts.Location = new System.Drawing.Point(13, 506);
             this.DGVProducts.MultiSelect = false;
@@ -106,6 +106,7 @@
             this.DGVProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVProducts.Size = new System.Drawing.Size(1071, 317);
             this.DGVProducts.TabIndex = 5;
+            this.DGVProducts.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DGVProducts_Scroll);
             this.DGVProducts.DoubleClick += new System.EventHandler(this.DGVProducts_DoubleClick);
             // 
             // label7
@@ -336,11 +337,25 @@
             this.BtnCancelEdit.Visible = false;
             this.BtnCancelEdit.Click += new System.EventHandler(this.BtnCancelEdit_Click);
             // 
+            // BtnFavoriteSearch
+            // 
+            this.BtnFavoriteSearch.AutoSize = true;
+            this.BtnFavoriteSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnFavoriteSearch.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFavoriteSearch.Location = new System.Drawing.Point(17, 469);
+            this.BtnFavoriteSearch.Name = "BtnFavoriteSearch";
+            this.BtnFavoriteSearch.Size = new System.Drawing.Size(123, 31);
+            this.BtnFavoriteSearch.TabIndex = 48;
+            this.BtnFavoriteSearch.Text = "Favorite";
+            this.BtnFavoriteSearch.UseVisualStyleBackColor = true;
+            this.BtnFavoriteSearch.CheckedChanged += new System.EventHandler(this.BtnFavoriteSearch_CheckedChanged);
+            // 
             // Frm_ProductsAddDeleteUpdate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 853);
+            this.Controls.Add(this.BtnFavoriteSearch);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -390,5 +405,6 @@
         private System.Windows.Forms.Button Btn_HintAndInfo;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox BtnFavorite;
+        private System.Windows.Forms.CheckBox BtnFavoriteSearch;
     }
 }

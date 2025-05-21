@@ -10,10 +10,16 @@ namespace Alkamous.Controller
     public class ClsOperationsofInvoices : IBaseOperation<CTB_Invoices>, IInvoices
     {
         private readonly string ProcedureName = "SP_TB_Invoices";
-        private DataAccessLayer DAL = new DataAccessLayer();
+       
+        private readonly IDataAccessLayer DAL;
+
         private CTB_Invoices MTB_Invoices = new CTB_Invoices();
         private readonly List<SortedList> Listofsortedlis = new List<SortedList>();
-        
+
+        public ClsOperationsofInvoices(IDataAccessLayer _DAL)
+        {
+            DAL = _DAL;
+        }
 
         private bool CheckResult(SortedList SL)
         {

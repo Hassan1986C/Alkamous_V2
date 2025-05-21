@@ -13,7 +13,8 @@ namespace Alkamous.View
     public partial class Frm_ProductsAddDeleteUpdate : Form
     {
         ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts();
-
+        private readonly LazyLoading LazyDataLoader = new LazyLoading();
+        private Timer _searchTimer;
 
         public Frm_ProductsAddDeleteUpdate()
         {
@@ -149,79 +150,54 @@ namespace Alkamous.View
             BtnFavorite.Checked = false;
         }
 
+        
 
-        private async Task<Task> LoadData(string Search = "")
+        // Reset and perform a new search
+        private async Task PerformSearch()
         {
-            try
+            // Reset pagination state
+            LazyDataLoader.Reset();
+
+            // Clear the DataGridView
+            if (DGVProducts.DataSource != null)
             {
-                var ResultOfData = string.IsNullOrEmpty(Search)
-                    ? await OperationsofProducts.Get_AllProduct(1, 5000000)
-                    : await OperationsofProducts.Get_AllProduct_BySearch(Search, 1, 5000000);
-
-
-                // تأكد من أن الجدول يحتوي على أعمدة
-                if (ResultOfData != null && ResultOfData.Columns.Count > 5)
-                {
-                    // إنشاء عمود جديد
-                    string columnName = ResultOfData.Columns[5].ColumnName;
-                    var newColumn = new DataColumn(columnName + "_Copy", typeof(string));
-
-                    // إضافة العمود الجديد إلى الجدول
-                    ResultOfData.Columns.Add(newColumn);
-
-                    // نسخ البيانات من العمود الأصلي إلى العمود الجديد كقيم نصية
-                    foreach (DataRow row in ResultOfData.Rows)
-                    {
-                        if (row[columnName] != DBNull.Value && bool.TryParse(row[columnName].ToString(), out bool value))
-                        {
-                            row[newColumn.ColumnName] = value ? "Yes" : "No";
-                        }
-                        else
-                        {
-                            // التعامل مع الحالات التي يكون فيها العمود فارغًا أو يحتوي على قيمة غير صحيحة
-                            row[newColumn.ColumnName] = "Unknown";
-                        }
-                    }
-
-
-
-
-                    // إزالة العمود القديم إذا لزم الأمر
-                    ResultOfData.Columns.Remove(columnName);
-                    // إعادة تسمية العمود الجديد إلى نفس اسم العمود القديم
-                    newColumn.ColumnName = columnName;
-                }
-
-
-                DGVProducts.DataSource = ResultOfData;
-                LbCount.Text = DGVProducts.RowCount.ToString();
-                ReColoreDGV(DGVProducts);
-                return Task.CompletedTask;
+                ((DataTable)DGVProducts.DataSource).Clear();
+                DGVProducts.DataSource = null;
             }
-            catch (Exception ex)
-            {
-                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name.ToString();
-                Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
-                MessageBox.Show(ex.Message);
-                return null;
-            }
+
+            // Load first page of new search results
+            await LoadNextPageAsync();
+
         }
-
-
-
-        private void LbCount_Click(object sender, EventArgs e)
+        private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
+
+            // Set up debounce timer if not already created
+            if (_searchTimer == null)
+            {
+                _searchTimer = new Timer();
+                _searchTimer.Interval = 500; // 500ms delay
+                _searchTimer.Tick += async (s, args) =>
+                {
+                    _searchTimer.Stop();
+                    await PerformSearch();
+                };
+            }
+
+            // Restart the timer
+            _searchTimer.Stop();
+            _searchTimer.Start();
 
         }
 
         private async void Frm_ProductsAddDeleteUpdate_Load(object sender, EventArgs e)
         {
-            var ResultOfData = await LoadData();
-            // we can say  ResultOfData.IsCompleted or the condation belwo
-            if (ResultOfData.Status == TaskStatus.RanToCompletion)
-            {
-                InitializeDGVProducts();
-            }
+            // Reset pagination state
+            LazyDataLoader.Reset();
+
+            // Load initial data
+            await LoadNextPageAsync();
+            InitializeDGVProducts();
 
         }
 
@@ -244,7 +220,7 @@ namespace Alkamous.View
                         {
                             Chelp.RegisterUsersActionLogs("Delete prodect", TxtProductId.Text);
                             MessageBox.Show("Data Deleted Successfully ");
-                            await LoadData();
+                            await LoadNextPageAsync(); 
                         }
                         else
                         {
@@ -303,7 +279,7 @@ namespace Alkamous.View
                         ClearAllTestBox();
                         if (string.IsNullOrEmpty(TxtSearch.Text))
                         {
-                            await LoadData();
+                            await LoadNextPageAsync();
                         }
                         else
                         {
@@ -325,8 +301,6 @@ namespace Alkamous.View
 
         }
 
-
-
         private async void BtnEditProduct_Click(object sender, EventArgs e)
         {
             try
@@ -344,7 +318,7 @@ namespace Alkamous.View
                         EnabledDisableButtons(false);
                         if (string.IsNullOrEmpty(TxtSearch.Text))
                         {
-                            await LoadData();
+                            await LoadNextPageAsync();
                         }
                         else
                         {
@@ -366,10 +340,7 @@ namespace Alkamous.View
             }
         }
 
-        private async void TxtSearch_TextChanged(object sender, EventArgs e)
-        {
-            await LoadData(TxtSearch.Text.Trim());
-        }
+        
 
 
         private void MoveToNextText(object sender, KeyEventArgs e)
@@ -453,7 +424,7 @@ namespace Alkamous.View
                 if (favoriteValue != null)
                 {
                     string favoriteText = favoriteValue.ToString();
-                    BtnFavorite.Checked = favoriteText.Equals("Yes", StringComparison.OrdinalIgnoreCase);
+                    BtnFavorite.Checked = favoriteText.Equals(true.ToString(), StringComparison.OrdinalIgnoreCase);
                 }
                 else
                 {
@@ -477,7 +448,7 @@ namespace Alkamous.View
             ClearAllTestBox();
             if (string.IsNullOrEmpty(TxtSearch.Text))
             {
-                await LoadData();
+                await LoadNextPageAsync();
             }
             else
             {
@@ -506,7 +477,100 @@ namespace Alkamous.View
 
         private void BtnFavorite_CheckedChanged(object sender, EventArgs e)
         {
-            BtnFavorite.ForeColor = BtnFavorite.Checked ? Color.Red : Color.Black;
+            if (sender is CheckBox checkBox)
+            {
+                checkBox.ForeColor = checkBox.Checked ? Color.Red : Color.Black;
+            }
         }
+
+
+        private async Task LoadNextPageAsync()
+        {
+            bool Isfavorite = BtnFavoriteSearch.Checked;
+
+            await LazyDataLoader.LoadNextPageAsyncTEST(
+
+                         "product_Id",
+                          TxtSearch.Text.Trim(),
+                          Isfavorite,
+                          DGVProducts,
+                          OperationsofProducts.Get_AllProduct,                      // Matches Func<int, int, Task<DataTable>>
+                          OperationsofProducts.Get_AllProduct_BySearch,             // Matches Func<string, int, int, Task<DataTable>>
+                          OperationsofProducts.Get_AllProduct_BySearchFavorite      // Matches Func<string, int, int, Task<DataTable>>
+                          );
+
+            
+            LbCount.Text = LazyDataLoader.TotalCount;
+
+
+            }
+
+        private async void DGVProducts_Scroll(object sender, ScrollEventArgs e)
+        {
+            // Only handle vertical scrolling events
+            if (e.ScrollOrientation != ScrollOrientation.VerticalScroll)
+                return;
+
+            // Don't proceed if already loading or at end of data
+            if (LazyDataLoader.IsLoading || LazyDataLoader.EndOfData)
+                return;
+
+            var dgv = (DataGridView)sender;
+
+            // Calculate how close we are to the bottom - load when within 3 rows
+            int lastVisibleRowIndex = dgv.FirstDisplayedScrollingRowIndex + dgv.DisplayedRowCount(true) - 1;
+            int totalRows = dgv.RowCount;
+
+            // Load next page when scrolled near the bottom
+            if (totalRows > 0 && lastVisibleRowIndex >= totalRows - 3)
+            {
+                await LoadNextPageAsync();
+            }
+        }
+
+        private async void BtnFavoriteSearch_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                checkBox.ForeColor = checkBox.Checked ? Color.Red : Color.Black;
+                await PerformSearch();
+            }
+        }
+
+
+        //private void FavirName()
+        //{
+        //    // تأكد من أن الجدول يحتوي على أعمدة
+        //    if (ResultOfData != null && ResultOfData.Columns.Count > 5)
+        //    {
+        //        // إنشاء عمود جديد
+        //        string columnName = ResultOfData.Columns[5].ColumnName;
+        //        var newColumn = new DataColumn(columnName + "_Copy", typeof(string));
+
+        //        // إضافة العمود الجديد إلى الجدول
+        //        ResultOfData.Columns.Add(newColumn);
+
+        //        // نسخ البيانات من العمود الأصلي إلى العمود الجديد كقيم نصية
+        //        foreach (DataRow row in ResultOfData.Rows)
+        //        {
+        //            if (row[columnName] != DBNull.Value && bool.TryParse(row[columnName].ToString(), out bool value))
+        //            {
+        //                row[newColumn.ColumnName] = value ? "Yes" : "No";
+        //            }
+        //            else
+        //            {
+        //                // التعامل مع الحالات التي يكون فيها العمود فارغًا أو يحتوي على قيمة غير صحيحة
+        //                row[newColumn.ColumnName] = "Unknown";
+        //            }
+        //        }
+
+
+
+        //        // إزالة العمود القديم إذا لزم الأمر
+        //        ResultOfData.Columns.Remove(columnName);
+        //        // إعادة تسمية العمود الجديد إلى نفس اسم العمود القديم
+        //        newColumn.ColumnName = columnName;
+        //    }
+        //}
     }
 }

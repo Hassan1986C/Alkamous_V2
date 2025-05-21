@@ -13,11 +13,11 @@ namespace Alkamous.View
     public partial class Frm_Customers : Form
     {
         #region Declare variables and initialize a new instance of classes
-        ClsOperationsofCustomers OperationsofCustomers = new ClsOperationsofCustomers();
-        ClsOperationsofInvoices OperationsofInvoices = new ClsOperationsofInvoices();
-        ClsOperationsofConsumable OperationsofConsumable = new ClsOperationsofConsumable();
-        ClsOperationsofTermsInvoices OperationsofTermsInvoices = new ClsOperationsofTermsInvoices();
-        ClsOperationsofBanks OperationsofBanks = new ClsOperationsofBanks();
+        ClsOperationsofCustomers OperationsofCustomers = new ClsOperationsofCustomers(new DataAccessLayer());
+        ClsOperationsofInvoices OperationsofInvoices = new ClsOperationsofInvoices(new DataAccessLayer());
+        ClsOperationsofConsumable OperationsofConsumable = new ClsOperationsofConsumable(new DataAccessLayer());
+        ClsOperationsofTermsInvoices OperationsofTermsInvoices = new ClsOperationsofTermsInvoices(new DataAccessLayer());
+        ClsOperationsofBanks OperationsofBanks = new ClsOperationsofBanks(new DataAccessLayer());
         ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts();
         CLSExportDataToWordFile CLSExportDataToWordFile = new CLSExportDataToWordFile();
         private DataTable dt = new DataTable();

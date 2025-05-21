@@ -17,7 +17,7 @@ namespace Alkamous.View
     public partial class Frm_CustomerInfoImportExport : Form
     {
 
-        ClsOperationsofCustomerInfo operationsofCustomerInfo = new ClsOperationsofCustomerInfo();
+        ClsOperationsofCustomerInfo operationsofCustomerInfo = new ClsOperationsofCustomerInfo(new DataAccessLayer());
         List<CTB_CustomerInfo> csvDataList = null;
 
         public Frm_CustomerInfoImportExport()

@@ -12,7 +12,7 @@ namespace Alkamous.View
 {
     public partial class Frm_CustomerInfo : Form
     {
-        readonly ClsOperationsofCustomerInfo OperationsofCustomerInfo = new ClsOperationsofCustomerInfo();
+        readonly ClsOperationsofCustomerInfo OperationsofCustomerInfo = new ClsOperationsofCustomerInfo(new DataAccessLayer());
         string AutoNumValue = "";
 
         public Frm_CustomerInfo()

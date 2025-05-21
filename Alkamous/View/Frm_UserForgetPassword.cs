@@ -1,4 +1,5 @@
 ﻿using Alkamous.Controller;
+using Alkamous.Model;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace Alkamous.View
         #region Declare varabls
 
         private string OTPUserCode = "";
-        Model.CTB_Users MTB_Users = new Model.CTB_Users();
-        ClsOperationsofUsers ClsOperationsofUsers = new ClsOperationsofUsers();
+        CTB_Users MTB_Users = new CTB_Users();
+        ClsOperationsofUsers ClsOperationsofUsers = new ClsOperationsofUsers(new DataAccessLayer());
         private int CountButton;
         private Timer timer = new Timer
         {

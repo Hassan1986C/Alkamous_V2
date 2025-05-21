@@ -7,16 +7,17 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Alkamous.Model;
 
 namespace Alkamous.View
 {
     public partial class Frm_CustomersAddNewInvoices : Form
     {
         #region Declare variables
-        ClsOperationsofCustomers OperationsofCustomers = new ClsOperationsofCustomers();
-        ClsOperationsofInvoices OperationsofInvoices = new ClsOperationsofInvoices();
-        ClsOperationsofConsumable OperationsofConsumable = new ClsOperationsofConsumable();
-        ClsOperationsofTermsInvoices OperationsofTermsInvoices = new ClsOperationsofTermsInvoices();
+        ClsOperationsofCustomers OperationsofCustomers = new ClsOperationsofCustomers(new DataAccessLayer());
+        ClsOperationsofInvoices OperationsofInvoices = new ClsOperationsofInvoices(new DataAccessLayer());
+        ClsOperationsofConsumable OperationsofConsumable = new ClsOperationsofConsumable(new DataAccessLayer());
+        ClsOperationsofTermsInvoices OperationsofTermsInvoices = new ClsOperationsofTermsInvoices(new DataAccessLayer());
 
         public static DataTable dtCustomer = new DataTable();
         public static DataTable dtProducts = new DataTable();
@@ -493,7 +494,7 @@ namespace Alkamous.View
             if (DataHaveBeenloaded == 0)
             {
                 Cursor.Current = Cursors.WaitCursor;
-                ClsOperationsofBanks bnk = new ClsOperationsofBanks();
+                ClsOperationsofBanks bnk = new ClsOperationsofBanks(new DataAccessLayer());
                 var result = bnk.Get_All();
 
                 txtSelectAcount.Items.Add("Select No Account Bank");
@@ -518,7 +519,7 @@ namespace Alkamous.View
                 {
                     return;
                 }
-                ClsOperationsofBanks bnk = new ClsOperationsofBanks();
+                ClsOperationsofBanks bnk = new ClsOperationsofBanks(new DataAccessLayer());
                 var SelectResult = txtSelectAcount.SelectedItem.ToString();
                 if (SelectResult == "Select No Account Bank")
                 {
@@ -1359,7 +1360,7 @@ namespace Alkamous.View
         private void LoadAcountInfoByDefinition(string AcountBankSelected)
         {
 
-            ClsOperationsofBanks bnk = new ClsOperationsofBanks();
+            ClsOperationsofBanks bnk = new ClsOperationsofBanks(new DataAccessLayer());
 
 
             if (AcountBankSelected == "Select No Account Bank")

@@ -35,6 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.BtnMultiSelectItem = new System.Windows.Forms.CheckBox();
             this.BtnFavorite = new System.Windows.Forms.CheckBox();
+            this.Lbwait = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProducts)).BeginInit();
             this.SuspendLayout();
             // 
@@ -136,6 +137,19 @@
             this.BtnFavorite.UseVisualStyleBackColor = true;
             this.BtnFavorite.CheckedChanged += new System.EventHandler(this.BtnFavorite_CheckedChanged);
             // 
+            // Lbwait
+            // 
+            this.Lbwait.AutoSize = true;
+            this.Lbwait.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.Lbwait.Font = new System.Drawing.Font("Tahoma", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbwait.ForeColor = System.Drawing.SystemColors.Info;
+            this.Lbwait.Location = new System.Drawing.Point(380, 416);
+            this.Lbwait.Name = "Lbwait";
+            this.Lbwait.Size = new System.Drawing.Size(257, 48);
+            this.Lbwait.TabIndex = 30;
+            this.Lbwait.Text = "Please Wait";
+            this.Lbwait.Visible = false;
+            // 
             // Frm_Products
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -165,5 +179,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox BtnMultiSelectItem;
         private System.Windows.Forms.CheckBox BtnFavorite;
+        private System.Windows.Forms.Label Lbwait;
     }
 }

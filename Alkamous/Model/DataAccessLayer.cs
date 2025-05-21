@@ -165,7 +165,7 @@ namespace Alkamous.Model
                     _cmd.Parameters.Clear();
                     for (int i = 0; i < parameterList.Count; i++)                    
                         _cmd.Parameters.AddWithValue(parameterList.GetKey(i).ToString(), parameterList.GetByIndex(i));
-                    
+
                     int rowsAffected = _cmd.ExecuteNonQuery();
                     totalRowsAffected += rowsAffected;
                 }

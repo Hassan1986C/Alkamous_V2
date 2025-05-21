@@ -1,4 +1,5 @@
 ﻿using Alkamous.Controller;
+using Alkamous.Model;
 using Microsoft.Office.Interop.Word;
 using System;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Alkamous.View
     {
         #region Declare variables
         Model.CTB_Users MTB_Users = new Model.CTB_Users();
-        private ClsOperationsofUsers ClsOperationsofUsers = new ClsOperationsofUsers();
+        private ClsOperationsofUsers ClsOperationsofUsers = new ClsOperationsofUsers(new DataAccessLayer());
         #endregion
 
         public Frm_Login()

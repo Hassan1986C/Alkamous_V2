@@ -10,7 +10,7 @@ namespace Alkamous.View
     public partial class Frm_UserAddUpdateDelete : Form
     {
         private CTB_Users MTB_Users = new CTB_Users();
-        private readonly ClsOperationsofUsers ClsOperationsofUsers = new ClsOperationsofUsers();
+        private readonly ClsOperationsofUsers ClsOperationsofUsers = new ClsOperationsofUsers(new DataAccessLayer());
 
         public Frm_UserAddUpdateDelete()
         {

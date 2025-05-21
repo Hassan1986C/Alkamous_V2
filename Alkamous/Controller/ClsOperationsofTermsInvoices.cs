@@ -9,11 +9,15 @@ namespace Alkamous.Controller
     public class ClsOperationsofTermsInvoices : ITerms_Invoices
     {
         private readonly string ProcedureName = "SP_TB_Terms_Invoices";
-        DataAccessLayer DAL = new DataAccessLayer();
+        private readonly IDataAccessLayer DAL;
         CTB_Terms_Invoices MTB_Terms_Invoices = new CTB_Terms_Invoices();
-
-
         List<SortedList> Listofsortedlis = new List<SortedList>();
+
+        public ClsOperationsofTermsInvoices(IDataAccessLayer _DAL)
+        {
+            DAL = _DAL;
+        }
+
         public void Add_NewTerms_InvoiceLIST(CTB_Terms_Invoices item)
         {
             SortedList SL = new SortedList
@@ -74,5 +78,14 @@ namespace Alkamous.Controller
             return dt;
         }
 
+        public void Delete_Terms_InvoiceByTerms_Invoice_Number(string Terms_Invoice_Number)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public DataTable Get_Terms_Invoice_ByTerms_Invoice_Number(string Terms_Invoice_Number)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

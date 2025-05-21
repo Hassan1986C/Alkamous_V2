@@ -5,17 +5,18 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using Alkamous.Model;
 namespace Alkamous.Controller
 {
     public class CLSExportDataToWordFile
     {
         #region Declare Variables For CLS Of Operations
 
-        private readonly ClsOperationsofCustomers OperationsofCustomers = new ClsOperationsofCustomers();
-        private readonly ClsOperationsofInvoices OperationsofInvoices = new ClsOperationsofInvoices();
-        private readonly ClsOperationsofConsumable OperationsofConsumable = new ClsOperationsofConsumable();
-        private readonly ClsOperationsofTermsInvoices OperationsofTermsInvoices = new ClsOperationsofTermsInvoices();
-        private readonly ClsOperationsofBanks OperationsofBanks = new ClsOperationsofBanks();
+        private readonly ClsOperationsofCustomers OperationsofCustomers = new ClsOperationsofCustomers(new DataAccessLayer());
+        private readonly ClsOperationsofInvoices OperationsofInvoices = new ClsOperationsofInvoices(new DataAccessLayer());
+        private readonly ClsOperationsofConsumable OperationsofConsumable = new ClsOperationsofConsumable(new DataAccessLayer());
+        private readonly ClsOperationsofTermsInvoices OperationsofTermsInvoices = new ClsOperationsofTermsInvoices(new DataAccessLayer());
+        private readonly ClsOperationsofBanks OperationsofBanks = new ClsOperationsofBanks(new DataAccessLayer());
 
         #endregion
 

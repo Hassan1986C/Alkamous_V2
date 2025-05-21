@@ -10,11 +10,14 @@ namespace Alkamous.Controller
 {
     public class ClsOperationsofBanks : IBaseOperation<CTB_Banks>, IBankAccounts
     {
-
+        private readonly IDataAccessLayer DAL;
         private readonly string ProcedureName = "SP_TB_Bank";
-        DataAccessLayer DAL = new DataAccessLayer();
 
-               
+        public ClsOperationsofBanks(IDataAccessLayer _DAL)
+        {
+            DAL = _DAL;
+        }
+
         private SortedList AssignValuesToSortedList(CTB_Banks item, string @Check)
         {
             SortedList SL = new SortedList

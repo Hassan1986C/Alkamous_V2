@@ -10,10 +10,14 @@ namespace Alkamous.Controller
     {
 
         private readonly string ProcedureName = "SP_TB_Consumable";
-        private DataAccessLayer DAL = new DataAccessLayer();
+        private readonly IDataAccessLayer DAL;
         private CTB_Consumable MTB_Consumable = new CTB_Consumable();
         private readonly List<SortedList> Listofsortedlis = new List<SortedList>();
 
+        public ClsOperationsofConsumable(IDataAccessLayer _DAL)
+        {
+            DAL = _DAL;
+        }
 
         private bool CheckResult(SortedList SL)
         {

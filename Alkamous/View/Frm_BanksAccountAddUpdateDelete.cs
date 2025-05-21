@@ -11,7 +11,7 @@ namespace Alkamous.View
     {
 
         CTB_Banks MTB_Banks = new CTB_Banks();
-        ClsOperationsofBanks clsOperationsofBanks = new ClsOperationsofBanks();
+        ClsOperationsofBanks clsOperationsofBanks = new ClsOperationsofBanks(new DataAccessLayer());
 
         public Frm_BanksAccountAddUpdateDelete()
         {

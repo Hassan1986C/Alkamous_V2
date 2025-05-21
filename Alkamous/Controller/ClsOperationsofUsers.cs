@@ -12,9 +12,13 @@ namespace Alkamous.Controller
     // this interface created to apply the Solid principle Design pattern
     public class ClsOperationsofUsers : IBaseOperation<CTB_Users>, IUsers<CTB_Users>
     {
-
+        private readonly IDataAccessLayer DAL;
         private readonly string ProcedureName = "SP_TB_Users";
-        DataAccessLayer DAL = new DataAccessLayer();
+
+        public ClsOperationsofUsers(IDataAccessLayer _DAL)
+        {
+            DAL = _DAL;
+        }
 
         private SortedList AssignValuesToSortedList(CTB_Users item, string @Check)
         {

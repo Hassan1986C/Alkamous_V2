@@ -139,7 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Chelp.cs" />
-    <Compile Include="Controller\Class1.cs" />
     <Compile Include="Controller\ClsAESEncryption.cs" />
     <Compile Include="Controller\ClsDataBaseBackUpAndRestor.cs" />
     <Compile Include="Controller\CLSExportDataToWordFile.cs" />
@@ -155,6 +154,7 @@
     <Compile Include="Controller\ClsOperationsofUserLogFile.cs" />
     <Compile Include="Controller\ClsOperationsofUsers.cs" />
     <Compile Include="Controller\ClsSendUserEmail.cs" />
+    <Compile Include="Controller\LazyLoading.cs" />
     <Compile Include="InterfaceForAllClass\Interface1.cs" />
     <Compile Include="LocalDataSet\DataSetForReport.cs">
       <DependentUpon>DataSetForReport.xsd</DependentUpon>

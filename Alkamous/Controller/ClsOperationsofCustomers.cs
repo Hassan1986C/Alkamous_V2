@@ -21,12 +21,17 @@ namespace Alkamous.Controller
         /// <summary>
         /// Data access layer instance for database operations
         /// </summary>
-        private readonly DataAccessLayer DAL = new DataAccessLayer();
+        private readonly IDataAccessLayer DAL;
 
         /// <summary>
         /// Customer model instance for field mappings
         /// </summary>
         private readonly CTB_Customers MTB_Customers = new CTB_Customers();
+
+        public ClsOperationsofCustomers(IDataAccessLayer _DAL)
+        {
+            DAL = _DAL;
+        }
 
         /// <summary>
         /// Creates a SortedList of parameters for stored procedure execution

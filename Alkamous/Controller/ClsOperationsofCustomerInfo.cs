@@ -17,7 +17,13 @@ namespace Alkamous.Controller
         // Stored procedure name for all customer info operations
         private readonly string ProcedureName = "SP_TB_CustomersInfo";
         // Data access layer instance for database operations
-        private DataAccessLayer DAL = new DataAccessLayer();
+        //private DataAccessLayer DAL = new DataAccessLayer();
+        private readonly IDataAccessLayer DAL;
+        public ClsOperationsofCustomerInfo(IDataAccessLayer _DAL)
+        {
+            DAL = _DAL;
+        }
+
         // Model instance for customer information
         CTB_CustomerInfo MTB_CustomerInfo = new CTB_CustomerInfo();
 
@@ -138,7 +144,7 @@ namespace Alkamous.Controller
         public int Get_CountCustomerInfo()
         {
             SortedList SL = new SortedList
-            {
+                {
                 { "@Check", "Get_CountCustomerInfo" },
             };
 

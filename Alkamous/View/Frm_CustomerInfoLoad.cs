@@ -1,4 +1,5 @@
 ﻿using Alkamous.Controller;
+using Alkamous.Model;
 using System;
 using System.Data;
 using System.Drawing;
@@ -9,7 +10,7 @@ namespace Alkamous.View
 {
     public partial class Frm_CustomerInfoLoad : Form
     {
-        ClsOperationsofCustomerInfo OperationsofCustomerInfo = new ClsOperationsofCustomerInfo();
+        ClsOperationsofCustomerInfo OperationsofCustomerInfo = new ClsOperationsofCustomerInfo(new DataAccessLayer());
         public static string WhoSendOrderProducts = "Frm_CustomersAddNewInvoices";
 
         public Frm_CustomerInfoLoad()

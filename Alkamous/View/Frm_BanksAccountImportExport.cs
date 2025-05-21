@@ -15,7 +15,7 @@ namespace Alkamous.View
 {
     public partial class Frm_BanksAccountImportExport : Form
     {
-        ClsOperationsofBanks OperationsofBanks = new ClsOperationsofBanks();
+        ClsOperationsofBanks OperationsofBanks = new ClsOperationsofBanks(new DataAccessLayer());
         List<CTB_Banks> csvDataList = null;
         public Frm_BanksAccountImportExport()
         {
