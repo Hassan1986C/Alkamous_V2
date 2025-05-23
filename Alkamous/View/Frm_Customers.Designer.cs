@@ -107,6 +107,7 @@
             this.DGVCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVCustomers.Size = new System.Drawing.Size(1058, 646);
             this.DGVCustomers.TabIndex = 6;
+            this.DGVCustomers.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DGVCustomers_Scroll);
             this.DGVCustomers.DoubleClick += new System.EventHandler(this.DGVCustomers_DoubleClick);
             // 
             // BtnShowQuotationReport

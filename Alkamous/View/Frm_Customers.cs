@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Alkamous.Controller;
+using System.Threading;
 
 namespace Alkamous.View
 {
@@ -21,6 +22,13 @@ namespace Alkamous.View
         ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts();
         CLSExportDataToWordFile CLSExportDataToWordFile = new CLSExportDataToWordFile();
         private DataTable dt = new DataTable();
+
+
+        private readonly LazyLoading LazyDataLoader = new LazyLoading();
+
+        private CancellationTokenSource _cancellationTokenSource;
+
+
 
         #endregion
 
@@ -59,11 +67,6 @@ namespace Alkamous.View
             DGVCustomers.ContextMenuStrip = contextMenuStrip;
         }
 
-        //private void QuotationCP_Click(object sender, EventArgs e)
-        //{
-        //    MessageBox.Show("Not Yet");
-        //}
-
         private void CloneQuotation_Click(object sender, EventArgs e)
         {
             if (DGVCustomers.SelectedRows.Count > 0)
@@ -78,37 +81,106 @@ namespace Alkamous.View
         #endregion
         private async void Frm_Customers_Load(object sender, EventArgs e)
         {
-            DGVCustomers.RowHeadersVisible = false;
-            await LoadData();
+           
+
             await GetDistinctProductAsync();
+
+            // Reset pagination state
+            LazyDataLoader.Reset();
+
+            // Load initial data
+            await LoadNextPageAsync();
+            // InitializeDGVProducts();
+
+            DGVCustomers.RowHeadersVisible = false;
 
         }
 
         #region LoadData And Search
 
-        private async Task LoadData(string Search = "")
+
+        // Reset and perform a new search
+        private async Task PerformSearch()
         {
-            try
+            // Reset pagination state
+            LazyDataLoader.Reset();
+
+            // Clear the DataGridView
+            if (DGVCustomers.DataSource != null)
             {
-                var ResultOfData = string.IsNullOrEmpty(Search)
-                   ? await OperationsofCustomers.Get_AllCustomer()
-                   : await OperationsofCustomers.Get_AllCustomer_BySearch(Search, 1, 5000);
-
-                DGVCustomers.DataSource = ResultOfData;
-                LbCount.Text = DGVCustomers.RowCount.ToString();
-
+                ((DataTable)DGVCustomers.DataSource).Clear();
+                DGVCustomers.DataSource = null;
             }
-            catch (Exception ex)
+
+            // Load first page of new search results
+            await LoadNextPageAsync();
+
+        }
+
+        private async Task LoadNextPageAsync()
+        {
+            bool Isfavorite = false;
+
+            await LazyDataLoader.LoadNextPageAsync(
+
+                         "Customer_Invoice_Number",
+                          TxtSearch.Text.Trim(),
+                          Isfavorite,
+                          DGVCustomers,
+                          OperationsofCustomers.Get_AllCustomer,              // Matches Func<int, int, Task<DataTable>>
+                          OperationsofCustomers.Get_AllCustomer_BySearch,     // Matches Func<string, int, int, Task<DataTable>>
+                          null                                                // Matches Func<string, int, int, Task<DataTable>>
+                          );
+
+
+            LbCount.Text = LazyDataLoader.TotalCount;
+
+        }
+
+
+        private async void DGVCustomers_Scroll(object sender, ScrollEventArgs e)
+        {
+            // Only handle vertical scrolling events
+            if (e.ScrollOrientation != ScrollOrientation.VerticalScroll)
+                return;
+
+            // Don't proceed if already loading or at end of data
+            if (LazyDataLoader.IsLoading || LazyDataLoader.EndOfData)
+                return;
+
+            var dgv = (DataGridView)sender;
+
+            // Calculate how close we are to the bottom - load when within 3 rows
+            int lastVisibleRowIndex = dgv.FirstDisplayedScrollingRowIndex + dgv.DisplayedRowCount(true) - 1;
+            int totalRows = dgv.RowCount;
+
+            // Load next page when scrolled near the bottom
+            if (totalRows > 0 && lastVisibleRowIndex >= totalRows - 3)
             {
-                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name.ToString();
-                Controller.Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
-                MessageBox.Show(ex.Message);
+                await LoadNextPageAsync();
             }
         }
 
+
         private async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-            await LoadData(TxtSearch.Text.Trim());
+            _cancellationTokenSource?.Cancel(); // إلغاء المهمة السابقة إن وجدت
+            _cancellationTokenSource = new CancellationTokenSource();
+            var token = _cancellationTokenSource.Token;
+
+            try
+            {
+                await Task.Delay(400, token); // انتظار 400 مللي ثانية
+
+                if (!token.IsCancellationRequested)
+                {
+                    await PerformSearch(); // تنفيذ البحث إذا لم يُلغَ
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // تم الإلغاء، لا داعي لشيء هنا غالبًا
+            }
         }
 
         private async Task GetDistinctProductAsync()
@@ -147,7 +219,7 @@ namespace Alkamous.View
 
                             Controller.Chelp.RegisterUsersActionLogs("Delete Quotation", DGVCustomers.CurrentRow.Cells[MCTB_Customers.Customer_Invoice_Number].Value.ToString());
                             MessageBox.Show("Data Deleted Successfully ");
-                            await LoadData();
+                            await LoadNextPageAsync();
                         }
                         else
                         {
@@ -478,5 +550,7 @@ namespace Alkamous.View
                 DGVCustomers.DataSource = null;
             }
         }
+
+
     }
 }

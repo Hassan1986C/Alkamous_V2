@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,8 +14,10 @@ namespace Alkamous.View
     public partial class Frm_ProductsAddDeleteUpdate : Form
     {
         ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts();
-        private readonly LazyLoading LazyDataLoader = new LazyLoading();
-        private Timer _searchTimer;
+        private readonly LazyLoading LazyDataLoader = new LazyLoading();   
+        
+        private CancellationTokenSource _cancellationTokenSource;
+
 
         public Frm_ProductsAddDeleteUpdate()
         {
@@ -169,24 +172,26 @@ namespace Alkamous.View
             await LoadNextPageAsync();
 
         }
-        private void TxtSearch_TextChanged(object sender, EventArgs e)
+        private async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
 
-            // Set up debounce timer if not already created
-            if (_searchTimer == null)
-            {
-                _searchTimer = new Timer();
-                _searchTimer.Interval = 500; // 500ms delay
-                _searchTimer.Tick += async (s, args) =>
-                {
-                    _searchTimer.Stop();
-                    await PerformSearch();
-                };
-            }
+            _cancellationTokenSource?.Cancel(); // إلغاء المهمة السابقة إن وجدت
+            _cancellationTokenSource = new CancellationTokenSource();
+            var token = _cancellationTokenSource.Token;
 
-            // Restart the timer
-            _searchTimer.Stop();
-            _searchTimer.Start();
+            try
+            {
+                await Task.Delay(400, token); // انتظار 400 مللي ثانية
+
+                if (!token.IsCancellationRequested)
+                {
+                    await PerformSearch(); // تنفيذ البحث إذا لم يُلغَ
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // تم الإلغاء، لا داعي لشيء هنا غالبًا
+            }
 
         }
 
@@ -488,7 +493,7 @@ namespace Alkamous.View
         {
             bool Isfavorite = BtnFavoriteSearch.Checked;
 
-            await LazyDataLoader.LoadNextPageAsyncTEST(
+            await LazyDataLoader.LoadNextPageAsync(
 
                          "product_Id",
                           TxtSearch.Text.Trim(),

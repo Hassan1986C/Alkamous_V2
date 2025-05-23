@@ -25,14 +25,26 @@ namespace Alkamous.Controller
             EndOfData = false;
             TotalCount = "0";
         }
-        public async Task LoadNextPageAsyncTEST(
-             string product_Id,
+
+
+        /// <summary>
+        /// Loads the next page of data into a DataGridView with pagination and duplicate prevention.
+        /// </summary>
+        /// <param name="uniqueIdColumnName">Database column name used as unique identifier</param>
+        /// <param name="search">Search term filter (optional)</param>
+        /// <param name="isFavorite">Filter for favorite items only</param>
+        /// <param name="targetDGV">Target DataGridView to load data into</param>
+        /// <param name="GetAllFunc">Function to get all data: (page, pageSize) => DataTable</param>
+        /// <param name="GetBySearchFunc">Function to search data: (search, page, pageSize) => DataTable</param>
+        /// <param name="GetBySearchFavoriteFunc">Function to search favorites: (search, page, pageSize) => DataTable</param>
+        public async Task LoadNextPageAsync(
+             string uniqueIdColumnName,
              string search,
              bool isFavorite,
              DataGridView targetDGV,
-             Func<int, int, Task<DataTable>> GetAllProductsFunc,
-             Func<string, int, int, Task<DataTable>> GetProductsBySearchFunc,
-             Func<string, int, int, Task<DataTable>> GetProductsBySearchFavoriteFunc
+             Func<int, int, Task<DataTable>> GetAllFunc,
+             Func<string, int, int, Task<DataTable>> GetBySearchFunc,
+             Func<string, int, int, Task<DataTable>> GetBySearchFavoriteFunc
 
             )
         {
@@ -46,17 +58,17 @@ namespace Alkamous.Controller
                 if (string.IsNullOrEmpty(search) && !isFavorite)
                 {
                     // No search term - get all products with pagination
-                    newData= await GetAllProductsFunc(Page, PageSize);
+                    newData= await GetAllFunc(Page, PageSize);
                 }
                 else if (!isFavorite)
                 {
                     // Apply search with pagination
-                    newData= await GetProductsBySearchFunc(search, Page, PageSize);
+                    newData= await GetBySearchFunc(search, Page, PageSize);
                 }
                 else
                 {
                     // Apply search + favorite with pagination
-                    newData = await GetProductsBySearchFavoriteFunc(search, Page, PageSize);
+                    newData = await GetBySearchFavoriteFunc(search, Page, PageSize);
                 }
 
 
@@ -84,10 +96,10 @@ namespace Alkamous.Controller
                     foreach (DataRow newRow in newData.Rows)
                     {
                         // Get the product_Id to check for duplicates
-                        string productId = newRow[product_Id].ToString();
+                        string GetuniqueId = newRow[uniqueIdColumnName].ToString();
 
                         // Skip if we already have this product_Id
-                        if (currentData.Select($"product_Id = '{productId}'").Length == 0)
+                        if (currentData.Select($"{uniqueIdColumnName} = '{GetuniqueId}'").Length == 0)
                         {
                             currentData.ImportRow(newRow);
                         }

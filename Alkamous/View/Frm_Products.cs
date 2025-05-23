@@ -1,11 +1,11 @@
 ﻿using Alkamous.Controller;
-using Alkamous.InterfaceForAllClass;
 using Alkamous.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,8 +18,10 @@ namespace Alkamous.View
         public static bool isAddNewInvoices, isMainQuotation;
         public static string ExChangeRate, Taxes, Currency;
 
-        private readonly LazyLoading LazyDataLoader = new LazyLoading();
-        private Timer _searchTimer;
+        private readonly LazyLoading LazyDataLoader = new LazyLoading();       
+
+        private CancellationTokenSource _cancellationTokenSource;
+
 
         public Frm_Products()
         {
@@ -132,8 +134,6 @@ namespace Alkamous.View
         {
             // Reset pagination state
             LazyDataLoader.Reset();
-           // LazyLoading.Page = 1;
-           // LazyLoading.endOfData = false;
 
             // Clear the DataGridView
             if (DGVProducts.DataSource != null)
@@ -146,24 +146,28 @@ namespace Alkamous.View
             await LoadNextPageAsync();
 
         }
-        private void TxtSearch_TextChanged(object sender, EventArgs e)
+
+        
+        private async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
 
-            // Set up debounce timer if not already created
-            if (_searchTimer == null)
-            {
-                _searchTimer = new Timer();
-                _searchTimer.Interval = 500; // 500ms delay
-                _searchTimer.Tick += async (s, args) =>
-                {
-                    _searchTimer.Stop();
-                    await PerformSearch();
-                };
-            }
+            _cancellationTokenSource?.Cancel(); // إلغاء المهمة السابقة إن وجدت
+            _cancellationTokenSource = new CancellationTokenSource();
+            var token = _cancellationTokenSource.Token;
 
-            // Restart the timer
-            _searchTimer.Stop();
-            _searchTimer.Start();
+            try
+            {
+                await Task.Delay(400, token); // انتظار 400 مللي ثانية
+
+                if (!token.IsCancellationRequested)
+                {
+                    await PerformSearch(); // تنفيذ البحث إذا لم يُلغَ
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // تم الإلغاء، لا داعي لشيء هنا غالبًا
+            }
 
         }
 
@@ -172,9 +176,7 @@ namespace Alkamous.View
 
             // Reset pagination state
             LazyDataLoader.Reset();
-           // LazyLoading.Page = 1;
-           // LazyLoading.endOfData = false;
-
+           
             // Load initial data
             await LoadNextPageAsync();
             InitializeDGVProducts();
@@ -378,7 +380,7 @@ namespace Alkamous.View
         {
             bool Isfavorite = BtnFavorite.Checked;
 
-            await LazyDataLoader.LoadNextPageAsyncTEST(
+            await LazyDataLoader.LoadNextPageAsync(
 
                          "product_Id",
                           TxtSearch.Text.Trim(),
@@ -392,9 +394,5 @@ namespace Alkamous.View
 
             LbCount.Text = LazyDataLoader.TotalCount;
         }
-
-
-       
-
     }
 }
