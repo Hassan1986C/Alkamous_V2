@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Alkamous.Model;
+using System.Windows.Media.Imaging;
 
 namespace Alkamous.View
 {
@@ -705,8 +706,24 @@ namespace Alkamous.View
                         tabControlCustomers.SelectedIndex = 0;
                         TxtCustomer_Invoice.Focus();
                         TxtCustomer_Invoice.SelectAll();
-                        MessageBox.Show($"QUOTATION NO  {TxtCustomer_Invoice.Text}  already exists");
-                        return;
+
+                        // Use a clearer and more structured message.
+                        string message = $"The quotation number '{TxtCustomer_Invoice.Text}' already exists.\r\n Would you like to generate a new quotation number?";
+                        string title = "Duplicate Quotation Number"; // Use a more descriptive title
+
+                        DialogResult result = MessageBox.Show(message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+
+                        if (result == DialogResult.Yes)
+                        {
+                            // If the user chooses to generate a new quotation number
+                            await GenerateQuotationNumber();
+                        }
+                        else
+                        {
+                            // If the user chooses not to generate a new number, simply return.
+                            return;
+                        }
+
                     }
 
 

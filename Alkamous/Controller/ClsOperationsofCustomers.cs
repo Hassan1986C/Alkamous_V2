@@ -213,6 +213,8 @@ namespace Alkamous.Controller
             SortedList SL = new SortedList
             {
                 { "@Check", "Get_AllCustomer" },
+                 {"@PageNumber",PageNumber },
+                {"@PageSize",PageSize},
             };
             DataTable dt = await DAL.SelectDBasync(ProcedureName, SL);
             return dt;

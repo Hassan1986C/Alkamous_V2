@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,7 +15,9 @@ namespace Alkamous.View
     {
         ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts();
         private readonly LazyLoading LazyDataLoader = new LazyLoading();
-        private Timer _searchTimer;
+
+        private CancellationTokenSource _cancellationTokenSource;
+
 
         public Frm_ProductsAddDeleteUpdate()
         {
@@ -39,14 +42,14 @@ namespace Alkamous.View
             }
         }
 
-        private void InitializeDGVProducts()
+        private void InitializeDataGridView()
         {
             DGVProducts.AutoGenerateColumns = false;
             DGVProducts.Columns.Clear();
             CTB_Products MCTB_Products = new CTB_Products("ctr2");
             DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
             {
-                
+
                 Name = MCTB_Products.product_Id,
                 DataPropertyName = MCTB_Products.product_Id,
                 HeaderText = "Product ID",
@@ -150,54 +153,41 @@ namespace Alkamous.View
             BtnFavorite.Checked = false;
         }
 
-        
 
-        // Reset and perform a new search
-        private async Task PerformSearch()
-        {
-            // Reset pagination state
-            LazyDataLoader.Reset();
 
-            // Clear the DataGridView
-            if (DGVProducts.DataSource != null)
-            {
-                ((DataTable)DGVProducts.DataSource).Clear();
-                DGVProducts.DataSource = null;
-            }
 
-            // Load first page of new search results
-            await LoadNextPageAsync();
-
-        }
-        private void TxtSearch_TextChanged(object sender, EventArgs e)
+        private async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
 
-            // Set up debounce timer if not already created
-            if (_searchTimer == null)
+            _cancellationTokenSource?.Cancel(); // إلغاء المهمة السابقة إن وجدت
+            _cancellationTokenSource = new CancellationTokenSource();
+            var token = _cancellationTokenSource.Token;
+
+            try
             {
-                _searchTimer = new Timer();
-                _searchTimer.Interval = 500; // 500ms delay
-                _searchTimer.Tick += async (s, args) =>
+                await Task.Delay(400, token); // انتظار 400 مللي ثانية
+
+                if (!token.IsCancellationRequested)
                 {
-                    _searchTimer.Stop();
-                    await PerformSearch();
-                };
+                    if (await LazyDataLoader.PerformSearchAsync(DGVProducts))
+                    {
+                        // Load first page of new search results
+                        await LoadNextPageAsync();
+                    }
+                }
             }
-
-            // Restart the timer
-            _searchTimer.Stop();
-            _searchTimer.Start();
+            catch (TaskCanceledException)
+            {
+                // تم الإلغاء، لا داعي لشيء هنا غالبًا
+            }
 
         }
 
         private async void Frm_ProductsAddDeleteUpdate_Load(object sender, EventArgs e)
         {
-            // Reset pagination state
-            LazyDataLoader.Reset();
-
-            // Load initial data
+            // Load initial data            
             await LoadNextPageAsync();
-            InitializeDGVProducts();
+            InitializeDataGridView();
 
         }
 
@@ -220,7 +210,7 @@ namespace Alkamous.View
                         {
                             Chelp.RegisterUsersActionLogs("Delete prodect", TxtProductId.Text);
                             MessageBox.Show("Data Deleted Successfully ");
-                            await LoadNextPageAsync(); 
+                            await LoadNextPageAsync();
                         }
                         else
                         {
@@ -340,7 +330,7 @@ namespace Alkamous.View
             }
         }
 
-        
+
 
 
         private void MoveToNextText(object sender, KeyEventArgs e)
@@ -488,7 +478,7 @@ namespace Alkamous.View
         {
             bool Isfavorite = BtnFavoriteSearch.Checked;
 
-            await LazyDataLoader.LoadNextPageAsyncTEST(
+            await LazyDataLoader.LoadNextPageAsync(
 
                          "product_Id",
                           TxtSearch.Text.Trim(),
@@ -499,11 +489,11 @@ namespace Alkamous.View
                           OperationsofProducts.Get_AllProduct_BySearchFavorite      // Matches Func<string, int, int, Task<DataTable>>
                           );
 
-            
+
             LbCount.Text = LazyDataLoader.TotalCount;
 
 
-            }
+        }
 
         private async void DGVProducts_Scroll(object sender, ScrollEventArgs e)
         {
@@ -533,7 +523,11 @@ namespace Alkamous.View
             if (sender is CheckBox checkBox)
             {
                 checkBox.ForeColor = checkBox.Checked ? Color.Red : Color.Black;
-                await PerformSearch();
+                if (await LazyDataLoader.PerformSearchAsync(DGVProducts))
+                {
+                    // Load first page of new search results
+                    await LoadNextPageAsync();
+                }
             }
         }
 
