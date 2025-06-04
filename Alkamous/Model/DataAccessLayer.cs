@@ -259,8 +259,7 @@ namespace Alkamous.Model
         public bool Is_SQLServer_connection_setting_successful(string txtServerName, string txtDataBase, string txtPassword, string txtUserName,string ConnectTimeout)
         {
             try
-            {
-                
+            {                
                 string connectionString = $"data source={txtServerName};Password={txtPassword};Persist Security Info=True;User ID={txtUserName};Connect Timeout = {ConnectTimeout}";
                 string cmdText = $"USE {txtDataBase}; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'TB_Customers'";
 

@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Alkamous.View
@@ -66,20 +67,20 @@ namespace Alkamous.View
             for (int i = 0; i < DGVTerms.Columns.Count; i++)
                 DGVTerms.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            
+
         }
 
-        private void LoadData(string Search = "")
+        private async Task LoadData(string Search = "")
         {
             try
             {
                 var ResultOfData = string.IsNullOrEmpty(Search)
-                  ? OperationsofTerms.Get_AllTerms()
+                  ? await OperationsofTerms.Get_AllTerms()
                   : OperationsofTerms.Get_AllTerm_BySearch(Search);
 
                 DGVTerms.DataSource = ResultOfData;
                 LbCount.Text = DGVTerms.RowCount.ToString();
-                ReColoreDGV(DGVTerms);                
+                ReColoreDGV(DGVTerms);
             }
             catch (Exception ex)
             {
@@ -156,7 +157,7 @@ namespace Alkamous.View
             }
         }
 
-        private void BtnEditProduct_Click(object sender, EventArgs e)
+        private async void BtnEditProduct_Click(object sender, EventArgs e)
         {
             try
             {
@@ -169,7 +170,7 @@ namespace Alkamous.View
                         MessageBox.Show(" Data Updated Successfully ");
                         ClearAllTestBox();
                         CheckWhoSendOrder(false);
-                        LoadData();
+                        await LoadData();
 
                     }
                     else
@@ -186,7 +187,7 @@ namespace Alkamous.View
             }
         }
 
-        private void BtnDeleteProduct_Click(object sender, EventArgs e)
+        private async void BtnDeleteProduct_Click(object sender, EventArgs e)
         {
             try
             {
@@ -204,7 +205,7 @@ namespace Alkamous.View
                         {
                             Chelp.RegisterUsersActionLogs("Delete Terms", TxtTerms_Ar.Text.Trim());
                             MessageBox.Show("Data Deleted Successfully ");
-                            LoadData();
+                           await LoadData();
                         }
                         else
                         {
@@ -223,11 +224,11 @@ namespace Alkamous.View
             }
         }
 
-        private void BtnCancelEdit_Click(object sender, EventArgs e)
+        private async void BtnCancelEdit_Click(object sender, EventArgs e)
         {
             CheckWhoSendOrder(false);
             ClearAllTestBox();
-            LoadData();
+            await LoadData();
         }
 
         private void DGVTerms_DoubleClick(object sender, EventArgs e)
@@ -248,15 +249,15 @@ namespace Alkamous.View
             }
         }
 
-        private void Frm_TermsAddDeleteUpdate_Load(object sender, EventArgs e)
+        private async void Frm_TermsAddDeleteUpdate_Load(object sender, EventArgs e)
         {
-            LoadData();
+            await LoadData();
             DGVColumnHeaderTextAndWidth();
         }
 
-        private void TxtSearch_TextChanged(object sender, EventArgs e)
+        private async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-            LoadData(TxtSearch.Text.Trim());
+            await LoadData(TxtSearch.Text.Trim());
         }
     }
 }

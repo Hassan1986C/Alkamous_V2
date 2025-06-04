@@ -12,7 +12,7 @@ namespace Alkamous.View
         Chelp chelp = new Chelp();
      
         ClsOperationsofCustomerInfo OperationsofCustomerInfo = new ClsOperationsofCustomerInfo(new DataAccessLayer());
-        ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts();
+        ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts(new DataAccessLayer());
         ClsOperationsofCustomers OperationsofCustomers = new ClsOperationsofCustomers(new DataAccessLayer());
         ClsOperationsofUserLogFile OperationsofUserLogFile = new ClsOperationsofUserLogFile();
         public Frm_WlcomeScreen()

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Alkamous.Model;
 using System.Windows.Media.Imaging;
+using static Alkamous.Model.CTB_Products;
 
 namespace Alkamous.View
 {
@@ -48,7 +49,7 @@ namespace Alkamous.View
         {
             try
             {
-                Model.CTB_Products MCTB_Products = new Model.CTB_Products("ctr2");
+                Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.SqlParameter);
 
 
                 DGVProducts.RowHeadersVisible = false;
@@ -122,7 +123,7 @@ namespace Alkamous.View
         {
             try
             {
-                Model.CTB_Products MCTB_Products = new Model.CTB_Products("ctr2");
+                Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.SqlParameter);
 
 
                 DGVProductsConsumable.RowHeadersVisible = false;

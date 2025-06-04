@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Alkamous.View
@@ -80,14 +81,14 @@ namespace Alkamous.View
         }
 
 
-        private void LoadData(string Search = "")
+        private async Task LoadData(string Search = "")
         {
             try
             {
 
                 var ResultOfData = string.IsNullOrEmpty(Search)
-                  ? OperationsofTerms.Get_AllTerms()
-                  : OperationsofTerms.Get_AllTerm_BySearch(Search);                              
+                  ? await OperationsofTerms.Get_AllTerms()
+                  : OperationsofTerms.Get_AllTerm_BySearch(Search);
 
                 DGVTerms.DataSource = ResultOfData;
                 LbCount.Text = DGVTerms.RowCount.ToString();
@@ -101,15 +102,15 @@ namespace Alkamous.View
             }
         }
 
-        private void TxtSearch_TextChanged(object sender, EventArgs e)
+        private async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-            LoadData(TxtSearch.Text.Trim());
+           await LoadData(TxtSearch.Text.Trim());
         }
 
-        private void Frm_Terms_Load(object sender, EventArgs e)
+        private async void Frm_Terms_Load(object sender, EventArgs e)
         {
-            TxtSearch.Focus();
-            LoadData();
+            TxtSearch.Focus();          
+            await LoadData();
             DGVColumnHeaderTextAndWidth();
 
         }
@@ -142,11 +143,7 @@ namespace Alkamous.View
             //}
         }
 
-        private void LbCount_Click(object sender, EventArgs e)
-        {
-
-        }
-
+       
         private void AddSelectedTerms()
         {
             try
@@ -209,5 +206,13 @@ namespace Alkamous.View
             DGVTerms.ClearSelection();
         }
 
+
+        private void DGVTerms_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                AddSelectedTerms();
+            }
+        }
     }
 }

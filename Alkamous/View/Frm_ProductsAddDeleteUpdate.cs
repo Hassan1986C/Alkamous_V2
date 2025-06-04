@@ -7,13 +7,15 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls.WebParts;
 using System.Windows.Forms;
+using static Alkamous.Model.CTB_Products;
 
 namespace Alkamous.View
 {
     public partial class Frm_ProductsAddDeleteUpdate : Form
     {
-        ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts();
+        ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts(new DataAccessLayer());
         private readonly LazyLoading LazyDataLoader = new LazyLoading();
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -46,7 +48,7 @@ namespace Alkamous.View
         {
             DGVProducts.AutoGenerateColumns = false;
             DGVProducts.Columns.Clear();
-            CTB_Products MCTB_Products = new CTB_Products("ctr2");
+            CTB_Products MCTB_Products = new CTB_Products(ProductFieldNaming.Plain);
             DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
             {
 
@@ -159,27 +161,7 @@ namespace Alkamous.View
         private async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
 
-            _cancellationTokenSource?.Cancel(); // إلغاء المهمة السابقة إن وجدت
-            _cancellationTokenSource = new CancellationTokenSource();
-            var token = _cancellationTokenSource.Token;
-
-            try
-            {
-                await Task.Delay(400, token); // انتظار 400 مللي ثانية
-
-                if (!token.IsCancellationRequested)
-                {
-                    if (await LazyDataLoader.PerformSearchAsync(DGVProducts))
-                    {
-                        // Load first page of new search results
-                        await LoadNextPageAsync();
-                    }
-                }
-            }
-            catch (TaskCanceledException)
-            {
-                // تم الإلغاء، لا داعي لشيء هنا غالبًا
-            }
+           await LazyDataLoader.TxtSearch_Fun(DGVProducts, LoadNextPageAsync);
 
         }
 
@@ -197,7 +179,7 @@ namespace Alkamous.View
             {
                 if (DGVProducts.RowCount > 0)
                 {
-                    CTB_Products MCTB_Products = new CTB_Products("ctr2");
+                    CTB_Products MCTB_Products = new CTB_Products(ProductFieldNaming.Plain);
                     if (MessageBox.Show("Are you sure you want to Delete  " + Environment.NewLine
                         + Environment.NewLine + "product_Id    : " + DGVProducts.CurrentRow.Cells[MCTB_Products.product_Id].Value.ToString()
                         + Environment.NewLine + "product_NameEn   : " + DGVProducts.CurrentRow.Cells[MCTB_Products.product_NameEn].Value.ToString()
@@ -210,7 +192,11 @@ namespace Alkamous.View
                         {
                             Chelp.RegisterUsersActionLogs("Delete prodect", TxtProductId.Text);
                             MessageBox.Show("Data Deleted Successfully ");
+
+                            await LazyDataLoader.PerformSearchAsync(DGVProducts);
                             await LoadNextPageAsync();
+                            
+                           // LazyDataLoader.TxtSearch_Fun(DGVProducts, LoadNextPageAsync);
                         }
                         else
                         {
@@ -231,7 +217,7 @@ namespace Alkamous.View
 
         private CTB_Products AssignValuesToClass()
         {
-            CTB_Products MTB_Products = new CTB_Products
+            CTB_Products MTB_Products = new CTB_Products(CTB_Products.ProductFieldNaming.Plain)
             {
                 product_Id = TxtProductId.Text,
                 product_NameAr = TxtProductNameAr.Text,
@@ -308,11 +294,13 @@ namespace Alkamous.View
                         EnabledDisableButtons(false);
                         if (string.IsNullOrEmpty(TxtSearch.Text))
                         {
-                            await LoadNextPageAsync();
+                           await LazyDataLoader.TxtSearch_Fun(DGVProducts, LoadNextPageAsync);
                         }
                         else
                         {
                             TxtSearch.Clear();
+                            await LazyDataLoader.PerformSearchAsync(DGVProducts);
+                            await LoadNextPageAsync();
                         }
 
                     }
@@ -402,7 +390,7 @@ namespace Alkamous.View
         {
             try
             {
-                CTB_Products MCTB_Products = new CTB_Products("ctr2");
+                CTB_Products MCTB_Products = new CTB_Products(ProductFieldNaming.Plain);
                 TxtProductId.Text = DGVProducts.CurrentRow.Cells[MCTB_Products.product_Id].Value.ToString();
                 TxtProductNameEn.Text = DGVProducts.CurrentRow.Cells[MCTB_Products.product_NameEn].Value.ToString();
                 TxtProductNameAr.Text = DGVProducts.CurrentRow.Cells[MCTB_Products.product_NameAr].Value.ToString();

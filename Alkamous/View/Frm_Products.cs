@@ -1,20 +1,23 @@
 ﻿using Alkamous.Controller;
+using Alkamous.InterfaceForAllClass;
 using Alkamous.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Interop;
 
 namespace Alkamous.View
 {
     public partial class Frm_Products : Form
-    {
-        private readonly ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts();
-        private readonly CTB_Products MCTB_Products = new CTB_Products("ctr2");
+    {        
+        private readonly ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts(new DataAccessLayer());
+        private readonly CTB_Products MCTB_Products = new CTB_Products(CTB_Products.ProductFieldNaming.Plain);
         public static bool isAddNewInvoices, isMainQuotation;
         public static string ExChangeRate, Taxes, Currency;
 
@@ -54,7 +57,7 @@ namespace Alkamous.View
         {
             DGVProducts.AutoGenerateColumns = false;
             DGVProducts.Columns.Clear();
-            CTB_Products MCTB_Products = new CTB_Products("ctr2");
+            CTB_Products MCTB_Products = new CTB_Products(CTB_Products.ProductFieldNaming.Plain);
             DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
             {
 
@@ -131,36 +134,15 @@ namespace Alkamous.View
 
         
         
-        private async void TxtSearch_TextChanged(object sender, EventArgs e)
+        private  void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-
-            _cancellationTokenSource?.Cancel(); // إلغاء المهمة السابقة إن وجدت
-            _cancellationTokenSource = new CancellationTokenSource();
-            var token = _cancellationTokenSource.Token;
-
-            try
-            {
-                await Task.Delay(400, token); // انتظار 400 مللي ثانية
-
-                if (!token.IsCancellationRequested)
-                {
-                    if (await LazyDataLoader.PerformSearchAsync(DGVProducts))
-                    {
-                        // Load first page of new search results
-                        await LoadNextPageAsync();
-                    }
-                }
-            }
-            catch (TaskCanceledException)
-            {
-                // تم الإلغاء، لا داعي لشيء هنا غالبًا
-            }
+            LazyDataLoader.TxtSearch_Fun(DGVProducts,LoadNextPageAsync );            
 
         }
 
         private async void Frm_Products_Load(object sender, EventArgs e)
         {
-
+          
             // Load initial data
             await LoadNextPageAsync();
             InitializeDataGridView();

@@ -3,6 +3,7 @@ using Alkamous.Model;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace Alkamous.Controller
 {
@@ -93,14 +94,14 @@ namespace Alkamous.Controller
             return dt;
         }
 
-        public DataTable Get_AllTerms()
+        public async Task<DataTable> Get_AllTerms()
         {
             SortedList SL = new SortedList
             {
                 { "@Check", "Get_AllTerms" },
             };
 
-            DataTable dt = DAL.SelectDB(ProcedureName, SL);
+            DataTable dt =await DAL.SelectDBasync(ProcedureName, SL);
             return dt;
         }
 

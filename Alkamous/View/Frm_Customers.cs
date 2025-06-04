@@ -19,7 +19,7 @@ namespace Alkamous.View
         ClsOperationsofConsumable OperationsofConsumable = new ClsOperationsofConsumable(new DataAccessLayer());
         ClsOperationsofTermsInvoices OperationsofTermsInvoices = new ClsOperationsofTermsInvoices(new DataAccessLayer());
         ClsOperationsofBanks OperationsofBanks = new ClsOperationsofBanks(new DataAccessLayer());
-        ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts();
+        ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts(new DataAccessLayer());
         CLSExportDataToWordFile CLSExportDataToWordFile = new CLSExportDataToWordFile();
         private DataTable dt = new DataTable();
 
@@ -218,31 +218,9 @@ namespace Alkamous.View
         }
 
 
-        private async void TxtSearch_TextChanged(object sender, EventArgs e)
+        private  void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-            _cancellationTokenSource?.Cancel(); // إلغاء المهمة السابقة إن وجدت
-            _cancellationTokenSource = new CancellationTokenSource();
-            var token = _cancellationTokenSource.Token;
-
-            try
-            {
-                await Task.Delay(400, token); // انتظار 400 مللي ثانية
-
-                if (!token.IsCancellationRequested)
-                {
-                    // تنفيذ البحث إذا لم يُلغَ
-
-                    if (await LazyDataLoader.PerformSearchAsync(DGVCustomers))
-                    {
-                        // Load first page of new search results
-                        await LoadNextPageAsync();
-                    }
-                }
-            }
-            catch (TaskCanceledException)
-            {
-                // تم الإلغاء، لا داعي لشيء هنا غالبًا
-            }
+            LazyDataLoader.TxtSearch_Fun(DGVCustomers, LoadNextPageAsync);
         }
 
         private async Task GetDistinctProductAsync()

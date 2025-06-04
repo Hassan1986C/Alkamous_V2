@@ -51,7 +51,7 @@
             this.LbCount.TabIndex = 8;
             this.LbCount.Text = "0";
             this.LbCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.LbCount.Click += new System.EventHandler(this.LbCount_Click);
+           
             // 
             // TxtSearch
             // 
@@ -88,11 +88,13 @@
             this.DGVTerms.Location = new System.Drawing.Point(12, 59);
             this.DGVTerms.Name = "DGVTerms";
             this.DGVTerms.ReadOnly = true;
+            this.DGVTerms.RowHeadersWidth = 51;
             this.DGVTerms.RowTemplate.Height = 26;
             this.DGVTerms.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVTerms.Size = new System.Drawing.Size(1058, 658);
             this.DGVTerms.TabIndex = 6;
             this.DGVTerms.DoubleClick += new System.EventHandler(this.DGVTerms_DoubleClick);
+            this.DGVTerms.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DGVTerms_KeyDown);
             // 
             // BtnAddSelect
             // 
@@ -143,7 +145,7 @@
             this.Name = "Frm_Terms";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Frm_Terms";
-            this.Load += new System.EventHandler(this.Frm_Terms_Load);
+            this.Load += new System.EventHandler(this.Frm_Terms_Load);            
             ((System.ComponentModel.ISupportInitialize)(this.DGVTerms)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

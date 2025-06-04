@@ -1,8 +1,10 @@
 ﻿using Alkamous.Model;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Alkamous.InterfaceForAllClass
 {
@@ -233,7 +235,7 @@ namespace Alkamous.InterfaceForAllClass
         bool Update_Term(string Term_AutoNum, string Term_En, string Term_Ar);
         bool Delete_Term(string Term_AutoNum);
         DataTable Get_AllTerm_BySearch(string search);
-        DataTable Get_AllTerms();
+        Task<DataTable> Get_AllTerms();
     }
 
     public interface IProducts
@@ -280,7 +282,20 @@ namespace Alkamous.InterfaceForAllClass
 
     public interface ILazyLoading
     {
-        Task<DataTable> LoadData(int page = 1, int pageSize = 100, string search = "");
-        Task LoadNextPageAsync();
+        Task LoadNextPageAsync(
+             string uniqueIdColumnName,
+             string search,
+             bool isFavorite,
+             DataGridView targetDGV,
+             Func<int, int, Task<DataTable>> GetAllFunc,
+             Func<string, int, int, Task<DataTable>> GetBySearchFunc,
+             Func<string, int, int, Task<DataTable>> GetBySearchFavoriteFunc
+
+            );
+
+        Task<bool> PerformSearchAsync(DataGridView targetDGV);
+        Task TxtSearch_Fun(DataGridView targetDGV, Func<Task> CallLoadNextPageAsync);
+
+
     }
 }

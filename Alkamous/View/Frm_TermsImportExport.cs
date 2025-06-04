@@ -202,13 +202,13 @@ namespace Alkamous.View
 
         }
 
-        private void ExportTermsData()
+        private async void ExportTermsData()
         {
             try
             {
 
                 DataTable ResultOfData = new DataTable();
-                ResultOfData = OperationsofTerms.Get_AllTerms();
+                ResultOfData =await OperationsofTerms.Get_AllTerms();
 
                 if (ResultOfData.Rows.Count > 0)
                 {

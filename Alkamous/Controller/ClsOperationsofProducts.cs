@@ -10,8 +10,17 @@ namespace Alkamous.Controller
     public class ClsOperationsofProducts : IBaseOperation<CTB_Products>, IProducts
     {
         private readonly string ProcedureName = "SP_TB_Products";
-        DataAccessLayer DAL = new DataAccessLayer();
-        CTB_Products MTB_Products = new CTB_Products();
+        
+        CTB_Products MTB_Products = new CTB_Products(CTB_Products.ProductFieldNaming.Plain);
+
+        
+        private readonly IDataAccessLayer DAL;        
+        public ClsOperationsofProducts(IDataAccessLayer _DAL)
+        {
+            DAL = _DAL;
+            
+        }
+               
 
         private SortedList AssignValuesToSortedList(CTB_Products item, string @Check)
         {

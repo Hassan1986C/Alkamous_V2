@@ -17,7 +17,7 @@ namespace Alkamous.View
 {
     public partial class Frm_ProductsImportExport : Form
     {
-        private readonly ClsOperationsofProducts operationsofProducts = new ClsOperationsofProducts();
+        private readonly ClsOperationsofProducts operationsofProducts = new ClsOperationsofProducts(new DataAccessLayer());
         private List<CTB_Products> csvDataList = null;
 
         public Frm_ProductsImportExport()

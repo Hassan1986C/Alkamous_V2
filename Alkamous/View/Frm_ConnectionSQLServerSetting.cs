@@ -36,7 +36,6 @@ namespace Alkamous.View
                         Properties.Settings.Default.Save();
                         MessageBox.Show("The data has been saved successfully. The program will be restarted");
                         Application.Restart();
-
                     }
                 }
                 else
