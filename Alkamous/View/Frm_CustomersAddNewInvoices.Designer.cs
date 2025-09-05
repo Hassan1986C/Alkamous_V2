@@ -571,7 +571,7 @@
             this.TxtCustomer_Mob.MaxLength = 50;
             this.TxtCustomer_Mob.Name = "TxtCustomer_Mob";
             this.TxtCustomer_Mob.Size = new System.Drawing.Size(313, 34);
-            this.TxtCustomer_Mob.TabIndex = 3;            
+            this.TxtCustomer_Mob.TabIndex = 3;
             this.TxtCustomer_Mob.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyNumberByKeyPress);
             // 
             // TxtCustomer_Company
@@ -1169,7 +1169,6 @@
             this.tabPageTermsandconditions.Size = new System.Drawing.Size(935, 559);
             this.tabPageTermsandconditions.TabIndex = 2;
             this.tabPageTermsandconditions.Text = "    Terms and conditions    ";
-            
             // 
             // BtnAddTermsToServerAsNewTerm
             // 
@@ -1195,7 +1194,6 @@
             this.LbCountTerms.TabIndex = 63;
             this.LbCountTerms.Text = "0";
             this.LbCountTerms.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            
             // 
             // BtnMoveTermRowUp
             // 

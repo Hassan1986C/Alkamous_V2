@@ -169,7 +169,7 @@ namespace Alkamous.View
             if (OTPUserCode == TxtConformCode.Text.Trim())
             {
                 WaitingLabel.Visible = true;
-                WaitingLabel.Text = "Congratulations, you can now create a new password./n please don't forget it again!!";
+                WaitingLabel.Text = "Congratulations, you can now create a new password. \r\n please don't forget it again!!";
                 groupBoxSaveNewPassword.Enabled = true;
             }
         }

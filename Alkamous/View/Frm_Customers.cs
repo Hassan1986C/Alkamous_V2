@@ -259,6 +259,7 @@ namespace Alkamous.View
 
                             Controller.Chelp.RegisterUsersActionLogs("Delete Quotation", DGVCustomers.CurrentRow.Cells[MCTB_Customers.Customer_Invoice_Number].Value.ToString());
                             MessageBox.Show("Data Deleted Successfully ");
+                            await LazyDataLoader.PerformSearchAsync(DGVCustomers);
                             await LoadNextPageAsync();
                         }
                         else

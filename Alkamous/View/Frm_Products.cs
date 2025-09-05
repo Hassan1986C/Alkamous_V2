@@ -134,9 +134,9 @@ namespace Alkamous.View
 
         
         
-        private  void TxtSearch_TextChanged(object sender, EventArgs e)
+        private  async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-            LazyDataLoader.TxtSearch_Fun(DGVProducts,LoadNextPageAsync );            
+           await LazyDataLoader.TxtSearch_Fun(DGVProducts,LoadNextPageAsync );            
 
         }
 

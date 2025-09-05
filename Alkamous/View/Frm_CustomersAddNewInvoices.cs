@@ -1602,7 +1602,7 @@ namespace Alkamous.View
 
         private void BtnUpdateConsumablePrice_Click(object sender, EventArgs e)
         {
-            if (DGVProducts.Rows.Count > 0)
+            if (DGVProductsConsumable.Rows.Count > 0)
             {
                 Chelp.UpdatePricesAndRecalculate(DGVProductsConsumable, TxtCustomer_Currency.Text);
             }

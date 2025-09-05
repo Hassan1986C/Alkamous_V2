@@ -568,7 +568,7 @@ namespace Alkamous.Controller
 
                 #endregion
 
-                #region terms and conditions 
+                #region terms and conditions Arabic and English
 
                 DataTable dtTB_Terms_InvoicesReport = new DataTable();
                 dtTB_Terms_InvoicesReport = OperationsofTermsInvoices.Get_AllTerms_Invoice_ByTerm_Invoice_Number(InvoiceNumber);

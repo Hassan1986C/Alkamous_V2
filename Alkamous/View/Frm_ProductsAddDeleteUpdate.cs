@@ -155,9 +155,6 @@ namespace Alkamous.View
             BtnFavorite.Checked = false;
         }
 
-
-
-
         private async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
 
@@ -250,17 +247,12 @@ namespace Alkamous.View
                     var result = await OperationsofProducts.AddNewAsync(MTB_Products);
                     if (result)
                     {
-                        Chelp.RegisterUsersActionLogs("Add prodect", TxtProductId.Text);
-                        MessageBox.Show("Data Added Successfully");
+                        Chelp.RegisterUsersActionLogs("Add prodect", TxtProductId.Text);                        
                         ClearAllTestBox();
-                        if (string.IsNullOrEmpty(TxtSearch.Text))
-                        {
-                            await LoadNextPageAsync();
-                        }
-                        else
-                        {
-                            TxtSearch.Clear();
-                        }
+                      
+                        await LazyDataLoader.PerformSearchAsync(DGVProducts);
+                        await LoadNextPageAsync();
+                        MessageBox.Show("Data Added Successfully");
                     }
                     else
                     {
@@ -289,20 +281,14 @@ namespace Alkamous.View
                     if (result)
                     {
                         Chelp.RegisterUsersActionLogs("Update prodect", TxtProductId.Text);
-                        MessageBox.Show(" Data Updated Successfully ");
+                        
                         ClearAllTestBox();
                         EnabledDisableButtons(false);
-                        if (string.IsNullOrEmpty(TxtSearch.Text))
-                        {
-                           await LazyDataLoader.TxtSearch_Fun(DGVProducts, LoadNextPageAsync);
-                        }
-                        else
-                        {
-                            TxtSearch.Clear();
-                            await LazyDataLoader.PerformSearchAsync(DGVProducts);
-                            await LoadNextPageAsync();
-                        }
-
+                        TxtSearch.Clear();
+                        await LazyDataLoader.PerformSearchAsync(DGVProducts);
+                        await LoadNextPageAsync();
+                       
+                        MessageBox.Show(" Data Updated Successfully ");
                     }
                     else
                     {
@@ -318,9 +304,6 @@ namespace Alkamous.View
             }
         }
 
-
-
-
         private void MoveToNextText(object sender, KeyEventArgs e)
         {
             if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Tab))
@@ -329,7 +312,6 @@ namespace Alkamous.View
                 e.Handled = e.SuppressKeyPress = true;
             }
         }
-
 
         private void TxtProductPrice_Validated(object sender, EventArgs e)
         {
