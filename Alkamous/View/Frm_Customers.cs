@@ -509,10 +509,12 @@ namespace Alkamous.View
             try
             {
                 if (DGVCustomers.RowCount > 0)
-                {
+                {                    
                     Model.CTB_Customers MCTB_Customers = new Model.CTB_Customers("ctr2");
                     string InvosNO = DGVCustomers.CurrentRow.Cells[MCTB_Customers.Customer_Invoice_Number].Value.ToString();
-                    ShowReport(InvosNO);
+                    Frm_ShowQuotation frm_ShowQuotation = new Frm_ShowQuotation();
+                    Frm_ShowQuotation.Invoice_NumberToGetData = InvosNO;
+                    frm_ShowQuotation.Show();
 
                 }
             }
@@ -592,6 +594,27 @@ namespace Alkamous.View
             }
         }
 
+        private void BtnShowData_Click(object sender, EventArgs e)
+        {           
+            
+            try
+            {
+                if (DGVCustomers.RowCount > 0)
+                {
+                    Model.CTB_Customers MCTB_Customers = new Model.CTB_Customers("ctr2");
+                    string InvosNO = DGVCustomers.CurrentRow.Cells[MCTB_Customers.Customer_Invoice_Number].Value.ToString();                    
+                    Frm_ShowQuotation frm_ShowQuotation = new Frm_ShowQuotation();
+                    Frm_ShowQuotation.Invoice_NumberToGetData= InvosNO;
+                    frm_ShowQuotation.Show();
 
+                }
+            }
+            catch (Exception ex)
+            {
+                var Btn = sender as Button;
+                Controller.Chelp.WriteErrorLog(Name + " => " + Btn.Name.ToString() + " => " + ex.Message);
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

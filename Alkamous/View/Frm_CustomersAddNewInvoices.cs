@@ -1,5 +1,4 @@
 ﻿using Alkamous.Controller;
-using Alkamous.InterfaceForAllClass;
 using System;
 using System.Data;
 using System.Drawing;
@@ -8,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Alkamous.Model;
-using System.Windows.Media.Imaging;
 using static Alkamous.Model.CTB_Products;
 
 namespace Alkamous.View
