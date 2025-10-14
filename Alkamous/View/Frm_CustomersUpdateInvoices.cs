@@ -797,8 +797,9 @@ namespace Alkamous.View
             try
             {
                 Frm_Products frm = new Frm_Products();
-                Frm_Products.isAddNewInvoices = false;
-                Frm_Products.isMainQuotation = true;
+                //Frm_Products.isAddNewInvoices = false;
+                Frm_Products.WhoSendOrder = "UpdateInvoices";
+                Frm_Products.isMainQuotation = "MainQuotation";
                 Frm_Products.ExChangeRate = TxtExchange.Text;
                 Frm_Products.Taxes = TxtTaxes.Text;
                 Frm_Products.Currency = TxtCustomer_Currency.Text;
@@ -819,8 +820,9 @@ namespace Alkamous.View
             try
             {
                 Frm_Products frm = new Frm_Products();
-                Frm_Products.isAddNewInvoices = false;
-                Frm_Products.isMainQuotation = false;
+               // Frm_Products.isAddNewInvoices = false;
+                Frm_Products.WhoSendOrder = "UpdateInvoices";
+                Frm_Products.isMainQuotation = "Consumable";
                 Frm_Products.ExChangeRate = TxtExchange.Text;
                 Frm_Products.Taxes = TxtTaxes.Text;
                 Frm_Products.Currency = TxtCustomer_Currency.Text;

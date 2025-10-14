@@ -597,7 +597,7 @@ namespace Alkamous.Controller
                     //    builderAR.Append("  -  ").Append(row["Term_Ar"]).AppendLine();
                     //}
 
-                    // Add total in words (Arabic or English based on selected language)
+                    // Add terms and conditions (Arabic or English based on selected language)
                     if (Customer_Language == "English")
                     {
                         _replaceBookmarks["Terms_and_conditions_Arabic"].Range.Delete();

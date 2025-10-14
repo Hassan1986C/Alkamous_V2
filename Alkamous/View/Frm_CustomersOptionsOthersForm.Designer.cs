@@ -32,6 +32,8 @@
             this.BtnProducts = new System.Windows.Forms.Button();
             this.BtnBanks = new System.Windows.Forms.Button();
             this.BtnImportExport = new System.Windows.Forms.Button();
+            this.BtnProductsgroup = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnTerms
@@ -43,9 +45,9 @@
             this.BtnTerms.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnTerms.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnTerms.ForeColor = System.Drawing.Color.White;
-            this.BtnTerms.Location = new System.Drawing.Point(592, 92);
+            this.BtnTerms.Location = new System.Drawing.Point(820, 82);
             this.BtnTerms.Name = "BtnTerms";
-            this.BtnTerms.Size = new System.Drawing.Size(337, 272);
+            this.BtnTerms.Size = new System.Drawing.Size(250, 200);
             this.BtnTerms.TabIndex = 13;
             this.BtnTerms.Text = "Manage Terms";
             this.BtnTerms.UseVisualStyleBackColor = false;
@@ -61,9 +63,9 @@
             this.BtnProducts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnProducts.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnProducts.ForeColor = System.Drawing.Color.White;
-            this.BtnProducts.Location = new System.Drawing.Point(132, 92);
+            this.BtnProducts.Location = new System.Drawing.Point(112, 91);
             this.BtnProducts.Name = "BtnProducts";
-            this.BtnProducts.Size = new System.Drawing.Size(337, 272);
+            this.BtnProducts.Size = new System.Drawing.Size(250, 200);
             this.BtnProducts.TabIndex = 12;
             this.BtnProducts.Text = "Manage Products";
             this.BtnProducts.UseVisualStyleBackColor = false;
@@ -78,9 +80,9 @@
             this.BtnBanks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnBanks.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnBanks.ForeColor = System.Drawing.Color.White;
-            this.BtnBanks.Location = new System.Drawing.Point(132, 399);
+            this.BtnBanks.Location = new System.Drawing.Point(112, 403);
             this.BtnBanks.Name = "BtnBanks";
-            this.BtnBanks.Size = new System.Drawing.Size(337, 272);
+            this.BtnBanks.Size = new System.Drawing.Size(250, 200);
             this.BtnBanks.TabIndex = 11;
             this.BtnBanks.Text = "Manage Bank Account";
             this.BtnBanks.UseVisualStyleBackColor = false;
@@ -96,19 +98,54 @@
             this.BtnImportExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnImportExport.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnImportExport.ForeColor = System.Drawing.Color.White;
-            this.BtnImportExport.Location = new System.Drawing.Point(592, 399);
+            this.BtnImportExport.Location = new System.Drawing.Point(476, 403);
             this.BtnImportExport.Name = "BtnImportExport";
-            this.BtnImportExport.Size = new System.Drawing.Size(337, 272);
+            this.BtnImportExport.Size = new System.Drawing.Size(250, 200);
             this.BtnImportExport.TabIndex = 10;
             this.BtnImportExport.Text = "Import and Export";
             this.BtnImportExport.UseVisualStyleBackColor = false;
             this.BtnImportExport.Click += new System.EventHandler(this.BtnImportExport_Click);
+            // 
+            // BtnProductsgroup
+            // 
+            this.BtnProductsgroup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(77)))), ((int)(((byte)(178)))));
+            this.BtnProductsgroup.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnProductsgroup.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.BtnProductsgroup.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.BtnProductsgroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnProductsgroup.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnProductsgroup.ForeColor = System.Drawing.Color.White;
+            this.BtnProductsgroup.Location = new System.Drawing.Point(476, 82);
+            this.BtnProductsgroup.Name = "BtnProductsgroup";
+            this.BtnProductsgroup.Size = new System.Drawing.Size(250, 200);
+            this.BtnProductsgroup.TabIndex = 14;
+            this.BtnProductsgroup.Text = "Product Groups";
+            this.BtnProductsgroup.UseVisualStyleBackColor = false;
+            this.BtnProductsgroup.Click += new System.EventHandler(this.BtnProductsgroup_Click);
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(77)))), ((int)(((byte)(178)))));
+            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(820, 403);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(250, 200);
+            this.button2.TabIndex = 15;
+            this.button2.Text = "Not Yet";
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // Frm_CustomersOptionsOthersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1168, 746);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.BtnProductsgroup);
             this.Controls.Add(this.BtnTerms);
             this.Controls.Add(this.BtnProducts);
             this.Controls.Add(this.BtnBanks);
@@ -126,5 +163,7 @@
         private System.Windows.Forms.Button BtnProducts;
         private System.Windows.Forms.Button BtnBanks;
         private System.Windows.Forms.Button BtnImportExport;
+        private System.Windows.Forms.Button BtnProductsgroup;
+        private System.Windows.Forms.Button button2;
     }
 }

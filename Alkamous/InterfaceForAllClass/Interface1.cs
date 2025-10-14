@@ -247,6 +247,7 @@ namespace Alkamous.InterfaceForAllClass
         DataTable Get_Product_product_Id(string product_Id, int PageNumber = 1, int PageSize = 5000);
         Task<DataTable> Get_DistinctProduct();
         bool Check_ProductIdNotDuplicate(string product_Id);
+        Task<DataTable> Get_product_GroupBy_BySearch(string search, int PageNumber = 1, int PageSize = 500000);
     }
 
 

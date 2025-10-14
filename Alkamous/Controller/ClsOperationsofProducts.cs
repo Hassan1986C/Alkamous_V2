@@ -4,13 +4,30 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Alkamous.Controller
 {
     public class ClsOperationsofProducts : IBaseOperation<CTB_Products>, IProducts
     {
         private readonly string ProcedureName = "SP_TB_Products";
-        
+        private readonly string ProcedureName2 = "SP_TB_product_GroupBy";
+
+        public enum ProdectModels
+        {
+            EVOLIS_Primacy_1,
+            EVOLIS_Primacy_2,
+            EVOLIS_Primacy_2_with_encoders,
+            EVOLIS_Primacy_2_Lam,
+            EVOLIS_Primacy_2_Lam_with_encoders,
+            EVOLIS_zenius_1,
+            EVOLIS_zenius_2,
+            EVOLIS_zenius_2_with_encoders,
+            EVOLIS_Agilia,
+            EVOLIS_Agilia_with_encoders,
+            EVOLIS_Agilia_Lam,
+        }
+
         CTB_Products MTB_Products = new CTB_Products(CTB_Products.ProductFieldNaming.Plain);
 
         
@@ -21,7 +38,6 @@ namespace Alkamous.Controller
             
         }
                
-
         private SortedList AssignValuesToSortedList(CTB_Products item, string @Check)
         {
             SortedList SL = new SortedList
@@ -82,7 +98,7 @@ namespace Alkamous.Controller
         {
             SortedList SL = new SortedList
             {
-                { "@Check", "Get_AllProduct_BySearchFavorite" },
+                {"@Check", "Get_AllProduct_BySearchFavorite" },
                 {"@PageNumber",PageNumber },
                 {"@PageSize",PageSize},
                 {MTB_Products.product_NameAr,search },
@@ -155,6 +171,50 @@ namespace Alkamous.Controller
 
             DataTable dt = await DAL.SelectDBasync(ProcedureName, SL);
             return dt;
+        }
+
+
+
+        /////////////////////////////////////
+
+       
+        public async Task<bool> Add_product_GroupByAsync(string product_GroupBy_Name, string product_id)
+        {
+            SortedList SL = new SortedList
+            {
+                { "@Check", "Add_product_GroupBy" },
+                { "@product_GroupBy_Name",product_GroupBy_Name},
+                {"@product_id",product_id }
+            };
+
+            int result = await DAL.RunProcedureasync(ProcedureName2, SL);
+            return result == 1;
+        }
+
+        public async Task<DataTable> Get_product_GroupBy_BySearch(string search, int PageNumber = 1, int PageSize = 500000)
+        {
+            SortedList SL = new SortedList
+            {
+                {"@Check", "Get_product_GroupBy_BySearch" },
+                {"@product_GroupBy_Name",search },
+                {"@PageNumber", PageNumber },
+                {"@PageSize", PageSize },
+                
+            };
+
+            DataTable dt = await DAL.SelectDBasync(ProcedureName2, SL);
+            return dt;
+        }
+
+        public async Task<bool> Delete_product_GroupBy(string Text)
+        {
+            SortedList SL = new SortedList
+            {
+                { "@Check", "Delete_product_GroupBy" },
+                { "@product_GroupBy_Name",Text},
+            };
+            int result = await DAL.RunProcedureasync(ProcedureName2, SL);
+            return result == 1;
         }
 
 

@@ -36,6 +36,8 @@
             this.BtnMultiSelectItem = new System.Windows.Forms.CheckBox();
             this.BtnFavorite = new System.Windows.Forms.CheckBox();
             this.Lbwait = new System.Windows.Forms.Label();
+            this.TxtGroupByItem = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProducts)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,8 +65,8 @@
             this.DGVProducts.RowHeadersWidth = 51;
             this.DGVProducts.RowTemplate.Height = 26;
             this.DGVProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVProducts.Size = new System.Drawing.Size(1058, 711);
-            this.DGVProducts.TabIndex = 1;
+            this.DGVProducts.Size = new System.Drawing.Size(1327, 711);
+            this.DGVProducts.TabIndex = 1;           
             this.DGVProducts.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DGVProducts_Scroll);
             this.DGVProducts.DoubleClick += new System.EventHandler(this.DGVProducts_DoubleClick);
             this.DGVProducts.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DGVProducts_KeyDown);
@@ -76,7 +78,7 @@
             this.LbCount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LbCount.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LbCount.ForeColor = System.Drawing.Color.White;
-            this.LbCount.Location = new System.Drawing.Point(930, 36);
+            this.LbCount.Location = new System.Drawing.Point(1199, 36);
             this.LbCount.Name = "LbCount";
             this.LbCount.Size = new System.Drawing.Size(140, 41);
             this.LbCount.TabIndex = 4;
@@ -89,10 +91,10 @@
             this.TxtSearch.BackColor = System.Drawing.Color.White;
             this.TxtSearch.Font = new System.Drawing.Font("Century Gothic", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtSearch.ForeColor = System.Drawing.Color.Black;
-            this.TxtSearch.Location = new System.Drawing.Point(352, 36);
+            this.TxtSearch.Location = new System.Drawing.Point(309, 30);
             this.TxtSearch.MaxLength = 40;
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(569, 41);
+            this.TxtSearch.Size = new System.Drawing.Size(492, 41);
             this.TxtSearch.TabIndex = 3;
             this.TxtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TxtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
@@ -102,10 +104,10 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(290, 9);
+            this.label1.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.label1.Location = new System.Drawing.Point(305, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(631, 19);
+            this.label1.Size = new System.Drawing.Size(485, 17);
             this.label1.TabIndex = 5;
             this.label1.Text = "Search By product_Id -  product_NameAR - product_NameEN - product_Unit";
             // 
@@ -115,7 +117,7 @@
             this.BtnMultiSelectItem.AutoSize = true;
             this.BtnMultiSelectItem.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnMultiSelectItem.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnMultiSelectItem.Location = new System.Drawing.Point(179, 41);
+            this.BtnMultiSelectItem.Location = new System.Drawing.Point(136, 36);
             this.BtnMultiSelectItem.Name = "BtnMultiSelectItem";
             this.BtnMultiSelectItem.Size = new System.Drawing.Size(167, 31);
             this.BtnMultiSelectItem.TabIndex = 28;
@@ -129,7 +131,7 @@
             this.BtnFavorite.AutoSize = true;
             this.BtnFavorite.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnFavorite.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnFavorite.Location = new System.Drawing.Point(35, 41);
+            this.BtnFavorite.Location = new System.Drawing.Point(12, 36);
             this.BtnFavorite.Name = "BtnFavorite";
             this.BtnFavorite.Size = new System.Drawing.Size(118, 31);
             this.BtnFavorite.TabIndex = 29;
@@ -150,11 +152,37 @@
             this.Lbwait.Text = "Please Wait";
             this.Lbwait.Visible = false;
             // 
+            // TxtGroupByItem
+            // 
+            this.TxtGroupByItem.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.TxtGroupByItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TxtGroupByItem.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtGroupByItem.FormattingEnabled = true;
+            this.TxtGroupByItem.Location = new System.Drawing.Point(827, 35);
+            this.TxtGroupByItem.Margin = new System.Windows.Forms.Padding(2);
+            this.TxtGroupByItem.Name = "TxtGroupByItem";
+            this.TxtGroupByItem.Size = new System.Drawing.Size(367, 32);
+            this.TxtGroupByItem.TabIndex = 30;
+            this.TxtGroupByItem.SelectedIndexChanged += new System.EventHandler(this.TxtGroupByItem_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(833, 8);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(98, 17);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "Group By Item";
+            // 
             // Frm_Products
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1082, 810);
+            this.ClientSize = new System.Drawing.Size(1351, 810);
+            this.Controls.Add(this.TxtGroupByItem);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.BtnFavorite);
             this.Controls.Add(this.BtnMultiSelectItem);
             this.Controls.Add(this.label1);
@@ -164,6 +192,7 @@
             this.Name = "Frm_Products";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Products & Items";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_Products_FormClosing);
             this.Load += new System.EventHandler(this.Frm_Products_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGVProducts)).EndInit();
             this.ResumeLayout(false);
@@ -180,5 +209,7 @@
         private System.Windows.Forms.CheckBox BtnMultiSelectItem;
         private System.Windows.Forms.CheckBox BtnFavorite;
         private System.Windows.Forms.Label Lbwait;
+        private System.Windows.Forms.ComboBox TxtGroupByItem;
+        private System.Windows.Forms.Label label4;
     }
 }

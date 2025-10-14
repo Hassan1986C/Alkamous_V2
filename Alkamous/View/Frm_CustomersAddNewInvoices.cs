@@ -121,7 +121,7 @@ namespace Alkamous.View
         {
             try
             {
-                Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.SqlParameter);
+                Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.Plain);
 
 
                 DGVProductsConsumable.RowHeadersVisible = false;
@@ -810,8 +810,9 @@ namespace Alkamous.View
             {
                 Frm_Products frm = new Frm_Products();
 
-                Frm_Products.isAddNewInvoices = true;
-                Frm_Products.isMainQuotation = true;
+               // Frm_Products.isAddNewInvoices = true;
+                Frm_Products.WhoSendOrder = "NewInvoices";
+                Frm_Products.isMainQuotation = "MainQuotation";
                 Frm_Products.ExChangeRate = TxtExchange.Text.Trim();
                 Frm_Products.Taxes = TxtTaxes.Text.Trim();
                 Frm_Products.Currency = TxtCustomer_Currency.Text.Trim();
@@ -833,8 +834,9 @@ namespace Alkamous.View
             try
             {
                 Frm_Products frm = new Frm_Products();
-                Frm_Products.isAddNewInvoices = true;
-                Frm_Products.isMainQuotation = false;
+               // Frm_Products.isAddNewInvoices = true;
+                Frm_Products.WhoSendOrder = "NewInvoices";
+                Frm_Products.isMainQuotation = "Consumable";
                 Frm_Products.ExChangeRate = TxtExchange.Text;
                 Frm_Products.Taxes = TxtTaxes.Text;
                 Frm_Products.Currency = TxtCustomer_Currency.Text;
