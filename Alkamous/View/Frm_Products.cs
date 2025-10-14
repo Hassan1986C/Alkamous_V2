@@ -11,17 +11,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using static Alkamous.Controller.ClsOperationsofProducts;
 
 namespace Alkamous.View
 {
     public partial class Frm_Products : Form
-    {        
+    {
         private readonly ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts(new DataAccessLayer());
         private readonly CTB_Products MCTB_Products = new CTB_Products(CTB_Products.ProductFieldNaming.Plain);
-        public static bool isAddNewInvoices, isMainQuotation;
-        public static string ExChangeRate, Taxes, Currency;
 
-        private readonly LazyLoading LazyDataLoader = new LazyLoading();       
+        public static string ExChangeRate, Taxes, Currency, WhoSendOrder, isMainQuotation;
+
+
+        private readonly LazyLoading LazyDataLoader = new LazyLoading();
 
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -60,7 +62,6 @@ namespace Alkamous.View
             CTB_Products MCTB_Products = new CTB_Products(CTB_Products.ProductFieldNaming.Plain);
             DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
             {
-
                 Name = MCTB_Products.product_Id,
                 DataPropertyName = MCTB_Products.product_Id,
                 HeaderText = "Product ID",
@@ -132,20 +133,20 @@ namespace Alkamous.View
             DGVProducts.Columns[MCTB_Products.product_Unit].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
-        
-        
-        private  async void TxtSearch_TextChanged(object sender, EventArgs e)
-        {
-           await LazyDataLoader.TxtSearch_Fun(DGVProducts,LoadNextPageAsync );            
 
+
+        private async void TxtSearch_TextChanged(object sender, EventArgs e)
+        {
+            await LazyDataLoader.TxtSearch_Fun(DGVProducts, LoadNextPageAsync);
         }
 
         private async void Frm_Products_Load(object sender, EventArgs e)
         {
-          
             // Load initial data
             await LoadNextPageAsync();
             InitializeDataGridView();
+            LoadEnumProdectsModules();
+
         }
 
         #region  SelectProductAndSendParameterToForms
@@ -155,21 +156,43 @@ namespace Alkamous.View
             try
             {
                 var isMultiSelect = BtnMultiSelectItem.Checked;
-                if (isAddNewInvoices)
+
+                // Group
+                // NewInvoices
+                // UpdateInvoices
+                // who sends the order Group or NewInvoices or UpdateInvoices
+                switch (WhoSendOrder)
                 {
-                    HandleProductsSelection(isMainQuotation,
-                                            isMultiSelect, MCTB_Products,
-                                            Frm_CustomersAddNewInvoices.FrmCustomerAddNewInvoices,
-                                            Frm_CustomersAddNewInvoices.dtProducts,
-                                            Frm_CustomersAddNewInvoices.dtProductsConsumable);
-                }
-                else
-                {
-                    HandleProductsSelection(isMainQuotation,
-                                            isMultiSelect, MCTB_Products,
-                                            Frm_CustomersUpdateInvoices.FrmCustomersUpdateInvoices,
-                                            Frm_CustomersUpdateInvoices.dtProducts,
-                                            Frm_CustomersUpdateInvoices.dtProductsConsumable);
+                    case "Group":
+
+                        HandleProductsSelection(isMainQuotation,
+                                                isMultiSelect, MCTB_Products,
+                                                Frm_Products_group.FrmProductsgroup,
+                                                Frm_Products_group.dtProducts,
+                                                null);
+                        break;
+
+                    case "NewInvoices":
+
+                        HandleProductsSelection(isMainQuotation,
+                                                isMultiSelect, MCTB_Products,
+                                                Frm_CustomersAddNewInvoices.FrmCustomerAddNewInvoices,
+                                                Frm_CustomersAddNewInvoices.dtProducts,
+                                                Frm_CustomersAddNewInvoices.dtProductsConsumable);
+                        break;
+
+                    case "UpdateInvoices":
+
+                        HandleProductsSelection(isMainQuotation,
+                                                isMultiSelect, MCTB_Products,
+                                                Frm_CustomersUpdateInvoices.FrmCustomersUpdateInvoices,
+                                                Frm_CustomersUpdateInvoices.dtProducts,
+                                                Frm_CustomersUpdateInvoices.dtProductsConsumable);
+                        break;
+
+                    default:
+                        MessageBox.Show("لم يتم تحديد نوع العملية!");
+                        break;
                 }
 
                 Close();
@@ -182,39 +205,60 @@ namespace Alkamous.View
             }
         }
 
-        private void HandleProductsSelection(bool isMainQuotation, bool isMultiSelect, CTB_Products MCTB_Products,
+
+
+        private void HandleProductsSelection(string isMainQuotation, bool isMultiSelect, CTB_Products MCTB_Products,
                                              Form targetForm, DataTable targetTable, DataTable consumableTable)
         {
-            // who sends the request Quotation or consumable 
-            if (isMainQuotation)
+            // Group
+            // MainQuotation
+            // Consumable
+            // who sends the request Group MainQuotation or consumable 
+            switch (isMainQuotation)
             {
-                if (isMultiSelect)
-                {
-                    AddMultiProducts(MCTB_Products, targetTable,
-                                     targetForm.Controls.Find("DGVProducts", true).FirstOrDefault() as DataGridView,
-                                     targetForm.Controls.Find("LbCountProdects", true).FirstOrDefault() as Label,
-                                     targetForm.Controls.Find("TxtTotalAmount", true).FirstOrDefault() as TextBox);
+                case "Group":
 
-                }
-                else
-                {
-                    AddSingleProduct(MCTB_Products, DGVProducts, targetForm);
-                }
+                    AddMultiProducts(MCTB_Products, targetTable,
+                                        targetForm.Controls.Find("DGVProducts", true).FirstOrDefault() as DataGridView,
+                                        targetForm.Controls.Find("LbCountProdects", true).FirstOrDefault() as Label,
+                                        targetForm.Controls.Find("TxtTotalAmount", true).FirstOrDefault() as TextBox);
+
+                    break;
+
+                case "MainQuotation":
+                    if (isMultiSelect)
+                    {
+                        AddMultiProducts(MCTB_Products, targetTable,
+                                         targetForm.Controls.Find("DGVProducts", true).FirstOrDefault() as DataGridView,
+                                         targetForm.Controls.Find("LbCountProdects", true).FirstOrDefault() as Label,
+                                         targetForm.Controls.Find("TxtTotalAmount", true).FirstOrDefault() as TextBox);
+
+                    }
+                    else
+                    {
+                        AddSingleProduct(MCTB_Products, DGVProducts, targetForm);
+                    }
+
+                    break;
+                case "Consumable":
+                    if (isMultiSelect)
+                    {
+                        AddMultiProducts(MCTB_Products, consumableTable,
+                                         targetForm.Controls.Find("DGVProductsConsumable", true).FirstOrDefault() as DataGridView,
+                                         targetForm.Controls.Find("LbCountProdectsConsumable", true).FirstOrDefault() as Label,
+                                         targetForm.Controls.Find("TxtTotalAmount", true).FirstOrDefault() as TextBox);
+                    }
+                    else
+                    {
+                        AddSingleProduct(MCTB_Products, DGVProducts, targetForm, true);
+                    }
+
+                    break;
+                default:
+                    MessageBox.Show("لم يتم تحديد نوع العملية!");
+                    break;
             }
-            else
-            {
-                if (isMultiSelect)
-                {
-                    AddMultiProducts(MCTB_Products, consumableTable,
-                                     targetForm.Controls.Find("DGVProductsConsumable", true).FirstOrDefault() as DataGridView,
-                                     targetForm.Controls.Find("LbCountProdectsConsumable", true).FirstOrDefault() as Label,
-                                     targetForm.Controls.Find("TxtTotalAmount", true).FirstOrDefault() as TextBox);
-                }
-                else
-                {
-                    AddSingleProduct(MCTB_Products, DGVProducts, targetForm, true);
-                }
-            }
+
         }
 
         private void AddMultiProducts(CTB_Products MCTB_Products, DataTable targetTable, DataGridView targetDGV, Label targetLabel, TextBox TotalAmount)
@@ -225,7 +269,7 @@ namespace Alkamous.View
             // Collect rows to be added
             foreach (DataGridViewRow row in DGVProducts.SelectedRows.Cast<DataGridViewRow>().Reverse())
             {
-                string productId = row.Cells[MCTB_Products.product_Id].Value.ToString().Trim();
+                string productId = row.Cells[MCTB_Products.product_Id].Value.ToString().Trim() ?? string.Empty;
 
                 // Check if the product is already in the targetTable by Using Linq
                 bool productExists = targetTable.AsEnumerable().Any(dr => dr.Field<string>(0) == productId);
@@ -249,7 +293,12 @@ namespace Alkamous.View
 
             // Update the target label and total amount
             targetLabel.Text = targetTable.Rows.Count.ToString(); // Updated to targetTable.Rows.Count instead of targetDGV.Rows.Count
-            TotalAmount.Text = Chelp.DGVProductsChangededReSumTotalAmount(Currency, targetDGV);
+            //MessageBox.Show(targetTable.Columns.Count.ToString());
+            if (isMainQuotation != "Group")
+            {
+                TotalAmount.Text = Chelp.DGVProductsChangededReSumTotalAmount(Currency, targetDGV);
+            }
+
         }
 
 
@@ -273,6 +322,9 @@ namespace Alkamous.View
                     case "EV-C4511":
                     case "EV-C8001":
                     case "FA-81754":
+                    case "SL-CR80-BK":
+                    case "EV-C8152":
+                    case "ID-CARD-033":
                         qtyTextBox.Text = "100";
                         break;
                     default:
@@ -311,10 +363,62 @@ namespace Alkamous.View
 
         }
 
+        int DataHaveBeenloaded = 0;
+        private void LoadEnumProdectsModules()
+        {
+            if (DataHaveBeenloaded == 0)
+            {
+                // تحميل أسماء الـ enum إلى القائمة المنسدلة
+                var result = Enum.GetValues(typeof(ClsOperationsofProducts.ProdectModels));
+
+                TxtGroupByItem.Items.Add("Load ALL Prodects");
+
+                for (int i = 0; i < result.Length; i++)
+                {
+                    TxtGroupByItem.Items.Add(result.GetValue(i).ToString());
+                }
+
+                DataHaveBeenloaded++;
+                Cursor.Current = Cursors.Default;
+                TxtGroupByItem.SelectedIndex = 0;
+            }
+        }
+        private async void TxtGroupByItem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            await Task.Delay(400);
+            if (TxtGroupByItem.SelectedIndex == 0)
+            {
+                await LoadNextPageAsync();
+                TxtSearch.Clear();
+            }
+            else
+            {
+                LoadDataGroupByItem(TxtGroupByItem.Text);
+            }
+
+        }
+
+        private void Frm_Products_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+        }
+
+
+
+        private async void LoadDataGroupByItem(string Search)
+        {
+            using (var dt = await OperationsofProducts.Get_product_GroupBy_BySearch(Search))
+            {
+                DGVProducts.DataSource = dt;
+                LbCount.Text = dt.Rows.Count.ToString();
+            }
+
+        }
         private async void BtnFavorite_CheckedChanged(object sender, EventArgs e)
         {
             BtnFavorite.ForeColor = BtnFavorite.Checked ? Color.Red : Color.Black;
-
+            await Task.Delay(200);
             if (await LazyDataLoader.PerformSearchAsync(DGVProducts))
             {
                 // Load first page of new search results
@@ -361,6 +465,7 @@ namespace Alkamous.View
                           OperationsofProducts.Get_AllProduct,                      // Matches Func<int, int, Task<DataTable>>
                           OperationsofProducts.Get_AllProduct_BySearch,             // Matches Func<string, int, int, Task<DataTable>>
                           OperationsofProducts.Get_AllProduct_BySearchFavorite      // Matches Func<string, int, int, Task<DataTable>>
+
                           );
 
 

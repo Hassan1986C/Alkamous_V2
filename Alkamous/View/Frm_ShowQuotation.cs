@@ -13,9 +13,13 @@ namespace Alkamous.View
 
         #region Declare variables
 
+        ClsOperationsofCustomers OperationsofCustomers = new ClsOperationsofCustomers(new DataAccessLayer());
         ClsOperationsofInvoices OperationsofInvoices = new ClsOperationsofInvoices(new DataAccessLayer());
+        ClsOperationsofConsumable OperationsofConsumable = new ClsOperationsofConsumable(new DataAccessLayer());
 
+        public static DataTable dtCustomer = new DataTable();
         public static DataTable dtProducts = new DataTable();
+        public static DataTable dtProductsConsumable = new DataTable();
 
         private static Frm_ShowQuotation frmCustomerShowInvoices;
         public static string Invoice_NumberToGetData { get; set; }
@@ -75,13 +79,13 @@ namespace Alkamous.View
                 DGVProducts.Columns[5].HeaderText = "Price";
                 DGVProducts.Columns[6].HeaderText = "Amount";
 
-                DGVProducts.Columns[0].Width = 50;  // Code
-                DGVProducts.Columns[1].Width = 200; // Product En
-                DGVProducts.Columns[2].Width = 200; // Product Ar
-                DGVProducts.Columns[3].Width = 40;  // QTY
-                DGVProducts.Columns[4].Width = 40;  // Unit
-                DGVProducts.Columns[5].Width = 60;  // Price
-                DGVProducts.Columns[6].Width = 100; // Amount
+                //DGVProducts.Columns[0].Width = 50;  // Code
+                //DGVProducts.Columns[1].Width = 200; // Product En
+                //DGVProducts.Columns[2].Width = 200; // Product Ar
+                //DGVProducts.Columns[3].Width = 40;  // QTY
+                //DGVProducts.Columns[4].Width = 40;  // Unit
+                //DGVProducts.Columns[5].Width = 60;  // Price
+                //DGVProducts.Columns[6].Width = 100; // Amount
 
                 // Set the font and alignment for the first column                
                 DGVProducts.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -96,14 +100,9 @@ namespace Alkamous.View
                 DGVProducts.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
                 // Manually set the height of any rows that exceed the default maximum height
-                DGVProducts.RowTemplate.Height = 50; // set a default height for rows
+                // DGVProducts.RowTemplate.Height = 50; // set a default height for rows
 
-                DGVProducts.Columns[0].ReadOnly = true;
-                DGVProducts.Columns[1].ReadOnly = true;
-                DGVProducts.Columns[2].ReadOnly = true;
-                //DGVProducts.Columns[3].ReadOnly = true;
-                //DGVProducts.Columns[4].ReadOnly = true;
-                //DGVProducts.Columns[5].ReadOnly = true;
+
                 DGVProducts.Columns[6].ReadOnly = true;
 
                 for (int i = 0; i < DGVProducts.Columns.Count; i++)
@@ -123,9 +122,26 @@ namespace Alkamous.View
 
             try
             {
+
+                // OperationsofCustomers
+                Model.CTB_Customers MCTB_Customers = new Model.CTB_Customers("ctr2");
+                dtCustomer = OperationsofCustomers.Get_CustomerDetails_ByCustomer_Invoice_Number(Invoice_Number);
+
+                TxtCustomer_Name.Text = dtCustomer.Rows[0][MCTB_Customers.Customer_Name].ToString();
+                TxtCustomer_Company.Text = dtCustomer.Rows[0][MCTB_Customers.Customer_Company].ToString();
+                TxtCustomer_Invoice.Text = dtCustomer.Rows[0][MCTB_Customers.Customer_Invoice_Number].ToString();
+                TxtDiscount.Text = dtCustomer.Rows[0][MCTB_Customers.Customer_Discount].ToString();
+
+
                 //OperationsofInvoices
                 dtProducts = OperationsofInvoices.Get_Invoice_ByInvoice_Number(Invoice_Number);
                 DGVProducts.DataSource = dtProducts;
+
+                //OperationsofConsumable
+                dtProductsConsumable = OperationsofConsumable.Get_Consumable_ByConsumable_Number(Invoice_Number);
+                DGVProductsConsumable.DataSource = dtProductsConsumable;
+
+
 
             }
             catch (Exception ex)
@@ -140,6 +156,7 @@ namespace Alkamous.View
         {
             DGVColumnHeaderTextAndWidthProductes();
             LoadDataToFrmEdit(Invoice_NumberToGetData);
+
 
         }
     }

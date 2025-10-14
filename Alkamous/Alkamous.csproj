@@ -316,6 +316,12 @@
     <Compile Include="View\Frm_ProductsImportExport.Designer.cs">
       <DependentUpon>Frm_ProductsImportExport.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Frm_Products_group.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Frm_Products_group.Designer.cs">
+      <DependentUpon>Frm_Products_group.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Frm_ShowQuotation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -462,6 +468,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Frm_ProductsImportExport.resx">
       <DependentUpon>Frm_ProductsImportExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Frm_Products_group.resx">
+      <DependentUpon>Frm_Products_group.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Frm_ShowQuotation.resx">
       <DependentUpon>Frm_ShowQuotation.cs</DependentUpon>

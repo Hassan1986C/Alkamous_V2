@@ -40,7 +40,7 @@ namespace Alkamous.Controller
              Func<int, int, Task<DataTable>> GetAllFunc,
              Func<string, int, int, Task<DataTable>> GetBySearchFunc,
              Func<string, int, int, Task<DataTable>> GetBySearchFavoriteFunc
-
+             
             )
         {
             if (IsLoading || EndOfData) return;

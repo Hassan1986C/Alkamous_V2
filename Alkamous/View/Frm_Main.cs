@@ -99,7 +99,7 @@ namespace Alkamous.View
                 Interval = 1000,
                 Enabled = true
             };
-            timer.Tick += Timer_Tick;
+           // timer.Tick += Timer_Tick;
             timer.Start();
 
             LbServerName.Text = Properties.Settings.Default.ServerName;
@@ -162,11 +162,11 @@ namespace Alkamous.View
         }
 
 
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            LBTime.Text = $"Time :  {DateTime.Now.ToString("hh:mm:ss tt")}";
+        //private void Timer_Tick(object sender, EventArgs e)
+        //{
+        //    LBTime.Text = $"Time :  {DateTime.Now.ToString("hh:mm:ss tt")}";
 
-        }
+        //}
 
         private void PicLogo_Click(object sender, EventArgs e)
         {
