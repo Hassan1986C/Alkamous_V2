@@ -30,6 +30,10 @@ namespace Alkamous.Controller
             CardPresso_licenses,
             Tripod_Turnstile_security_Gate,
             Parking_System_security,
+            Monochrome_Ribbon,
+            EDIKIO_Printer,
+            PerPrinted_Card,
+
         }
 
         CTB_Products MTB_Products = new CTB_Products(CTB_Products.ProductFieldNaming.SqlParameter);

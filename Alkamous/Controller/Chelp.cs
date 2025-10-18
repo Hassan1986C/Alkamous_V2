@@ -1,12 +1,15 @@
-﻿using Alkamous.View;
+﻿using Alkamous.InterfaceForAllClass;
+using Alkamous.View;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Alkamous.Controller
 {
@@ -316,6 +319,57 @@ namespace Alkamous.Controller
             byte[] encryptedData = ClsAESEncryption.AESEncrypt(UserPassword, key, iv);
             return (encryptedData, key, iv);
         }
+        #endregion
+
+        #region Move Rows Up And Down
+        // we use Action Delegate as lambda
+        
+        public enum MoveDirection
+        {
+            Up = -1,
+            Down = 1
+        }
+
+        public static void MoveRow(DataGridView dgv, DataTable dt, MoveDirection direction)
+        {
+            if (dgv.Rows.Count == 0 || dgv.SelectedCells.Count == 0)
+                return;
+
+            int currentIndex = dgv.SelectedCells[0].OwningRow.Index;
+            int newIndex = currentIndex + (int)direction;
+
+            // التحقق من الحدود
+            if (newIndex < 0 || newIndex >= dgv.Rows.Count)
+                return;
+
+            // نسخ الصف
+            DataRow rowToMove = dt.NewRow();
+            rowToMove.ItemArray = dt.Rows[currentIndex].ItemArray;
+
+            // نقل الصف
+            dt.Rows.RemoveAt(currentIndex);
+            dt.Rows.InsertAt(rowToMove, newIndex);
+
+            // تحديد الصف الجديد
+            dgv.ClearSelection();
+            dgv.Rows[newIndex].Selected = true;
+        }
+
+        public static void ExecuteSafely(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                string methodName = new System.Diagnostics.StackTrace()
+                    .GetFrame(1).GetMethod().Name;
+                Chelp.WriteErrorLog($"MoveRow => {methodName} => {ex.Message}");
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         #endregion
 
         #region Register Users Action Logs

@@ -25,7 +25,7 @@ namespace Alkamous.View
 
         private readonly LazyLoading LazyDataLoader = new LazyLoading();
 
-        private CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSource _cancellationTokenSource;
 
 
         public Frm_Products()
@@ -140,10 +140,8 @@ namespace Alkamous.View
             await LazyDataLoader.TxtSearch_Fun(DGVProducts, LoadNextPageAsync);
         }
 
-        private async void Frm_Products_Load(object sender, EventArgs e)
-        {
-            // Load initial data
-            await LoadNextPageAsync();
+        private void Frm_Products_Load(object sender, EventArgs e)
+        {           
             InitializeDataGridView();
             LoadEnumProdectsModules();
 
@@ -388,6 +386,7 @@ namespace Alkamous.View
             await Task.Delay(400);
             if (TxtGroupByItem.SelectedIndex == 0)
             {
+                await LazyDataLoader.PerformSearchAsync(DGVProducts);              
                 await LoadNextPageAsync();
                 TxtSearch.Clear();
             }
@@ -454,12 +453,14 @@ namespace Alkamous.View
 
         private async Task LoadNextPageAsync()
         {
+            string uniqueIdColumnName="product_Id";
+            string Search = TxtSearch.Text.Trim();  
             bool Isfavorite = BtnFavorite.Checked;
 
             await LazyDataLoader.LoadNextPageAsync(
 
-                         "product_Id",
-                          TxtSearch.Text.Trim(),
+                          uniqueIdColumnName,
+                          Search,
                           Isfavorite,
                           DGVProducts,
                           OperationsofProducts.Get_AllProduct,                      // Matches Func<int, int, Task<DataTable>>

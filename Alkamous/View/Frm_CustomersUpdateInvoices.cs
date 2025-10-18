@@ -76,7 +76,7 @@ namespace Alkamous.View
                 DGVProducts.Columns[5].HeaderText = "Price";
                 DGVProducts.Columns[6].HeaderText = "Amount";
 
-               // DGVProducts.Columns[0].Width = 50;
+                // DGVProducts.Columns[0].Width = 50;
                 //DGVProducts.Columns[1].Width = 100;
                 //DGVProducts.Columns[2].Width = 100;
                 //DGVProducts.Columns[3].Width = 30;
@@ -621,7 +621,7 @@ namespace Alkamous.View
                         cTB_Invoices.Invoice_Price = DGVProducts.Rows[i].Cells[5].Value.ToString();
                         cTB_Invoices.Invoice_Amount = DGVProducts.Rows[i].Cells[6].Value.ToString();
 
-                       await OperationsofInvoices.AddNewAsync(cTB_Invoices);
+                        await OperationsofInvoices.AddNewAsync(cTB_Invoices);
                     }
 
                     OperationsofInvoices.InsertBulk();
@@ -820,7 +820,7 @@ namespace Alkamous.View
             try
             {
                 Frm_Products frm = new Frm_Products();
-               // Frm_Products.isAddNewInvoices = false;
+                // Frm_Products.isAddNewInvoices = false;
                 Frm_Products.WhoSendOrder = "UpdateInvoices";
                 Frm_Products.isMainQuotation = "Consumable";
                 Frm_Products.ExChangeRate = TxtExchange.Text;
@@ -916,140 +916,30 @@ namespace Alkamous.View
         #endregion
 
         #region Move Rows Up And Down
-
+        // we use Action Delegate as lambda
         private void BtnUpMoveRows_Click(object sender, EventArgs e)
         {
-
-            try
-            {
-                MoveRowUp(DGVProducts, dtProducts);
-            }
-            catch (Exception ex)
-            {
-                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name.ToString();
-                Controller.Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
-                MessageBox.Show(ex.Message);
-            }
-
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProducts, dtProducts, Chelp.MoveDirection.Up));
         }
-
         private void BtnDownMoveRows_Click(object sender, EventArgs e)
         {
-            try
-            {
-                MoveRowDown(DGVProducts, dtProducts);
-            }
-            catch (Exception ex)
-            {
-                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name.ToString();
-                Controller.Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
-                MessageBox.Show(ex.Message);
-            }
-
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProducts, dtProducts, Chelp.MoveDirection.Down));
         }
-
         private void BtnMoveTermRowUp_Click(object sender, EventArgs e)
         {
-            try
-            {
-                MoveRowUp(DGVTermsInvose, dtTermsInvoices);
-            }
-            catch (Exception ex)
-            {
-                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name.ToString();
-                Controller.Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
-                MessageBox.Show(ex.Message);
-            }
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVTermsInvose, dtTermsInvoices, Chelp.MoveDirection.Up));
         }
-
         private void BtnMoveTermRowDown_Click(object sender, EventArgs e)
         {
-            try
-            {
-                MoveRowDown(DGVTermsInvose, dtTermsInvoices);
-            }
-            catch (Exception ex)
-            {
-                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name.ToString();
-                Controller.Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
-                MessageBox.Show(ex.Message);
-            }
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVTermsInvose, dtTermsInvoices, Chelp.MoveDirection.Down));
         }
-
         private void BtnMoveConsumableRowUP_Click(object sender, EventArgs e)
         {
-            try
-            {
-                MoveRowUp(DGVProductsConsumable, dtProductsConsumable);
-            }
-            catch (Exception ex)
-            {
-                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name.ToString();
-                Controller.Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
-                MessageBox.Show(ex.Message);
-            }
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProductsConsumable, dtProductsConsumable, Chelp.MoveDirection.Up));
         }
-
         private void BtnMoveConsumableRowDown_Click(object sender, EventArgs e)
         {
-            try
-            {
-                MoveRowDown(DGVProductsConsumable, dtProductsConsumable);
-            }
-            catch (Exception ex)
-            {
-                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name.ToString();
-                Controller.Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void MoveRowUp(DataGridView dgv, DataTable dt)
-        {
-            if (dgv.Rows.Count == 0) return;
-
-            int rowIndex = dgv.SelectedCells[0].OwningRow.Index;
-
-            if (rowIndex == 0) return;
-
-            DataRow NewRowHolder = dt.NewRow();
-
-            for (int i = 0; i < dt.Columns.Count; i++)
-            {
-                NewRowHolder[i] = dgv.Rows[rowIndex].Cells[i].Value;
-            }
-
-            dt.Rows.RemoveAt(rowIndex);
-            dt.Rows.InsertAt(NewRowHolder, rowIndex - 1);
-
-            dgv.ClearSelection();
-            dgv.Rows[rowIndex - 1].Selected = true;
-
-        }
-
-        private void MoveRowDown(DataGridView dgv, DataTable dt)
-        {
-            if (dgv.Rows.Count == 0) return;
-
-            int rowIndex = dgv.SelectedCells[0].OwningRow.Index;
-
-
-            if (rowIndex < dgv.Rows.Count - 1)
-            {
-
-                DataRow NewRowHolder = dt.NewRow();
-
-                for (int i = 0; i < dt.Columns.Count; i++)
-                {
-                    NewRowHolder[i] = dgv.Rows[rowIndex].Cells[i].Value;
-                }
-
-                dt.Rows.RemoveAt(rowIndex);
-                dt.Rows.InsertAt(NewRowHolder, rowIndex + 1);
-
-                dgv.ClearSelection();
-                dgv.Rows[rowIndex + 1].Selected = true;
-            }
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProductsConsumable, dtProductsConsumable, Chelp.MoveDirection.Down));
         }
 
         #endregion

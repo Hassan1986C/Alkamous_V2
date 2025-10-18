@@ -92,10 +92,11 @@ namespace Alkamous.View
 
             DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
             {
-                Name = MCTB_Products.product_Price,
-                DataPropertyName = MCTB_Products.product_Price,
-                HeaderText = "Pric",
-                Width = 20
+                Name = "Invoice_QTY",
+                DataPropertyName = "Invoice_QTY",
+                HeaderText = "Invoice_QTY",
+                Width = 20,
+                Visible = false
             });
 
             DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
@@ -108,21 +109,24 @@ namespace Alkamous.View
 
             DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
             {
-                Name = MCTB_Products.product_favorite,
-                DataPropertyName = MCTB_Products.product_favorite,
-                HeaderText = "Favorite",
+                Name = MCTB_Products.product_Price,
+                DataPropertyName = MCTB_Products.product_Price,
+                HeaderText = "Price",
+                Width = 20
+            });
+
+           
+
+            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Invoice_Amount",
+                DataPropertyName = "Invoice_Amount",
+                HeaderText = "Invoice_Amount",
                 Width = 20,
                 Visible = false
             });
 
-            DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "TotalCount",
-                DataPropertyName = "TotalCount",
-                HeaderText = "TotalCount",
-                Width = 20,
-                Visible = false
-            });
+            
 
             // Styling only
             DGVProducts.ColumnHeadersDefaultCellStyle.Padding = new Padding(0, 4, 0, 4);
@@ -173,46 +177,7 @@ namespace Alkamous.View
 
             dtProducts.Clear();
 
-
-            DataTable dtSource = await OperationsofProducts.Get_product_GroupBy_BySearch(Search);
-            //MessageBox.Show(dtSource.Columns.Count.ToString());
-            DGVProducts.DataSource = dtSource;
-
-            // أنشئ خريطة الأعمدة يدوياً
-            Dictionary<string, string> map = new Dictionary<string, string>()
-                {
-                    { "product_Id", "product_Id" },
-                    { "product_NameAr", "product_NameAr" },
-                    { "product_NameEn", "product_NameEn" },
-                    { "product_Price", "product_Price" },
-                    { "product_Unit", "product_Unit" }
-                    // الأعمدة الباقية (Invoice_QTY و Invoice_Amount) سنملأها يدويًا لاحقًا
-                };
-
-            // انسخ البيانات من الجدول الأصلي إلى الجديد
-            foreach (DataRow srcRow in dtSource.Rows)
-            {
-                DataRow newRow = dtProducts.NewRow();
-
-                foreach (var mapItem in map)
-                {
-                    string srcCol = mapItem.Key;
-                    string destCol = mapItem.Value;
-
-
-                    if (dtSource.Columns.Contains(srcCol) && dtProducts.Columns.Contains(destCol))
-                    {
-                        newRow[destCol] = srcRow[srcCol];
-                    }
-                }
-
-                // الحقول الجديدة الغير موجودة في الجدول الأصلي
-                newRow["Invoice_QTY"] = "1"; // أو أي قيمة افتراضية
-                newRow["Invoice_Amount"] = "2";
-
-                dtProducts.Rows.Add(newRow);
-            }
-
+            dtProducts = await OperationsofProducts.Get_product_GroupBy_BySearch(Search);
 
             DGVProducts.DataSource = dtProducts;
             LbCountProdects.Text = dtProducts.Rows.Count.ToString();
@@ -323,5 +288,23 @@ namespace Alkamous.View
             }
             LoadDataGroupByItem(TxtGroupByItem.Text);
         }
+
+
+
+        #region Move Rows Up And Down
+        // we use Action Delegate as lambda
+        private void BtnUpMoveRows_Click(object sender, EventArgs e)
+        {
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProducts, dtProducts, Chelp.MoveDirection.Up));
+           
+        }
+
+        private void BtnDownMoveRows_Click(object sender, EventArgs e)
+        {
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProducts, dtProducts, Chelp.MoveDirection.Down));
+        }
+
+        #endregion
+
     }
 }
