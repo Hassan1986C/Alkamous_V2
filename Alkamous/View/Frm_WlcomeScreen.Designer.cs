@@ -122,12 +122,14 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel1.Controls.Add(this.label9);
+            this.panel1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 111);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(347, 43);
             this.panel1.TabIndex = 5;
+            this.panel1.Click += new System.EventHandler(this.lbTotalQuotations_Click);
             // 
             // label9
             // 
@@ -141,6 +143,7 @@
             this.label9.Size = new System.Drawing.Size(115, 20);
             this.label9.TabIndex = 5;
             this.label9.Text = "View Details";
+            this.label9.Click += new System.EventHandler(this.lbTotalQuotations_Click);
             // 
             // lbTotalQuotations
             // 
