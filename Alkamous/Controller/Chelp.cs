@@ -15,7 +15,7 @@ namespace Alkamous.Controller
 {
     public class Chelp
     {
-        #region Write Error Logs file
+        #region Write Error Logs file for all system
         public static void WriteErrorLog(string strErrorText, string strFileName = "ErrorLog.txt")
         {
             try
