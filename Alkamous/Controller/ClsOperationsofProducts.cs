@@ -8,7 +8,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Alkamous.Controller
 {
-    public class ClsOperationsofProducts : IBaseOperation<CTB_Products>, IProducts,IProductsGroupBy
+    public class ClsOperationsofProducts : IBaseOperation<CTB_Products>, IProducts, IProductsGroupBy
     {
         private readonly string ProcedureName = "SP_TB_Products";
         private readonly string ProcedureName2 = "SP_TB_product_GroupBy";
@@ -38,14 +38,14 @@ namespace Alkamous.Controller
 
         CTB_Products MTB_Products = new CTB_Products(CTB_Products.ProductFieldNaming.SqlParameter);
 
-        
-        private readonly IDataAccessLayer DAL;        
+
+        private readonly IDataAccessLayer DAL;
         public ClsOperationsofProducts(IDataAccessLayer _DAL)
         {
             DAL = _DAL;
-            
+
         }
-               
+
         private SortedList AssignValuesToSortedList(CTB_Products item, string @Check)
         {
             SortedList SL = new SortedList
@@ -98,7 +98,7 @@ namespace Alkamous.Controller
 
             };
 
-            DataTable dt =await DAL.SelectDBasync(ProcedureName, SL);
+            DataTable dt = await DAL.SelectDBasync(ProcedureName, SL);
             return dt;
         }
 
@@ -183,7 +183,6 @@ namespace Alkamous.Controller
 
 
 
-
         //////////////////// product_GroupBy /////////////////
 
         public async Task<bool> Add_product_GroupByAsync(string product_GroupBy_Name, string product_id)
@@ -199,6 +198,9 @@ namespace Alkamous.Controller
             return result == 1;
         }
 
+
+
+
         public async Task<DataTable> Get_product_GroupBy_BySearch(string search, int PageNumber = 1, int PageSize = 500000)
         {
             SortedList SL = new SortedList
@@ -207,7 +209,7 @@ namespace Alkamous.Controller
                 {"@product_GroupBy_Name",search },
                 {"@PageNumber", PageNumber },
                 {"@PageSize", PageSize },
-                
+
             };
 
             DataTable dt = await DAL.SelectDBasync(ProcedureName2, SL);
@@ -225,6 +227,61 @@ namespace Alkamous.Controller
             return result == 1;
         }
 
+
+        //////////////////////////////////////
+
+
+        public async Task<bool> Add_product_Item_GroupAsync(string product_Item_Group_Name)
+        {
+            SortedList SL = new SortedList
+            {
+                { "@Check", "Add_product_item_Group" },
+                { "@product_Group_Name",product_Item_Group_Name}
+            };
+
+            int result = await DAL.RunProcedureasync(ProcedureName2, SL);
+            return result == 1;
+        }
+
+        public async Task<bool> Edit_product_Item_GroupAsync(string product_item_Group_AutoNum, string product_Item_Group_Name)
+        {
+            SortedList SL = new SortedList
+            {
+                { "@Check", "Edit_product_item_Group" },
+                { "@product_Group_Name",product_Item_Group_Name},
+                {"@product_item_Group_AutoNum",product_item_Group_AutoNum}
+
+            };
+
+            int result = await DAL.RunProcedureasync(ProcedureName2, SL);
+            return result == 1;
+        }
+
+        public async Task<bool> Delete_product_Item_GroupAsync(string product_item_Group_AutoNum)
+        {
+
+            SortedList SL = new SortedList
+            {
+                { "@Check", "Delete_product_item_Group" },
+                { "@product_item_Group_AutoNum",product_item_Group_AutoNum}
+            };
+
+            int result = await DAL.RunProcedureasync(ProcedureName2, SL);
+            return result == 1;
+        }
+
+
+
+        public async Task<DataTable> Get_product_item_Group()
+        {
+            SortedList SL = new SortedList
+            {
+                { "@Check", "Get_product_item_Group" },
+            };
+
+            DataTable dt = await DAL.SelectDBasync(ProcedureName2, SL);
+            return dt;
+        }
 
     }
 }

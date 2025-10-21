@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DGVProducts = new System.Windows.Forms.DataGridView();
             this.groupBoxItems = new System.Windows.Forms.GroupBox();
             this.LbCountProdects = new System.Windows.Forms.Label();
@@ -39,6 +39,7 @@
             this.BtnSaveData = new System.Windows.Forms.Button();
             this.BtnUpMoveRows = new System.Windows.Forms.Button();
             this.BtnDownMoveRows = new System.Windows.Forms.Button();
+            this.BtnAddToGroup = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProducts)).BeginInit();
             this.groupBoxItems.SuspendLayout();
             this.SuspendLayout();
@@ -50,14 +51,14 @@
             this.DGVProducts.AllowUserToOrderColumns = true;
             this.DGVProducts.AllowUserToResizeRows = false;
             this.DGVProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.DGVProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVProducts.Location = new System.Drawing.Point(12, 189);
             this.DGVProducts.MultiSelect = false;
@@ -72,6 +73,7 @@
             // groupBoxItems
             // 
             this.groupBoxItems.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBoxItems.Controls.Add(this.BtnAddToGroup);
             this.groupBoxItems.Controls.Add(this.LbCountProdects);
             this.groupBoxItems.Controls.Add(this.BtnShowAllProdcts);
             this.groupBoxItems.Controls.Add(this.TxtGroupByItem);
@@ -100,7 +102,7 @@
             // BtnShowAllProdcts
             // 
             this.BtnShowAllProdcts.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.BtnShowAllProdcts.BackColor = System.Drawing.Color.DarkOliveGreen;
+            this.BtnShowAllProdcts.BackColor = System.Drawing.Color.SlateBlue;
             this.BtnShowAllProdcts.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnShowAllProdcts.FlatAppearance.BorderSize = 0;
             this.BtnShowAllProdcts.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumSeaGreen;
@@ -109,7 +111,7 @@
             this.BtnShowAllProdcts.ForeColor = System.Drawing.Color.White;
             this.BtnShowAllProdcts.Location = new System.Drawing.Point(5, 86);
             this.BtnShowAllProdcts.Name = "BtnShowAllProdcts";
-            this.BtnShowAllProdcts.Size = new System.Drawing.Size(295, 55);
+            this.BtnShowAllProdcts.Size = new System.Drawing.Size(404, 55);
             this.BtnShowAllProdcts.TabIndex = 52;
             this.BtnShowAllProdcts.Text = "Add Product to Group";
             this.BtnShowAllProdcts.UseVisualStyleBackColor = false;
@@ -119,14 +121,16 @@
             // 
             this.TxtGroupByItem.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.TxtGroupByItem.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.TxtGroupByItem.DropDownHeight = 300;
             this.TxtGroupByItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TxtGroupByItem.Font = new System.Drawing.Font("Tahoma", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtGroupByItem.FormattingEnabled = true;
+            this.TxtGroupByItem.IntegralHeight = false;
             this.TxtGroupByItem.ItemHeight = 33;
             this.TxtGroupByItem.Location = new System.Drawing.Point(4, 41);
             this.TxtGroupByItem.Margin = new System.Windows.Forms.Padding(2);
             this.TxtGroupByItem.Name = "TxtGroupByItem";
-            this.TxtGroupByItem.Size = new System.Drawing.Size(1062, 41);
+            this.TxtGroupByItem.Size = new System.Drawing.Size(990, 41);
             this.TxtGroupByItem.TabIndex = 2;
             this.TxtGroupByItem.SelectedIndexChanged += new System.EventHandler(this.TxtGroupByItem_SelectedIndexChanged);
             // 
@@ -208,6 +212,24 @@
             this.BtnDownMoveRows.UseVisualStyleBackColor = false;
             this.BtnDownMoveRows.Click += new System.EventHandler(this.BtnDownMoveRows_Click);
             // 
+            // BtnAddToGroup
+            // 
+            this.BtnAddToGroup.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.BtnAddToGroup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.BtnAddToGroup.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnAddToGroup.FlatAppearance.BorderSize = 0;
+            this.BtnAddToGroup.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumSeaGreen;
+            this.BtnAddToGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnAddToGroup.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold);
+            this.BtnAddToGroup.ForeColor = System.Drawing.Color.White;
+            this.BtnAddToGroup.Location = new System.Drawing.Point(999, 42);
+            this.BtnAddToGroup.Name = "BtnAddToGroup";
+            this.BtnAddToGroup.Size = new System.Drawing.Size(59, 41);
+            this.BtnAddToGroup.TabIndex = 66;
+            this.BtnAddToGroup.Text = "+";
+            this.BtnAddToGroup.UseVisualStyleBackColor = false;
+            this.BtnAddToGroup.Click += new System.EventHandler(this.BtnAddToGroup_Click);
+            // 
             // Frm_Products_group
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -242,5 +264,6 @@
         public System.Windows.Forms.Label LbCountProdects;
         private System.Windows.Forms.Button BtnUpMoveRows;
         private System.Windows.Forms.Button BtnDownMoveRows;
+        private System.Windows.Forms.Button BtnAddToGroup;
     }
 }

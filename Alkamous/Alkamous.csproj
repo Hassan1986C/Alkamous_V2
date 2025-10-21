@@ -322,6 +322,12 @@
     <Compile Include="View\Frm_Products_group.Designer.cs">
       <DependentUpon>Frm_Products_group.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Frm_Products_group_AddDeleteUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Frm_Products_group_AddDeleteUpdate.Designer.cs">
+      <DependentUpon>Frm_Products_group_AddDeleteUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Frm_ShowQuotation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -471,6 +477,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Frm_Products_group.resx">
       <DependentUpon>Frm_Products_group.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Frm_Products_group_AddDeleteUpdate.resx">
+      <DependentUpon>Frm_Products_group_AddDeleteUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Frm_ShowQuotation.resx">
       <DependentUpon>Frm_ShowQuotation.cs</DependentUpon>

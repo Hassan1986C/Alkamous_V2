@@ -362,7 +362,7 @@ namespace Alkamous.View
         }
 
         int DataHaveBeenloaded = 0;
-        private void LoadEnumProdectsModules()
+        private void LoadEnumProdectsModules2()
         {
             if (DataHaveBeenloaded == 0)
             {
@@ -381,9 +381,36 @@ namespace Alkamous.View
                 TxtGroupByItem.SelectedIndex = 0;
             }
         }
+
+        public async void LoadEnumProdectsModules()
+        {
+            if (DataHaveBeenloaded == 0)
+            {
+                // Load data from database (await the task)
+                DataTable dtDep = await OperationsofProducts.Get_product_item_Group();
+
+                // Add a default "Select Printer Type" row at the top
+                DataRow newRow = dtDep.NewRow();
+                newRow["product_Group_Name"] = "Load ALL Prodects";
+                newRow["product_item_Group_AutoNum"] = "0";
+                dtDep.Rows.InsertAt(newRow, 0);
+
+                // Bind to ComboBox
+                TxtGroupByItem.DataSource = dtDep;
+                TxtGroupByItem.DisplayMember = "product_Group_Name";
+                TxtGroupByItem.ValueMember = "product_item_Group_AutoNum";
+
+                
+                DataHaveBeenloaded++;
+                Cursor.Current = Cursors.Default;
+                TxtGroupByItem.SelectedIndex = 0;
+            }
+        }
+
         private async void TxtGroupByItem_SelectedIndexChanged(object sender, EventArgs e)
         {
             await Task.Delay(400);
+           
             if (TxtGroupByItem.SelectedIndex == 0)
             {
                 await LazyDataLoader.PerformSearchAsync(DGVProducts);              
@@ -392,7 +419,7 @@ namespace Alkamous.View
             }
             else
             {
-                LoadDataGroupByItem(TxtGroupByItem.Text);
+                LoadDataGroupByItem(TxtGroupByItem.SelectedValue.ToString());
             }
 
         }

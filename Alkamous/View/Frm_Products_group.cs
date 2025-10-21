@@ -21,9 +21,9 @@ namespace Alkamous.View
 
         private readonly ClsOperationsofProducts OperationsofProducts = new ClsOperationsofProducts(new DataAccessLayer());
         private readonly CTB_Products MCTB_Products = new CTB_Products(CTB_Products.ProductFieldNaming.Plain);
-                
+
         public static DataTable dtProducts = new DataTable();
-        
+
 
         private static Frm_Products_group frmProductsgroup;
         public static string Invoice_NumberToGetData { get; set; }
@@ -115,7 +115,7 @@ namespace Alkamous.View
                 Width = 20
             });
 
-           
+
 
             DGVProducts.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -126,7 +126,7 @@ namespace Alkamous.View
                 Visible = false
             });
 
-            
+
 
             // Styling only
             DGVProducts.ColumnHeadersDefaultCellStyle.Padding = new Padding(0, 4, 0, 4);
@@ -171,7 +171,7 @@ namespace Alkamous.View
             InitializeDataGridView();
             LoadEnumProdectsModules();
         }
-                
+
         private async void LoadDataGroupByItem(string Search)
         {
 
@@ -184,7 +184,28 @@ namespace Alkamous.View
 
         }
 
-        private void LoadEnumProdectsModules()
+
+        public async void LoadEnumProdectsModules()
+        {
+            // Load data from database (await the task)
+            DataTable dtDep = await OperationsofProducts.Get_product_item_Group();
+
+            // Add a default "Select Printer Type" row at the top
+            DataRow newRow = dtDep.NewRow();
+            newRow["product_Group_Name"] = "Select Printer Type";
+            newRow["product_item_Group_AutoNum"] = "0";
+            dtDep.Rows.InsertAt(newRow, 0);
+
+            // Bind to ComboBox
+            TxtGroupByItem.DataSource = dtDep;
+            TxtGroupByItem.DisplayMember = "product_Group_Name";
+            TxtGroupByItem.ValueMember = "product_item_Group_AutoNum";
+
+            // Optionally select nothing at first
+            TxtGroupByItem.SelectedIndex = 0;
+        }
+
+        private void LoadEnumProdectsModules2()
         {
             if (DataHaveBeenloaded == 0)
             {
@@ -237,7 +258,7 @@ namespace Alkamous.View
                     MessageBox.Show("No data to save.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
+                string product_GroupBy_Id = Convert.ToString(TxtGroupByItem.SelectedValue.ToString());
                 string product_GroupBy_Name = TxtGroupByItem.Text?.Trim();
 
                 string message = $"Do you want to save the product group '{product_GroupBy_Name}'?";
@@ -246,18 +267,18 @@ namespace Alkamous.View
                 {
                     Cursor.Current = Cursors.WaitCursor;
 
-                    await OperationsofProducts.Delete_product_GroupBy(product_GroupBy_Name);
+                    await OperationsofProducts.Delete_product_GroupBy(product_GroupBy_Id);
 
                     foreach (DataRow row in dtProducts.Rows)
                     {
                         string productId = row["product_Id"]?.ToString()?.Trim();
 
-                        bool result = await OperationsofProducts.Add_product_GroupByAsync(product_GroupBy_Name, productId);
+                        bool result = await OperationsofProducts.Add_product_GroupByAsync(product_GroupBy_Id, productId);
                     }
 
                     Cursor.Current = Cursors.Default;
 
-                   
+
                     MessageBox.Show("Data has been added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //TxtGroupByItem.SelectedIndex = 0;
                 }
@@ -282,11 +303,15 @@ namespace Alkamous.View
             if (TxtGroupByItem.SelectedIndex == 0)
             {
                 dtProducts.Clear();
-
+                LbCountProdects.Text ="0"; 
                 return;
 
+            }           
+
+            if (TxtGroupByItem.SelectedValue != null)
+            {
+                LoadDataGroupByItem(TxtGroupByItem.SelectedValue.ToString());
             }
-            LoadDataGroupByItem(TxtGroupByItem.Text);
         }
 
 
@@ -296,7 +321,7 @@ namespace Alkamous.View
         private void BtnUpMoveRows_Click(object sender, EventArgs e)
         {
             Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProducts, dtProducts, Chelp.MoveDirection.Up));
-           
+
         }
 
         private void BtnDownMoveRows_Click(object sender, EventArgs e)
@@ -306,5 +331,11 @@ namespace Alkamous.View
 
         #endregion
 
+        private void BtnAddToGroup_Click(object sender, EventArgs e)
+        {
+            Frm_Products_group_AddDeleteUpdate frm = new Frm_Products_group_AddDeleteUpdate();
+            frm.ShowDialog();
+            LoadEnumProdectsModules();
+        }
     }
 }
