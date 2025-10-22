@@ -27,8 +27,7 @@ namespace Alkamous.View
 
         private static Frm_Products_group frmProductsgroup;
         public static string Invoice_NumberToGetData { get; set; }
-        int DataHaveBeenloaded = 0;
-
+       
 
         // this methode to make a new form same as orgnal from
         public static Frm_Products_group FrmProductsgroup
@@ -205,25 +204,7 @@ namespace Alkamous.View
             TxtGroupByItem.SelectedIndex = 0;
         }
 
-        private void LoadEnumProdectsModules2()
-        {
-            if (DataHaveBeenloaded == 0)
-            {
-                // تحميل أسماء الـ enum إلى القائمة المنسدلة
-                var result = Enum.GetValues(typeof(ClsOperationsofProducts.ProdectModels));
-
-                TxtGroupByItem.Items.Add("Select Printer Type");
-
-                for (int i = 0; i < result.Length; i++)
-                {
-                    TxtGroupByItem.Items.Add(result.GetValue(i).ToString());
-                }
-
-                DataHaveBeenloaded++;
-                Cursor.Current = Cursors.Default;
-                TxtGroupByItem.SelectedIndex = 0;
-            }
-        }
+      
         private void BtnDeleteRowFromDGVProducts_Click(object sender, EventArgs e)
         {
             DeleteRowFromDGVBySender(DGVProducts, dtProducts);
