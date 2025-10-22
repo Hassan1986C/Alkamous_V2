@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Alkamous.Controller
@@ -283,5 +284,32 @@ namespace Alkamous.Controller
             return dt;
         }
 
+        public async Task<DataTable> Get_product_item_GroupBySearch(string product_Item_Group_Name)
+        {
+            SortedList SL = new SortedList
+            {
+                { "@Check", "Check_product_item_GroupBysearch" },
+                { "@product_Group_Name", product_Item_Group_Name },
+            };
+
+            DataTable dt = await DAL.SelectDBasync(ProcedureName2, SL);
+            return dt;
+        }
+        
+        public async Task<bool> Check_product_item_GroupNotDuplicate(string product_Item_Group_Name)
+        {
+            SortedList SL = new SortedList
+            {
+                { "@Check", "Check_product_item_GroupNotDuplicate" },
+                { "@product_Group_Name", product_Item_Group_Name },
+            };
+
+            DataTable dt = await DAL.SelectDBasync(ProcedureName2, SL);
+
+            int result = Convert.ToInt16(dt.Rows[0][0]);
+            return result > 0;
+        }
+
     }
 }
+

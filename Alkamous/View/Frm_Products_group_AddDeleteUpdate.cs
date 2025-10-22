@@ -47,6 +47,13 @@ namespace Alkamous.View
 
                 if (CheckDataEntry())
                 {
+                    if (await OperationsofProducts.Check_product_item_GroupNotDuplicate(TxtproductGroupName.Text.Trim()))
+                    {
+                        MessageBox.Show("The product group name already exists. Please enter a different name.", "Duplicate Entry", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TxtproductGroupName.Focus();
+                        return;
+                    }
+
                     string product_item_Group_Name = TxtproductGroupName.Text?.Trim();
 
                     string message = $"Do you want to save the product group '{product_item_Group_Name}'?";
@@ -202,6 +209,17 @@ namespace Alkamous.View
                 Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private async void TxtSearch_TextChanged(object sender, EventArgs e)
+        {
+            
+             dtProducts.Clear();
+
+            dtProducts = await OperationsofProducts.Get_product_item_GroupBySearch(TxtSearch.Text.Trim());
+
+            DGVProducts.DataSource = dtProducts;
+            LbCount.Text = dtProducts.Rows.Count.ToString();
         }
     }
 }
