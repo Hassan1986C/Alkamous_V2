@@ -141,7 +141,7 @@ namespace Alkamous.View
         }
 
         private void Frm_Products_Load(object sender, EventArgs e)
-        {           
+        {
             InitializeDataGridView();
             LoadEnumProdectsModules();
 
@@ -259,44 +259,84 @@ namespace Alkamous.View
 
         }
 
+       
         private void AddMultiProducts(CTB_Products MCTB_Products, DataTable targetTable, DataGridView targetDGV, Label targetLabel, TextBox TotalAmount)
         {
-
             var productsToAdd = new List<DataGridViewRow>();
 
-            // Collect rows to be added
+            // 1. Collect selected rows and filter out products already present in the target table
             foreach (DataGridViewRow row in DGVProducts.SelectedRows.Cast<DataGridViewRow>().Reverse())
             {
-                string productId = row.Cells[MCTB_Products.product_Id].Value.ToString().Trim() ?? string.Empty;
+                // Safely extract the Product ID
+                string productId = row.Cells[MCTB_Products.product_Id].Value?.ToString()?.Trim() ?? string.Empty;
 
-                // Check if the product is already in the targetTable by Using Linq
+                if (string.IsNullOrEmpty(productId)) continue;
+
+                // Use LINQ to check if the product already exists in the target DataTable
                 bool productExists = targetTable.AsEnumerable().Any(dr => dr.Field<string>(0) == productId);
 
-                if (!productExists) productsToAdd.Add(row);
-
+                if (!productExists)
+                {
+                    productsToAdd.Add(row);
+                }
             }
 
-            // Add collected products to the targetTable
+            // 2. Process collected products and add them to targetTable
             foreach (var row in productsToAdd)
             {
-                var (STxtPrice, STxtAmount) = Chelp.ExchangeAndTaxesToForward(ExChangeRate, Taxes, row.Cells[MCTB_Products.product_Price].Value.ToString(), "1", Currency);
+                // Extract Product ID for the switch logic
+                string productId = row.Cells[MCTB_Products.product_Id].Value?.ToString() ?? string.Empty;
+                string quantity = "1"; // Default quantity
+
+                // 3. Determine quantity based on Product ID (Specific business logic)
+                switch (productId)
+                {
+                    case "EV-C4511":
+                    case "EV-C8001":
+                    case "FA-81754":
+                    case "SL-CR80-BK":
+                    case "EV-C8152":
+                    case "ID-CARD-033":
+                        quantity = "100";
+                        break;
+                    default:
+                        quantity = "1";
+                        break;
+                }
+
+                // 4. Extract price and handle potential null values
+                string priceStr = row.Cells[MCTB_Products.product_Price].Value?.ToString() ?? "0";
+
+                // 5. Calculate Price and Total Amount using the dynamic quantity determined above
+                // The method handles currency exchange and taxes based on the quantity (1 or 100)
+                var (STxtPrice, STxtAmount) = Chelp.ExchangeAndTaxesToForward(
+                    ExChangeRate,
+                    Taxes,
+                    priceStr,
+                    quantity,
+                    Currency
+                );
+
+                // 6. Map data and add the new row to the target DataTable
                 targetTable.Rows.Add(
-                    row.Cells[MCTB_Products.product_Id].Value.ToString(),
-                    row.Cells[MCTB_Products.product_NameEn].Value.ToString(),
-                    row.Cells[MCTB_Products.product_NameAr].Value.ToString(),
-                    "1",
-                    row.Cells[MCTB_Products.product_Unit].Value.ToString(),
-                    STxtPrice, STxtAmount);
+                    productId,
+                    row.Cells[MCTB_Products.product_NameEn].Value?.ToString() ?? string.Empty,
+                    row.Cells[MCTB_Products.product_NameAr].Value?.ToString() ?? string.Empty,
+                    quantity,
+                    row.Cells[MCTB_Products.product_Unit].Value?.ToString() ?? string.Empty,
+                    STxtPrice,
+                    STxtAmount
+                );
             }
 
-            // Update the target label and total amount
-            targetLabel.Text = targetTable.Rows.Count.ToString(); // Updated to targetTable.Rows.Count instead of targetDGV.Rows.Count
-            //MessageBox.Show(targetTable.Columns.Count.ToString());
+            // 7. Update UI elements (Row count and Total Amount)
+            targetLabel.Text = targetTable.Rows.Count.ToString();
+
+            // Recalculate total sum if the quotation type is not "Group"
             if (isMainQuotation != "Group")
             {
                 TotalAmount.Text = Chelp.DGVProductsChangededReSumTotalAmount(Currency, targetDGV);
             }
-
         }
 
 
@@ -400,7 +440,7 @@ namespace Alkamous.View
                 TxtGroupByItem.DisplayMember = "product_Group_Name";
                 TxtGroupByItem.ValueMember = "product_item_Group_AutoNum";
 
-                
+
                 DataHaveBeenloaded++;
                 Cursor.Current = Cursors.Default;
                 TxtGroupByItem.SelectedIndex = 0;
@@ -410,16 +450,18 @@ namespace Alkamous.View
         private async void TxtGroupByItem_SelectedIndexChanged(object sender, EventArgs e)
         {
             await Task.Delay(400);
-           
+
             if (TxtGroupByItem.SelectedIndex == 0)
             {
-                await LazyDataLoader.PerformSearchAsync(DGVProducts);              
+                await LazyDataLoader.PerformSearchAsync(DGVProducts);
                 await LoadNextPageAsync();
                 TxtSearch.Clear();
+
             }
             else
             {
                 LoadDataGroupByItem(TxtGroupByItem.SelectedValue.ToString());
+
             }
 
         }
@@ -455,33 +497,41 @@ namespace Alkamous.View
 
         private async void DGVProducts_Scroll(object sender, ScrollEventArgs e)
         {
-            // Only handle vertical scrolling events
-            if (e.ScrollOrientation != ScrollOrientation.VerticalScroll)
-                return;
-
-            // Don't proceed if already loading or at end of data
-            if (LazyDataLoader.IsLoading || LazyDataLoader.EndOfData)
-                return;
-
-            var dgv = (DataGridView)sender;
-
-            // Calculate how close we are to the bottom - load when within 3 rows
-            int lastVisibleRowIndex = dgv.FirstDisplayedScrollingRowIndex + dgv.DisplayedRowCount(true) - 1;
-            int totalRows = dgv.RowCount;
-
-
-            // Load next page when scrolled near the bottom
-            if (totalRows > 0 && lastVisibleRowIndex >= totalRows - 3)
+            try
             {
-                await LoadNextPageAsync();
+
+                // Only handle vertical scrolling events
+                if (e.ScrollOrientation != ScrollOrientation.VerticalScroll)
+                    return;
+
+                // Don't proceed if already loading or at end of data
+                if (LazyDataLoader.IsLoading || LazyDataLoader.EndOfData)
+                    return;
+
+                var dgv = (DataGridView)sender;
+
+                // Calculate how close we are to the bottom - load when within 3 rows
+                int lastVisibleRowIndex = dgv.FirstDisplayedScrollingRowIndex + dgv.DisplayedRowCount(true) - 1;
+                int totalRows = dgv.RowCount;
+
+
+                // Load next page when scrolled near the bottom
+                if (totalRows > 0 && lastVisibleRowIndex >= totalRows - 3)
+                {
+                    await LoadNextPageAsync();
+                }
+            }
+            catch (Exception)
+            {
+
             }
 
         }
 
         private async Task LoadNextPageAsync()
         {
-            string uniqueIdColumnName="product_Id";
-            string Search = TxtSearch.Text.Trim();  
+            string uniqueIdColumnName = "product_Id";
+            string Search = TxtSearch.Text.Trim();
             bool Isfavorite = BtnFavorite.Checked;
 
             await LazyDataLoader.LoadNextPageAsync(
@@ -498,6 +548,7 @@ namespace Alkamous.View
 
 
             LbCount.Text = LazyDataLoader.TotalCount;
+            ReColoreDGV(DGVProducts);
         }
     }
 }

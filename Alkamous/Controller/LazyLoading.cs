@@ -94,9 +94,17 @@ namespace Alkamous.Controller
                         string GetuniqueId = newRow[uniqueIdColumnName].ToString();
 
                         // Skip if we already have this product_Id
-                        if (currentData.Select($"{uniqueIdColumnName} = '{GetuniqueId}'").Length == 0)
+                        try
                         {
-                            currentData.ImportRow(newRow);
+                            if (currentData.Select($"{uniqueIdColumnName} = '{GetuniqueId}'").Length == 0)
+                            {
+                                currentData.ImportRow(newRow);
+                            }
+                        }
+                        catch (Exception)
+                        {
+
+                            continue;
                         }
                     }
                 }
