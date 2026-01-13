@@ -41,6 +41,17 @@ namespace Alkamous.View
             frmProductsgroup = this;
         }
 
+        private void ReColoreDGV(DataGridView dataGridView)
+        {
+
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                if (row.Index % 2 == 0)
+                {
+                    dataGridView.Rows[row.Index].DefaultCellStyle.BackColor = Color.WhiteSmoke;
+                }
+            }
+        }
         private void InitializeDataGridView()
         {
             Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.Plain);
@@ -180,6 +191,7 @@ namespace Alkamous.View
 
             DGVProducts.DataSource = dtProducts;
             LbCountProdects.Text = dtProducts.Rows.Count.ToString();
+            ReColoreDGV(DGVProducts);
 
         }
 
@@ -252,7 +264,7 @@ namespace Alkamous.View
 
                     foreach (DataRow row in dtProducts.Rows)
                     {
-                        string productId = row["product_Id"]?.ToString()?.Trim();
+                        string productId = row["product_Id"]?.ToString();
 
                         bool result = await OperationsofProducts.Add_product_GroupByAsync(product_GroupBy_Id, productId);
                     }
