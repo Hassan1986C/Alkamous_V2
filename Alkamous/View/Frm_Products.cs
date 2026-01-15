@@ -26,7 +26,7 @@ namespace Alkamous.View
         private readonly LazyLoading LazyDataLoader = new LazyLoading();
 
         private readonly CancellationTokenSource _cancellationTokenSource;
-
+        bool isScrolling = false;
 
         public Frm_Products()
         {
@@ -138,6 +138,7 @@ namespace Alkamous.View
         private async void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             await LazyDataLoader.TxtSearch_Fun(DGVProducts, LoadNextPageAsync);
+            isScrolling = false;
         }
 
         private void Frm_Products_Load(object sender, EventArgs e)
@@ -418,26 +419,7 @@ namespace Alkamous.View
         }
 
         int DataHaveBeenloaded = 0;
-        private void LoadEnumProdectsModules2()
-        {
-            if (DataHaveBeenloaded == 0)
-            {
-                // تحميل أسماء الـ enum إلى القائمة المنسدلة
-                var result = Enum.GetValues(typeof(ClsOperationsofProducts.ProdectModels));
-
-                TxtGroupByItem.Items.Add("Load ALL Prodects");
-
-                for (int i = 0; i < result.Length; i++)
-                {
-                    TxtGroupByItem.Items.Add(result.GetValue(i).ToString());
-                }
-
-                DataHaveBeenloaded++;
-                Cursor.Current = Cursors.Default;
-                TxtGroupByItem.SelectedIndex = 0;
-            }
-        }
-
+       
         public async void LoadEnumProdectsModules()
         {
             if (DataHaveBeenloaded == 0)
@@ -469,15 +451,18 @@ namespace Alkamous.View
 
             if (TxtGroupByItem.SelectedIndex == 0)
             {
+                
                 await LazyDataLoader.PerformSearchAsync(DGVProducts);
                 await LoadNextPageAsync();
                 TxtSearch.Clear();
+                isScrolling = false;
 
             }
             else
             {
+                
                 LoadDataGroupByItem(TxtGroupByItem.SelectedValue.ToString());
-
+                isScrolling = true;
             }
 
         }
@@ -503,18 +488,22 @@ namespace Alkamous.View
         {
             BtnFavorite.ForeColor = BtnFavorite.Checked ? Color.Red : Color.Black;
             await Task.Delay(200);
+            
             if (await LazyDataLoader.PerformSearchAsync(DGVProducts))
             {
                 // Load first page of new search results
                 await LoadNextPageAsync();
             }
+            isScrolling = false;
         }
 
-
+       
         private async void DGVProducts_Scroll(object sender, ScrollEventArgs e)
         {
             try
             {
+                if (isScrolling) return;
+
 
                 // Only handle vertical scrolling events
                 if (e.ScrollOrientation != ScrollOrientation.VerticalScroll)
