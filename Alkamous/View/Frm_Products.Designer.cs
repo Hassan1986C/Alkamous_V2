@@ -66,7 +66,7 @@
             this.DGVProducts.RowTemplate.Height = 26;
             this.DGVProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVProducts.Size = new System.Drawing.Size(1327, 711);
-            this.DGVProducts.TabIndex = 1;           
+            this.DGVProducts.TabIndex = 1;
             this.DGVProducts.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DGVProducts_Scroll);
             this.DGVProducts.DoubleClick += new System.EventHandler(this.DGVProducts_DoubleClick);
             this.DGVProducts.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DGVProducts_KeyDown);

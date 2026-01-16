@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Alkamous.Controller;
 using System.Threading;
+using System.Drawing;
 
 namespace Alkamous.View
 {
@@ -157,6 +158,17 @@ namespace Alkamous.View
 
                 DGVCustomers.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
+
+            // 1. تلوين الصفوف المتبادلة (الذي شرحناه سابقاً)
+            DGVCustomers.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
+
+            // 2. تلوين الصف عند اختياره (التصحيح)
+            DGVCustomers.DefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+            DGVCustomers.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            // 3. جعل كامل الصف يتم تحديده عند الضغط على أي خلية
+            DGVCustomers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
         }
 
 

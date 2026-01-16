@@ -49,140 +49,192 @@ namespace Alkamous.View
             {
                 Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.SqlParameter);
 
-
                 DGVProducts.RowHeadersVisible = false;
 
-                using (dtProducts = new DataTable())
-                {
-                    dtProducts.Columns.Add(MCTB_Products.product_Id);
-                    dtProducts.Columns.Add(MCTB_Products.product_NameEn);
-                    dtProducts.Columns.Add(MCTB_Products.product_NameAr);
-                    dtProducts.Columns.Add("Invoice_QTY");
-                    dtProducts.Columns.Add("Invoice_Unit");
-                    dtProducts.Columns.Add(MCTB_Products.product_Price);
-                    dtProducts.Columns.Add("Invoice_Amount");
-                   
-                    DGVProducts.DataSource = dtProducts;
-                }
+                dtProducts = new DataTable();
+                dtProducts.Columns.Add(MCTB_Products.product_Id);
+                dtProducts.Columns.Add(MCTB_Products.product_NameEn);
+                dtProducts.Columns.Add(MCTB_Products.product_NameAr);
+                dtProducts.Columns.Add("Invoice_QTY");
+                dtProducts.Columns.Add("Invoice_Unit");
+                dtProducts.Columns.Add(MCTB_Products.product_Price);
+                dtProducts.Columns.Add("Invoice_Amount");
 
+                DGVProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                DGVProducts.DataSource = dtProducts;
 
+                // --- تسميات العناوين ---
                 DGVProducts.Columns[0].HeaderText = "Code";
-                DGVProducts.Columns[1].HeaderText = "product En";
-                DGVProducts.Columns[2].HeaderText = "product Ar";
+                DGVProducts.Columns[1].HeaderText = "Product En";
+                DGVProducts.Columns[2].HeaderText = "Product Ar";
                 DGVProducts.Columns[3].HeaderText = "QTY";
                 DGVProducts.Columns[4].HeaderText = "Unit";
                 DGVProducts.Columns[5].HeaderText = "Price";
                 DGVProducts.Columns[6].HeaderText = "Amount";
 
-                //DGVProducts.Columns[0].Width = 50;  // Code
-                //DGVProducts.Columns[1].Width = 200; // Product En
-                //DGVProducts.Columns[2].Width = 200; // Product Ar
-                //DGVProducts.Columns[3].Width = 40;  // QTY
-                //DGVProducts.Columns[4].Width = 40;  // Unit
-                //DGVProducts.Columns[5].Width = 60;  // Price
-                //DGVProducts.Columns[6].Width = 100; // Amount
+                // --- ضبط القياسات (Fill لضمان ملء الشاشة) ---
+                DGVProducts.Columns[0].Width = 80;
+                DGVProducts.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                DGVProducts.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                DGVProducts.Columns[3].Width = 55;
+                DGVProducts.Columns[4].Width = 65;
+                DGVProducts.Columns[5].Width = 90;
+                DGVProducts.Columns[6].Width = 110;
 
-                // Set the font and alignment for the first column                
+                // --- التنسيق والمحاذاة ---
                 DGVProducts.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
-                // Set the font and alignment for the second column               
                 DGVProducts.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                DGVProducts.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // السعر
+                DGVProducts.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // الإجمالي
 
-                DGVProducts.Columns[1].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-                DGVProducts.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
+                // --- إعدادات الحماية والتعديل (مهم جداً) ---
+                // تفعيل وضع التعديل العام أولاً
+                DGVProducts.ReadOnly = false;
+
+                foreach (DataGridViewColumn col in DGVProducts.Columns)
+                {
+                    col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                    // محاذاة الأعمدة الوسطى (Code, QTY, Unit)
+                    if (col.Index != 1 && col.Index != 2 && col.Index != 5 && col.Index != 6)
+                        col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                    // جعل كل الأعمدة غير قابلة للتعديل بشكل افتراضي
+                    col.ReadOnly = true;
+                }
+
+                // الآن: فتح الحقول التي طلبتها للتعديل يدوياً
+                DGVProducts.Columns[3].ReadOnly = false; // الكمية QTY
+                DGVProducts.Columns[4].ReadOnly = false; // الوحدة Unit
+                DGVProducts.Columns[5].ReadOnly = false; // السعر Price
+
+                // --- اللمسات الاحترافية النهائية ---
+                DGVProducts.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
+                DGVProducts.DefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+                DGVProducts.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+                // تم إلغاء FullRowSelect لكي يستطيع المستخدم الضغط داخل الخلية للكتابة بسهولة
+                DGVProducts.SelectionMode = DataGridViewSelectionMode.CellSelect;
 
                 DGVProducts.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
-                // Manually set the height of any rows that exceed the default maximum height
-                DGVProducts.RowTemplate.Height = 50; // set a default height for rows
+                // منع الوميض (Double Buffering)
+                typeof(DataGridView).InvokeMember("DoubleBuffered",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty,
+                    null, DGVProducts, new object[] { true });
 
-                DGVProducts.Columns[0].ReadOnly = true;
-                DGVProducts.Columns[1].ReadOnly = true;
-                DGVProducts.Columns[2].ReadOnly = true;
-                //DGVProducts.Columns[3].ReadOnly = true;
-                //DGVProducts.Columns[4].ReadOnly = true;
-                //DGVProducts.Columns[5].ReadOnly = true;
-                DGVProducts.Columns[6].ReadOnly = true;
-
-                for (int i = 0; i < DGVProducts.Columns.Count; i++)
-                    DGVProducts.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
             catch (Exception ex)
             {
-                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name.ToString();
+                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("حدث خطأ أثناء تهيئة الجدول: " + ex.Message);
             }
-
         }
 
         private void DGVColumnHeaderTextAndWidthProductesConsumable()
         {
             try
             {
+                // 1. إعداد الموديل (استخدام Plain كما في كودك الأخير)
                 Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.Plain);
-
 
                 DGVProductsConsumable.RowHeadersVisible = false;
 
-                using (dtProductsConsumable = new DataTable())
-                {
-                    dtProductsConsumable.Columns.Add(MCTB_Products.product_Id);
-                    dtProductsConsumable.Columns.Add(MCTB_Products.product_NameEn);
-                    dtProductsConsumable.Columns.Add(MCTB_Products.product_NameAr);
-                    dtProductsConsumable.Columns.Add("Invoice_QTY");
-                    dtProductsConsumable.Columns.Add("Consumable_Unit");
-                    dtProductsConsumable.Columns.Add(MCTB_Products.product_Price);
-                    dtProductsConsumable.Columns.Add("Invoice_Amount");
+                // 2. تصحيح مصدر البيانات (إزالة الـ using لمنع اختفاء البيانات NullReference)
+                dtProductsConsumable = new DataTable();
+                dtProductsConsumable.Columns.Add(MCTB_Products.product_Id);
+                dtProductsConsumable.Columns.Add(MCTB_Products.product_NameEn);
+                dtProductsConsumable.Columns.Add(MCTB_Products.product_NameAr);
+                dtProductsConsumable.Columns.Add("Invoice_QTY");
+                dtProductsConsumable.Columns.Add("Consumable_Unit");
+                dtProductsConsumable.Columns.Add(MCTB_Products.product_Price);
+                dtProductsConsumable.Columns.Add("Invoice_Amount");
 
-                    DGVProductsConsumable.DataSource = dtProductsConsumable;
-                }
+                // 3. ضبط وضع الأوتو سايز لضمان استجابة القياسات اليدوية والـ Fill
+                DGVProductsConsumable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                DGVProductsConsumable.DataSource = dtProductsConsumable;
 
-
+                // 4. تسميات العناوين
                 DGVProductsConsumable.Columns[0].HeaderText = "Code";
-                DGVProductsConsumable.Columns[1].HeaderText = "product En";
-                DGVProductsConsumable.Columns[2].HeaderText = "product Ar";
+                DGVProductsConsumable.Columns[1].HeaderText = "Product En";
+                DGVProductsConsumable.Columns[2].HeaderText = "Product Ar";
                 DGVProductsConsumable.Columns[3].HeaderText = "QTY";
                 DGVProductsConsumable.Columns[4].HeaderText = "Unit";
                 DGVProductsConsumable.Columns[5].HeaderText = "Price";
                 DGVProductsConsumable.Columns[6].HeaderText = "Amount";
 
+                // 5. توزيع مساحة الأعمدة (التطابق مع الصورة 2)
+                DGVProductsConsumable.Columns[0].Width = 80;  // Code
 
-                // Set the font and alignment for the first column                
+                // أعمدة الوصف تأخذ المساحة المتبقية بالتساوي
+                DGVProductsConsumable.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                DGVProductsConsumable.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+                DGVProductsConsumable.Columns[3].Width = 55;  // QTY
+                DGVProductsConsumable.Columns[4].Width = 65;  // Unit
+                DGVProductsConsumable.Columns[5].Width = 90;  // Price
+                DGVProductsConsumable.Columns[6].Width = 110; // Amount
+
+                // 6. التنسيق والمحاذاة المالية
                 DGVProductsConsumable.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
-                // Set the font and alignment for the second column               
                 DGVProductsConsumable.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
+                // محاذاة المبالغ لليمين (Price & Amount)
+                DGVProductsConsumable.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                DGVProductsConsumable.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+                // تنسيق الأرقام (N2)
+                DGVProductsConsumable.Columns[5].DefaultCellStyle.Format = "N2";
+                DGVProductsConsumable.Columns[6].DefaultCellStyle.Format = "N2";
+
+                // تفعيل التفاف النص
                 DGVProductsConsumable.Columns[1].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
                 DGVProductsConsumable.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
+                // 7. إعدادات الحماية والتعديل (Editable Fields)
+                DGVProductsConsumable.ReadOnly = false;
+
+                foreach (DataGridViewColumn col in DGVProductsConsumable.Columns)
+                {
+                    col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                    // توسيط الكود والكمية والوحدة
+                    if (col.Index != 1 && col.Index != 2 && col.Index != 5 && col.Index != 6)
+                        col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                    col.ReadOnly = true; // قفل الكل
+                }
+
+                // فتح حقول التعديل المطلوبة للمستهلكات
+                DGVProductsConsumable.Columns[3].ReadOnly = false; // QTY
+                DGVProductsConsumable.Columns[4].ReadOnly = false; // Unit
+                DGVProductsConsumable.Columns[5].ReadOnly = false; // Price
+
+                // 8. اللمسات الجمالية والأداء
+                DGVProductsConsumable.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
+                DGVProductsConsumable.DefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+                DGVProductsConsumable.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+                // استخدام CellSelect لتمكين التحرير الفوري للكميات
+                DGVProductsConsumable.SelectionMode = DataGridViewSelectionMode.CellSelect;
 
                 DGVProductsConsumable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                DGVProductsConsumable.RowTemplate.Height = 50;
 
-                // Manually set the height of any rows that exceed the default maximum height
-                DGVProductsConsumable.RowTemplate.Height = 50; // set a default height for rows
-
-                DGVProductsConsumable.Columns[0].ReadOnly = true;
-                DGVProductsConsumable.Columns[1].ReadOnly = true;
-                DGVProductsConsumable.Columns[2].ReadOnly = true;
-                //DGVProductsConsumable.Columns[3].ReadOnly = true;
-                //DGVProductsConsumable.Columns[4].ReadOnly = true;
-                //DGVProductsConsumable.Columns[5].ReadOnly = true;
-                DGVProductsConsumable.Columns[6].ReadOnly = true;
-
-                for (int i = 0; i < DGVProductsConsumable.Columns.Count; i++)
-                    DGVProductsConsumable.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                // منع الوميض عند التمرير
+                typeof(DataGridView).InvokeMember("DoubleBuffered",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty,
+                    null, DGVProductsConsumable, new object[] { true });
 
             }
             catch (Exception ex)
             {
-                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name.ToString();
+                string MethodNames = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 Chelp.WriteErrorLog(Name + " => " + MethodNames + " => " + ex.Message);
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("حدث خطأ في جدول المستهلكات: " + ex.Message);
             }
-
         }
 
         private void DGVColumnHeaderTextAndWidthTermsInvo()
@@ -232,6 +284,18 @@ namespace Alkamous.View
 
             for (int i = 0; i < DGVTermsInvose.Columns.Count; i++)
                 DGVTermsInvose.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+
+            // 1. تلوين الصفوف المتبادلة (الذي شرحناه سابقاً)
+            DGVTermsInvose.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
+
+            // 2. تلوين الصف عند اختياره (التصحيح)
+            DGVTermsInvose.DefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+            DGVTermsInvose.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            // 3. جعل كامل الصف يتم تحديده عند الضغط على أي خلية
+            DGVTermsInvose.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
 
         }
 

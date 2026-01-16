@@ -1,17 +1,13 @@
 ﻿using Alkamous.Controller;
-using Alkamous.InterfaceForAllClass;
 using Alkamous.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Interop;
-using static Alkamous.Controller.ClsOperationsofProducts;
 
 namespace Alkamous.View
 {
@@ -43,17 +39,17 @@ namespace Alkamous.View
             }
         }
 
-        private void ReColoreDGV(DataGridView dataGridView)
-        {
+        //private void ReColoreDGV(DataGridView dataGridView)
+        //{
 
-            foreach (DataGridViewRow row in dataGridView.Rows)
-            {
-                if (row.Index % 2 == 0)
-                {
-                    dataGridView.Rows[row.Index].DefaultCellStyle.BackColor = Color.WhiteSmoke;
-                }
-            }
-        }
+        //    foreach (DataGridViewRow row in dataGridView.Rows)
+        //    {
+        //        if (row.Index % 2 == 0)
+        //        {
+        //            dataGridView.Rows[row.Index].DefaultCellStyle.BackColor = Color.WhiteSmoke;
+        //        }
+        //    }
+        //}
 
         private void InitializeDataGridView()
         {
@@ -131,6 +127,17 @@ namespace Alkamous.View
             DGVProducts.Columns[MCTB_Products.product_NameAr].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             DGVProducts.Columns[MCTB_Products.product_Price].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             DGVProducts.Columns[MCTB_Products.product_Unit].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // 1. تلوين الصفوف المتبادلة (الذي شرحناه سابقاً)
+            DGVProducts.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
+
+            // 2. تلوين الصف عند اختياره (التصحيح)
+            DGVProducts.DefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+            DGVProducts.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            // 3. جعل كامل الصف يتم تحديده عند الضغط على أي خلية
+            DGVProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
         }
 
 
@@ -464,7 +471,7 @@ namespace Alkamous.View
                 LoadDataGroupByItem(TxtGroupByItem.SelectedValue.ToString());
                 isScrolling = true;
             }
-
+          
         }
 
         private void Frm_Products_FormClosing(object sender, FormClosingEventArgs e)
@@ -473,7 +480,7 @@ namespace Alkamous.View
             _cancellationTokenSource?.Dispose();
         }
 
-
+       
 
         private async void LoadDataGroupByItem(string Search)
         {
@@ -553,7 +560,7 @@ namespace Alkamous.View
 
 
             LbCount.Text = LazyDataLoader.TotalCount;
-            ReColoreDGV(DGVProducts);
+           
         }
     }
 }

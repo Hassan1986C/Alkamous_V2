@@ -116,6 +116,17 @@ namespace Alkamous.View
                     DGVProducts.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 
+                // 1. تلوين الصفوف المتبادلة (الذي شرحناه سابقاً)
+                DGVProducts.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
+
+                // 2. تلوين الصف عند اختياره (التصحيح)
+                DGVProducts.DefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
+                DGVProducts.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+                // 3. جعل كامل الصف يتم تحديده عند الضغط على أي خلية
+                DGVProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+
             }
             catch (Exception ex)
             {
@@ -124,7 +135,7 @@ namespace Alkamous.View
                 MessageBox.Show(ex.Message);
             }
         }
-
+               
         private void DGVColumnHeaderTextAndWidthProductesConsumable()
         {
             try
