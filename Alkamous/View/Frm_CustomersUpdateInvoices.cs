@@ -50,22 +50,22 @@ namespace Alkamous.View
         {
             try
             {
-                Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.SqlParameter);
+                Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.Plain);
 
                 dtProducts.Clear();
                 DGVProducts.RowHeadersVisible = false;
 
-                using (dtProducts = new DataTable())
-                {
-                    dtProducts.Columns.Add(MCTB_Products.product_Id);
-                    dtProducts.Columns.Add(MCTB_Products.product_NameEn);
-                    dtProducts.Columns.Add(MCTB_Products.product_NameAr);
-                    dtProducts.Columns.Add("Invoice_QTY");
-                    dtProducts.Columns.Add("Invoice_Unit");
-                    dtProducts.Columns.Add(MCTB_Products.product_Price);
-                    dtProducts.Columns.Add("Invoice_Amount");
-                    DGVProducts.DataSource = dtProducts;
-                }
+
+                dtProducts = new DataTable();
+                dtProducts.Columns.Add(MCTB_Products.product_Id);
+                dtProducts.Columns.Add(MCTB_Products.product_NameEn);
+                dtProducts.Columns.Add(MCTB_Products.product_NameAr);
+                dtProducts.Columns.Add("Invoice_QTY");
+                dtProducts.Columns.Add("Invoice_Unit");
+                dtProducts.Columns.Add(MCTB_Products.product_Price);
+                dtProducts.Columns.Add("Invoice_Amount");
+                DGVProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                DGVProducts.DataSource = dtProducts;
 
 
                 DGVProducts.Columns[0].HeaderText = "Code";
@@ -76,13 +76,14 @@ namespace Alkamous.View
                 DGVProducts.Columns[5].HeaderText = "Price";
                 DGVProducts.Columns[6].HeaderText = "Amount";
 
-                // DGVProducts.Columns[0].Width = 50;
-                //DGVProducts.Columns[1].Width = 100;
-                //DGVProducts.Columns[2].Width = 100;
-                //DGVProducts.Columns[3].Width = 30;
-                //DGVProducts.Columns[4].Width = 20;
-                //DGVProducts.Columns[5].Width = 30;
-                //DGVProducts.Columns[6].Width = 100;
+                // --- ضبط القياسات (Fill لضمان ملء الشاشة) ---
+                DGVProducts.Columns[0].Width = 80;
+                DGVProducts.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                DGVProducts.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                DGVProducts.Columns[3].Width = 55;
+                DGVProducts.Columns[4].Width = 65;
+                DGVProducts.Columns[5].Width = 90;
+                DGVProducts.Columns[6].Width = 110;
 
 
                 // Set the font and alignment for the first column                
@@ -101,15 +102,15 @@ namespace Alkamous.View
                 DGVProducts.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
                 // Manually set the height of any rows that exceed the default maximum height
-                DGVProducts.RowTemplate.Height = 50; // set a default height for rows
+                //DGVProducts.RowTemplate.Height = 50; // set a default height for rows
 
-                //
+
                 DGVProducts.Columns[0].ReadOnly = true;
                 DGVProducts.Columns[1].ReadOnly = true;
                 DGVProducts.Columns[2].ReadOnly = true;
-                //DGVProducts.Columns[3].ReadOnly = true;
-                //DGVProducts.Columns[4].ReadOnly = true;
-                //DGVProducts.Columns[5].ReadOnly = true;
+                //DGVProducts.Columns[3].ReadOnly = false;
+                //DGVProducts.Columns[4].ReadOnly = false;
+                //DGVProducts.Columns[5].ReadOnly = false;
                 DGVProducts.Columns[6].ReadOnly = true;
 
                 for (int i = 0; i < DGVProducts.Columns.Count; i++)
@@ -135,12 +136,13 @@ namespace Alkamous.View
                 MessageBox.Show(ex.Message);
             }
         }
-               
+
+
         private void DGVColumnHeaderTextAndWidthProductesConsumable()
         {
             try
             {
-                Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.SqlParameter);
+                Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.Plain);
 
 
                 DGVProductsConsumable.RowHeadersVisible = false;
@@ -181,16 +183,15 @@ namespace Alkamous.View
                 DGVProductsConsumable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
                 // Manually set the height of any rows that exceed the default maximum height
-                DGVProductsConsumable.RowTemplate.Height = 50; // set a default height for rows
+                //DGVProductsConsumable.RowTemplate.Height = 50; // set a default height for rows
 
                 DGVProductsConsumable.Columns[0].ReadOnly = true;
                 DGVProductsConsumable.Columns[1].ReadOnly = true;
                 DGVProductsConsumable.Columns[2].ReadOnly = true;
-                //DGVProductsConsumable.Columns[3].ReadOnly = true;
-                //DGVProductsConsumable.Columns[4].ReadOnly = true;
-                //DGVProductsConsumable.Columns[5].ReadOnly = true;
+                //DGVProductsConsumable.Columns[3].ReadOnly = false;
+                //DGVProductsConsumable.Columns[4].ReadOnly = false;
+                //DGVProductsConsumable.Columns[5].ReadOnly = false;
                 DGVProductsConsumable.Columns[6].ReadOnly = true;
-
 
                 for (int i = 0; i < DGVProductsConsumable.Columns.Count; i++)
                     DGVProductsConsumable.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;

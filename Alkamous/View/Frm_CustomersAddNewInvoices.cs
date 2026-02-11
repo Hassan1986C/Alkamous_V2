@@ -72,6 +72,7 @@ namespace Alkamous.View
                 DGVProducts.Columns[5].HeaderText = "Price";
                 DGVProducts.Columns[6].HeaderText = "Amount";
 
+             
                 // --- ضبط القياسات (Fill لضمان ملء الشاشة) ---
                 DGVProducts.Columns[0].Width = 80;
                 DGVProducts.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -115,7 +116,7 @@ namespace Alkamous.View
                 DGVProducts.DefaultCellStyle.SelectionForeColor = Color.Black;
 
                 // تم إلغاء FullRowSelect لكي يستطيع المستخدم الضغط داخل الخلية للكتابة بسهولة
-                DGVProducts.SelectionMode = DataGridViewSelectionMode.CellSelect;
+               //  DGVProducts.SelectionMode = DataGridViewSelectionMode.CellSelect;
 
                 DGVProducts.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
@@ -216,9 +217,7 @@ namespace Alkamous.View
                 DGVProductsConsumable.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
                 DGVProductsConsumable.DefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
                 DGVProductsConsumable.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-                // استخدام CellSelect لتمكين التحرير الفوري للكميات
-                DGVProductsConsumable.SelectionMode = DataGridViewSelectionMode.CellSelect;
+                              
 
                 DGVProductsConsumable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
                 DGVProductsConsumable.RowTemplate.Height = 50;

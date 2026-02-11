@@ -245,12 +245,7 @@ namespace Alkamous.View
         {
             try
             {
-                // Check if there is data to save
-                if (DGVProducts.RowCount == 0)
-                {
-                    MessageBox.Show("No data to save.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+               
                 string product_GroupBy_Id = Convert.ToString(TxtGroupByItem.SelectedValue.ToString());
                 string product_GroupBy_Name = TxtGroupByItem.Text?.Trim();
 
@@ -285,10 +280,44 @@ namespace Alkamous.View
             }
         }
 
+        
         private async void BtnSaveData_Click(object sender, EventArgs e)
         {
-            if (TxtGroupByItem.SelectedIndex == 0) return;
-            await SaveData();
+            try
+            {
+                // 1. استخدام الحارس (Guard Clauses) لتبسيط الكود وتقليل التداخل (Nesting)
+                if (TxtGroupByItem.SelectedIndex <= 0)
+                {
+                    MessageBox.Show("Please select a group to add the products to.", "Selection Required",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                if (DGVProducts.Rows.Count == 0)
+                {
+                    MessageBox.Show("There are no products to save.", "Empty Data",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // 2. تعطيل الزر لمنع النقرات المتعددة (Race Conditions)
+                BtnSaveData.Enabled = false;
+
+                // 3. تنفيذ عملية الحفظ
+                await SaveData();
+               
+            }
+            catch (Exception ex)
+            {
+                // 4. معالجة الأخطاء (Error Handling)
+                MessageBox.Show($"An error occurred while saving: {ex.Message}", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // 5. إعادة تفعيل الزر في كل الأحوال
+                BtnSaveData.Enabled = true;
+            }
         }
 
         private void TxtGroupByItem_SelectedIndexChanged(object sender, EventArgs e)

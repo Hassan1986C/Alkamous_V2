@@ -267,7 +267,7 @@ namespace Alkamous.View
 
         }
 
-       
+
         private void AddMultiProducts(CTB_Products MCTB_Products, DataTable targetTable, DataGridView targetDGV, Label targetLabel, TextBox TotalAmount)
         {
             var productsToAdd = new List<DataGridViewRow>();
@@ -394,7 +394,7 @@ namespace Alkamous.View
                 }
             }
         }
-        
+
         #endregion
 
         private void DGVProducts_KeyDown(object sender, KeyEventArgs e)
@@ -426,7 +426,7 @@ namespace Alkamous.View
         }
 
         int DataHaveBeenloaded = 0;
-       
+
         public async void LoadEnumProdectsModules()
         {
             if (DataHaveBeenloaded == 0)
@@ -458,20 +458,23 @@ namespace Alkamous.View
 
             if (TxtGroupByItem.SelectedIndex == 0)
             {
-                
-                await LazyDataLoader.PerformSearchAsync(DGVProducts);
-                await LoadNextPageAsync();
-                TxtSearch.Clear();
                 isScrolling = false;
 
+                if (string.IsNullOrEmpty(TxtSearch.Text))
+                {
+                    await LazyDataLoader.PerformSearchAsync(DGVProducts);
+                    await LoadNextPageAsync();
+                }else
+                {
+                    TxtSearch.Clear();
+                }      
             }
             else
             {
-                
                 LoadDataGroupByItem(TxtGroupByItem.SelectedValue.ToString());
                 isScrolling = true;
             }
-          
+
         }
 
         private void Frm_Products_FormClosing(object sender, FormClosingEventArgs e)
@@ -480,7 +483,7 @@ namespace Alkamous.View
             _cancellationTokenSource?.Dispose();
         }
 
-       
+
 
         private async void LoadDataGroupByItem(string Search)
         {
@@ -495,7 +498,7 @@ namespace Alkamous.View
         {
             BtnFavorite.ForeColor = BtnFavorite.Checked ? Color.Red : Color.Black;
             await Task.Delay(200);
-            
+
             if (await LazyDataLoader.PerformSearchAsync(DGVProducts))
             {
                 // Load first page of new search results
@@ -504,7 +507,7 @@ namespace Alkamous.View
             isScrolling = false;
         }
 
-       
+
         private async void DGVProducts_Scroll(object sender, ScrollEventArgs e)
         {
             try
@@ -560,7 +563,7 @@ namespace Alkamous.View
 
 
             LbCount.Text = LazyDataLoader.TotalCount;
-           
+
         }
     }
 }

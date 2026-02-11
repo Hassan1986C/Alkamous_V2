@@ -113,6 +113,7 @@
             this.TxtAmountConsumable = new System.Windows.Forms.TextBox();
             this.DGVProductsConsumable = new System.Windows.Forms.DataGridView();
             this.tabPageTermsandconditions = new System.Windows.Forms.TabPage();
+            this.BtnAddTermsToServerAsNewTerm = new System.Windows.Forms.CheckBox();
             this.LbCountTerms = new System.Windows.Forms.Label();
             this.BtnMoveTermRowUP = new System.Windows.Forms.Button();
             this.BtnMoveTermRowDown = new System.Windows.Forms.Button();
@@ -138,7 +139,6 @@
             this.label24 = new System.Windows.Forms.Label();
             this.txtSelectAcount = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.BtnAddTermsToServerAsNewTerm = new System.Windows.Forms.CheckBox();
             this.groupBoxAddDataToDGV.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProducts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGVTermsInvose)).BeginInit();
@@ -1303,6 +1303,18 @@
             this.tabPageTermsandconditions.TabIndex = 2;
             this.tabPageTermsandconditions.Text = "    Terms and conditions    ";
             // 
+            // BtnAddTermsToServerAsNewTerm
+            // 
+            this.BtnAddTermsToServerAsNewTerm.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnAddTermsToServerAsNewTerm.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAddTermsToServerAsNewTerm.Location = new System.Drawing.Point(442, 265);
+            this.BtnAddTermsToServerAsNewTerm.Name = "BtnAddTermsToServerAsNewTerm";
+            this.BtnAddTermsToServerAsNewTerm.Size = new System.Drawing.Size(270, 40);
+            this.BtnAddTermsToServerAsNewTerm.TabIndex = 65;
+            this.BtnAddTermsToServerAsNewTerm.Text = "Add To Terms As New Term";
+            this.BtnAddTermsToServerAsNewTerm.UseVisualStyleBackColor = true;
+            this.BtnAddTermsToServerAsNewTerm.CheckedChanged += new System.EventHandler(this.BtnAddTermsToServerAsNewTerm_CheckedChanged);
+            // 
             // LbCountTerms
             // 
             this.LbCountTerms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -1598,18 +1610,6 @@
             this.label13.Size = new System.Drawing.Size(214, 18);
             this.label13.TabIndex = 62;
             this.label13.Text = "Select Bank Name And Account";
-            // 
-            // BtnAddTermsToServerAsNewTerm
-            // 
-            this.BtnAddTermsToServerAsNewTerm.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnAddTermsToServerAsNewTerm.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAddTermsToServerAsNewTerm.Location = new System.Drawing.Point(442, 265);
-            this.BtnAddTermsToServerAsNewTerm.Name = "BtnAddTermsToServerAsNewTerm";
-            this.BtnAddTermsToServerAsNewTerm.Size = new System.Drawing.Size(270, 40);
-            this.BtnAddTermsToServerAsNewTerm.TabIndex = 65;
-            this.BtnAddTermsToServerAsNewTerm.Text = "Add To Terms As New Term";
-            this.BtnAddTermsToServerAsNewTerm.UseVisualStyleBackColor = true;
-            this.BtnAddTermsToServerAsNewTerm.CheckedChanged += new System.EventHandler(this.BtnAddTermsToServerAsNewTerm_CheckedChanged);
             // 
             // Frm_CustomersUpdateInvoices
             // 

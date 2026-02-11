@@ -232,7 +232,7 @@ namespace Alkamous.View
 
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-            LazyDataLoader.TxtSearch_Fun(DGVCustomers, LoadNextPageAsync);
+            _ = LazyDataLoader.TxtSearch_Fun(DGVCustomers, LoadNextPageAsync);
         }
 
         private async Task GetDistinctProductAsync()
@@ -579,7 +579,7 @@ namespace Alkamous.View
         {
             if (TxtDistinctProduct.SelectedValue != null)
             {
-                // to get all invoices search by product id 
+                // to get all invoices number by search by product id 
                 DataTable InvoiceNumber = OperationsofInvoices.Get_Invoice_Byproduct_Id(TxtDistinctProduct.SelectedValue.ToString());
 
                 List<DataRow> resultRows = new List<DataRow>();
