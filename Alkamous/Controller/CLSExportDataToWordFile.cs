@@ -73,11 +73,12 @@ namespace Alkamous.Controller
                 string Customer_BankAccount = dtTB_CustomerReport.Rows[0]["Customer_BankAccount"].ToString();
                 string Customer_Language = dtTB_CustomerReport.Rows[0]["Customer_Language"].ToString();
                 string PaymentASTermsCostem = dtTB_CustomerReport.Rows[0]["Customer_Note"].ToString();
+                string Customer_Note_Quote_Name = dtTB_CustomerReport.Rows[0]["Customer_Note2"].ToString();
                 // Parse payment percentage with fallback to 100
                 int Customer_ValOfPaymentInAdv = int.TryParse(PaymentASTermsCostem, out Customer_ValOfPaymentInAdv) ? Customer_ValOfPaymentInAdv : 100;
 
-                // Generate Export File Name -> Quotation #123 For ALKAMOUS
-                string ExportFileName = $"Quotation #{Customer_Invoice_Number} For {(Customer_Company != "" ? Customer_Company : Customer_Name)}";
+                // Generate Export File Name -> Quotation #123 printerModule For ALKAMOUS
+                string ExportFileName = $"Quotation #{Customer_Invoice_Number} {Customer_Note_Quote_Name} For {(Customer_Company != "" ? Customer_Company : Customer_Name)}";
 
 
                 _replaceBookmarks["Customer_Invoice_Number"].Range.Text = Customer_Invoice_Number;

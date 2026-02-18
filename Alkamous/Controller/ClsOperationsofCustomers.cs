@@ -60,6 +60,7 @@ namespace Alkamous.Controller
                 {MTB_Customers.Customer_BankAccount , item.Customer_BankAccount },
                 {MTB_Customers.Customer_Language , item.Customer_Language },
                 {MTB_Customers.Customer_Note , item.Customer_Note },
+                {MTB_Customers.Customer_Note2 , item.Customer_Note2 },
             };
             return SL;
         }

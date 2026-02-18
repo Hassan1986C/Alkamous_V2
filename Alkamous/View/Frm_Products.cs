@@ -38,19 +38,6 @@ namespace Alkamous.View
                 Chelp.WriteErrorLog("ICon =>" + ex.Message);
             }
         }
-
-        //private void ReColoreDGV(DataGridView dataGridView)
-        //{
-
-        //    foreach (DataGridViewRow row in dataGridView.Rows)
-        //    {
-        //        if (row.Index % 2 == 0)
-        //        {
-        //            dataGridView.Rows[row.Index].DefaultCellStyle.BackColor = Color.WhiteSmoke;
-        //        }
-        //    }
-        //}
-
         private void InitializeDataGridView()
         {
             DGVProducts.AutoGenerateColumns = false;
@@ -161,7 +148,9 @@ namespace Alkamous.View
         {
             try
             {
-                var isMultiSelect = BtnMultiSelectItem.Checked;
+               
+                bool isMultiSelect=DGVProducts.SelectedRows.Count > 1;
+
 
                 // Group
                 // NewInvoices
@@ -402,13 +391,10 @@ namespace Alkamous.View
             if (e.KeyCode == Keys.Enter)
             {
                 SelectProductAndSendParameterToForms();
+
             }
         }
-
-        private void DGVProducts_DoubleClick(object sender, EventArgs e)
-        {
-            SelectProductAndSendParameterToForms();
-        }
+              
 
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
         {
@@ -418,12 +404,7 @@ namespace Alkamous.View
             }
         }
 
-        private void BtnMultiSelectItem_CheckedChanged(object sender, EventArgs e)
-        {
-            DGVProducts.MultiSelect = BtnMultiSelectItem.Checked;
-            BtnMultiSelectItem.ForeColor = BtnMultiSelectItem.Checked ? Color.Red : Color.Black;
 
-        }
 
         int DataHaveBeenloaded = 0;
 

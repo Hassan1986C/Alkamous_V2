@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TxtTotalAmount = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.BtnDeleteRowFromDGVProducts = new System.Windows.Forms.Button();
@@ -139,6 +139,9 @@
             this.label24 = new System.Windows.Forms.Label();
             this.txtSelectAcount = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.groupBoxAdditional_information = new System.Windows.Forms.GroupBox();
+            this.TxtSelectFileName = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.groupBoxAddDataToDGV.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProducts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGVTermsInvose)).BeginInit();
@@ -153,6 +156,7 @@
             this.tabPageTermsandconditions.SuspendLayout();
             this.tabPageBankAccount.SuspendLayout();
             this.groupBoxAcount.SuspendLayout();
+            this.groupBoxAdditional_information.SuspendLayout();
             this.SuspendLayout();
             // 
             // TxtTotalAmount
@@ -533,8 +537,8 @@
             // 
             this.DGVTermsInvose.AllowUserToAddRows = false;
             this.DGVTermsInvose.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.DGVTermsInvose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DGVTermsInvose.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -552,6 +556,7 @@
             // 
             // tabPageCustomerInfo
             // 
+            this.tabPageCustomerInfo.Controls.Add(this.groupBoxAdditional_information);
             this.tabPageCustomerInfo.Controls.Add(this.label12);
             this.tabPageCustomerInfo.Controls.Add(this.groupBoxInvosNumberAndCurrency);
             this.tabPageCustomerInfo.Controls.Add(this.groupBoxCustomerInfo);
@@ -570,11 +575,11 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Tahoma", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label12.Location = new System.Drawing.Point(305, 449);
+            this.label12.Location = new System.Drawing.Point(246, 485);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(395, 57);
+            this.label12.Size = new System.Drawing.Size(424, 57);
             this.label12.TabIndex = 8;
-            this.label12.Text = "Edit QUOTAION";
+            this.label12.Text = "Edit QUOTATION";
             // 
             // groupBoxInvosNumberAndCurrency
             // 
@@ -1611,6 +1616,41 @@
             this.label13.TabIndex = 62;
             this.label13.Text = "Select Bank Name And Account";
             // 
+            // groupBoxAdditional_information
+            // 
+            this.groupBoxAdditional_information.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBoxAdditional_information.Controls.Add(this.TxtSelectFileName);
+            this.groupBoxAdditional_information.Controls.Add(this.label25);
+            this.groupBoxAdditional_information.Location = new System.Drawing.Point(28, 406);
+            this.groupBoxAdditional_information.Name = "groupBoxAdditional_information";
+            this.groupBoxAdditional_information.Size = new System.Drawing.Size(884, 62);
+            this.groupBoxAdditional_information.TabIndex = 9;
+            this.groupBoxAdditional_information.TabStop = false;
+            // 
+            // TxtSelectFileName
+            // 
+            this.TxtSelectFileName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.TxtSelectFileName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.TxtSelectFileName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TxtSelectFileName.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtSelectFileName.FormattingEnabled = true;
+            this.TxtSelectFileName.ItemHeight = 21;
+            this.TxtSelectFileName.Location = new System.Drawing.Point(166, 22);
+            this.TxtSelectFileName.Margin = new System.Windows.Forms.Padding(2);
+            this.TxtSelectFileName.Name = "TxtSelectFileName";
+            this.TxtSelectFileName.Size = new System.Drawing.Size(507, 29);
+            this.TxtSelectFileName.TabIndex = 9;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(11, 27);
+            this.label25.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(127, 18);
+            this.label25.TabIndex = 10;
+            this.label25.Text = "Info for File Name";
+            // 
             // Frm_CustomersUpdateInvoices
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -1646,6 +1686,8 @@
             this.tabPageBankAccount.PerformLayout();
             this.groupBoxAcount.ResumeLayout(false);
             this.groupBoxAcount.PerformLayout();
+            this.groupBoxAdditional_information.ResumeLayout(false);
+            this.groupBoxAdditional_information.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1761,5 +1803,8 @@
         private System.Windows.Forms.Button BtnUpdateProductPrice;
         private System.Windows.Forms.Button BtnUpdateConsumablePrice;
         private System.Windows.Forms.CheckBox BtnAddTermsToServerAsNewTerm;
+        private System.Windows.Forms.GroupBox groupBoxAdditional_information;
+        private System.Windows.Forms.ComboBox TxtSelectFileName;
+        private System.Windows.Forms.Label label25;
     }
 }

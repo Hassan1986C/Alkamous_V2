@@ -33,7 +33,6 @@
             this.LbCount = new System.Windows.Forms.Label();
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.BtnMultiSelectItem = new System.Windows.Forms.CheckBox();
             this.BtnFavorite = new System.Windows.Forms.CheckBox();
             this.Lbwait = new System.Windows.Forms.Label();
             this.TxtGroupByItem = new System.Windows.Forms.ComboBox();
@@ -59,7 +58,6 @@
             this.DGVProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.DGVProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVProducts.Location = new System.Drawing.Point(12, 83);
-            this.DGVProducts.MultiSelect = false;
             this.DGVProducts.Name = "DGVProducts";
             this.DGVProducts.ReadOnly = true;
             this.DGVProducts.RowHeadersWidth = 51;
@@ -68,7 +66,6 @@
             this.DGVProducts.Size = new System.Drawing.Size(1327, 711);
             this.DGVProducts.TabIndex = 1;
             this.DGVProducts.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DGVProducts_Scroll);
-            this.DGVProducts.DoubleClick += new System.EventHandler(this.DGVProducts_DoubleClick);
             this.DGVProducts.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DGVProducts_KeyDown);
             // 
             // LbCount
@@ -110,20 +107,6 @@
             this.label1.Size = new System.Drawing.Size(485, 17);
             this.label1.TabIndex = 5;
             this.label1.Text = "Search By product_Id -  product_NameAR - product_NameEN - product_Unit";
-            // 
-            // BtnMultiSelectItem
-            // 
-            this.BtnMultiSelectItem.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.BtnMultiSelectItem.AutoSize = true;
-            this.BtnMultiSelectItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnMultiSelectItem.Font = new System.Drawing.Font("Century Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnMultiSelectItem.Location = new System.Drawing.Point(136, 36);
-            this.BtnMultiSelectItem.Name = "BtnMultiSelectItem";
-            this.BtnMultiSelectItem.Size = new System.Drawing.Size(167, 31);
-            this.BtnMultiSelectItem.TabIndex = 28;
-            this.BtnMultiSelectItem.Text = "multi-select";
-            this.BtnMultiSelectItem.UseVisualStyleBackColor = true;
-            this.BtnMultiSelectItem.CheckedChanged += new System.EventHandler(this.BtnMultiSelectItem_CheckedChanged);
             // 
             // BtnFavorite
             // 
@@ -184,7 +167,6 @@
             this.Controls.Add(this.TxtGroupByItem);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.BtnFavorite);
-            this.Controls.Add(this.BtnMultiSelectItem);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.LbCount);
             this.Controls.Add(this.TxtSearch);
@@ -206,7 +188,6 @@
         public System.Windows.Forms.Label LbCount;
         private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox BtnMultiSelectItem;
         private System.Windows.Forms.CheckBox BtnFavorite;
         private System.Windows.Forms.Label Lbwait;
         private System.Windows.Forms.ComboBox TxtGroupByItem;

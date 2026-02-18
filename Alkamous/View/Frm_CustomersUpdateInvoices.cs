@@ -599,7 +599,8 @@ namespace Alkamous.View
                     Customer_Discount = TxtDiscount.Text,
                     Customer_BankAccount = txtSelectAcount.SelectedItem.ToString(),
                     Customer_Language = TxtCustomer_Language.Text,
-                    Customer_Note = TXTValOfPaymentInAdv.Text
+                    Customer_Note = TXTValOfPaymentInAdv.Text,
+                    Customer_Note2 = TxtSelectFileName.Text.Trim()
                 };
                 return await OperationsofCustomers.UpdateAsync(MTB_Customers);
             }
@@ -967,6 +968,7 @@ namespace Alkamous.View
             }
         }
 
+        #region Load and Initialize Parameter For a Update Invoice
         private void Frm_CustomersUpdateInvoices_Load(object sender, EventArgs e)
         {
             DGVColumnHeaderTextAndWidthProductes();
@@ -977,11 +979,27 @@ namespace Alkamous.View
             TxtCustomer_Payment_Terms.DisplayMember = "Text";
             TxtCustomer_Payment_Terms.ValueMember = "Value";
             TxtCustomer_Payment_Terms.DataSource = Chelp.LoadDataToComboBox();
-
+            LoadDataToComboBoxOfFileName();
 
             loadDataToFrmEdit(Invoice_NumberToGetData);
         }
+        private void LoadDataToComboBoxOfFileName()
+        {
+            // 1. Clear existing items to avoid duplicates
+            TxtSelectFileName.Items.Clear();
 
+            // 2. Fetch the data from the external service class
+            string[] items = Chelp.GetPrinterModels();
+
+            // 3. Add the array of items to the ComboBox
+            TxtSelectFileName.Items.AddRange(items);
+
+            // 4. Select the first item by default if the list isn't empty
+            if (TxtSelectFileName.Items.Count > 0)
+            {
+                TxtSelectFileName.SelectedIndex = 0;
+            }
+        }
         private void loadDataToFrmEdit(string Invoice_Number)
         {
 
@@ -1033,7 +1051,7 @@ namespace Alkamous.View
                 string selectBankaccount = dtCustomer.Rows[0][MCTB_Customers.Customer_BankAccount].ToString();
 
                 TxtCustomer_Language.Text = dtCustomer.Rows[0][MCTB_Customers.Customer_Language].ToString();
-
+                TxtSelectFileName.Text = dtCustomer.Rows[0][MCTB_Customers.Customer_Note2].ToString();
 
                 //OperationsofInvoices
                 dtProducts = OperationsofInvoices.Get_Invoice_ByInvoice_Number(Invoice_Number);
@@ -1068,7 +1086,7 @@ namespace Alkamous.View
                 MessageBox.Show(ex.Message);
             }
         }
-
+        #endregion
         private void tabControlCustomers_SelectedIndexChanged(object sender, EventArgs e)
         {
 

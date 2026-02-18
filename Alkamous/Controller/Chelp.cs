@@ -421,6 +421,26 @@ namespace Alkamous.Controller
 
         }
         #endregion
+
+        #region GetFileNameForComboBox
+        public static string[] GetPrinterModels()
+        {
+            return new string[]
+            {
+            "",
+            "Evolis Zenius",
+            "Evolis Zenius 2",
+            "Evolis Primacy 2 Single-Sided",
+            "Evolis Primacy 2 Double-Sided",
+            "Evolis Primacy 2 Lamination",
+            "Evolis Agilia Single-Sided",
+            "Evolis Agilia Double-Sided",
+            "Evolis Agilia Laminator",
+            "Evolis Edikio",
+            "Pre-Printed Card"
+            };
+        }
+        #endregion
     }
 }
 

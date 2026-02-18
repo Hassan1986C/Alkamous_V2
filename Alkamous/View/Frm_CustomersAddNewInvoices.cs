@@ -72,7 +72,7 @@ namespace Alkamous.View
                 DGVProducts.Columns[5].HeaderText = "Price";
                 DGVProducts.Columns[6].HeaderText = "Amount";
 
-             
+
                 // --- ضبط القياسات (Fill لضمان ملء الشاشة) ---
                 DGVProducts.Columns[0].Width = 80;
                 DGVProducts.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -116,7 +116,7 @@ namespace Alkamous.View
                 DGVProducts.DefaultCellStyle.SelectionForeColor = Color.Black;
 
                 // تم إلغاء FullRowSelect لكي يستطيع المستخدم الضغط داخل الخلية للكتابة بسهولة
-               //  DGVProducts.SelectionMode = DataGridViewSelectionMode.CellSelect;
+                //  DGVProducts.SelectionMode = DataGridViewSelectionMode.CellSelect;
 
                 DGVProducts.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
@@ -217,7 +217,7 @@ namespace Alkamous.View
                 DGVProductsConsumable.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
                 DGVProductsConsumable.DefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
                 DGVProductsConsumable.DefaultCellStyle.SelectionForeColor = Color.Black;
-                              
+
 
                 DGVProductsConsumable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
                 DGVProductsConsumable.RowTemplate.Height = 50;
@@ -326,7 +326,7 @@ namespace Alkamous.View
                 SenderName == "TxtProduct_Price" || SenderName == "TxtAmount")
             {
                 AddDataToDatagradviweAfterCheck();
-               
+
             }
             else
             {
@@ -337,7 +337,7 @@ namespace Alkamous.View
 
         private void AddDataToDatagradviweAfterCheck()
         {
-           
+
             TxtAmount.Text = Chelp.CalculateAmount(TxtQTY.Text, TxtProduct_Price.Text);
 
             foreach (var textBox in new[] { TxtProduct_Id, TxtProduct_Unit, TxtQTY, TxtProduct_Price, TxtAmount })
@@ -532,7 +532,7 @@ namespace Alkamous.View
                 dtTermsInvoices.Rows.Add("", TxtTerm_En.Text, TxtTerms_Ar.Text);
                 DGVTermsInvose.DataSource = dtTermsInvoices;
                 LbCountTerms.Text = DGVTermsInvose.RowCount.ToString();
-                
+
 
                 if (BtnAddTermsToServerAsNewTerm.Checked)
                 {
@@ -635,7 +635,8 @@ namespace Alkamous.View
                     Customer_Discount = TxtDiscount.Text.Trim(),
                     Customer_BankAccount = txtSelectAcount.SelectedItem.ToString(),
                     Customer_Language = TxtCustomer_Language.Text.Trim(),
-                    Customer_Note = TXTValOfPaymentInAdv.Text.Trim()    
+                    Customer_Note = TXTValOfPaymentInAdv.Text.Trim(),
+                    Customer_Note2 = TxtSelectFileName.Text.Trim()
                 };
 
                 //return OperationsofCustomers.Add_Customer(MTB_Customers);
@@ -846,7 +847,7 @@ namespace Alkamous.View
                             Chelp.RegisterUsersActionLogs("Add Quotation", TxtCustomer_Invoice.Text);
 
                             ClearAllTextAndGroipBoxDataForNew();
-                          
+
                         }
                         else
                         {
@@ -873,7 +874,7 @@ namespace Alkamous.View
             {
                 Frm_Products frm = new Frm_Products();
 
-               // Frm_Products.isAddNewInvoices = true;
+                // Frm_Products.isAddNewInvoices = true;
                 Frm_Products.WhoSendOrder = "NewInvoices";
                 Frm_Products.isMainQuotation = "MainQuotation";
                 Frm_Products.ExChangeRate = TxtExchange.Text.Trim();
@@ -897,7 +898,7 @@ namespace Alkamous.View
             try
             {
                 Frm_Products frm = new Frm_Products();
-               // Frm_Products.isAddNewInvoices = true;
+                // Frm_Products.isAddNewInvoices = true;
                 Frm_Products.WhoSendOrder = "NewInvoices";
                 Frm_Products.isMainQuotation = "Consumable";
                 Frm_Products.ExChangeRate = TxtExchange.Text;
@@ -944,7 +945,7 @@ namespace Alkamous.View
         {
             try
             {
-                foreach (var groupBox in new[] { groupBoxCustomerInfo, groupBoxInvosNumberAndCurrency, groupBoxAddDataToDGV, groupBoxConsumable })
+                foreach (var groupBox in new[] { groupBoxCustomerInfo, groupBoxInvosNumberAndCurrency, groupBoxAdditional_information, groupBoxAddDataToDGV, groupBoxConsumable })
                 {
                     foreach (var control in groupBox.Controls)
                     {
@@ -1165,33 +1166,33 @@ namespace Alkamous.View
         // we use Action Delegate as lambda
         private void BtnUpMoveRows_Click(object sender, EventArgs e)
         {
-            Chelp.ExecuteSafely(()=> Chelp.MoveRow(DGVProducts, dtProducts, Chelp.MoveDirection.Up));          
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProducts, dtProducts, Chelp.MoveDirection.Up));
 
         }
         private void BtnDownMoveRows_Click(object sender, EventArgs e)
         {
-            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProducts, dtProducts, Chelp.MoveDirection.Down));            
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProducts, dtProducts, Chelp.MoveDirection.Down));
 
         }
         private void BtnMoveTermRowUp_Click(object sender, EventArgs e)
         {
-            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVTermsInvose, dtTermsInvoices, Chelp.MoveDirection.Up));           
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVTermsInvose, dtTermsInvoices, Chelp.MoveDirection.Up));
         }
 
         private void BtnMoveTermRowDown_Click(object sender, EventArgs e)
         {
-            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVTermsInvose, dtTermsInvoices, Chelp.MoveDirection.Down));           
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVTermsInvose, dtTermsInvoices, Chelp.MoveDirection.Down));
         }
 
         private void BtnMoveConsumableRowUP_Click(object sender, EventArgs e)
         {
-            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProductsConsumable, dtProductsConsumable, Chelp.MoveDirection.Up));            
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProductsConsumable, dtProductsConsumable, Chelp.MoveDirection.Up));
         }
 
         private void BtnMoveConsumableRowDown_Click(object sender, EventArgs e)
         {
-            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProductsConsumable, dtProductsConsumable, Chelp.MoveDirection.Down));           
-        }              
+            Chelp.ExecuteSafely(() => Chelp.MoveRow(DGVProductsConsumable, dtProductsConsumable, Chelp.MoveDirection.Down));
+        }
 
         #endregion
 
@@ -1204,6 +1205,7 @@ namespace Alkamous.View
             DGVColumnHeaderTextAndWidthProductesConsumable();
             DGVColumnHeaderTextAndWidthTermsInvo();
             Load_ALLBankAccount();
+            LoadDataToComboBoxOfFileName();
 
             TxtCustomer_Payment_Terms.DisplayMember = "Text";
             TxtCustomer_Payment_Terms.ValueMember = "Value";
@@ -1334,6 +1336,24 @@ namespace Alkamous.View
                 TxtTaxes.Enabled = true;
             }
 
+        }
+
+        private void LoadDataToComboBoxOfFileName()
+        {
+            // 1. Clear existing items to avoid duplicates
+            TxtSelectFileName.Items.Clear();
+
+            // 2. Fetch the data from the external service class
+            string[] items =Chelp.GetPrinterModels();
+
+            // 3. Add the array of items to the ComboBox
+            TxtSelectFileName.Items.AddRange(items);
+
+            // 4. Select the first item by default if the list isn't empty
+            if (TxtSelectFileName.Items.Count > 0)
+            {
+                TxtSelectFileName.SelectedIndex = 0;
+            }
         }
 
         #endregion

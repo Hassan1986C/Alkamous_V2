@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControlCustomers = new System.Windows.Forms.TabControl();
             this.tabPageCustomerInfo = new System.Windows.Forms.TabPage();
+            this.groupBoxAdditional_information = new System.Windows.Forms.GroupBox();
+            this.TxtSelectFileName = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBoxInvosNumberAndCurrency = new System.Windows.Forms.GroupBox();
             this.LBAsPerTerms = new System.Windows.Forms.Label();
@@ -142,6 +145,7 @@
             this.BtnSaveData = new System.Windows.Forms.Button();
             this.tabControlCustomers.SuspendLayout();
             this.tabPageCustomerInfo.SuspendLayout();
+            this.groupBoxAdditional_information.SuspendLayout();
             this.groupBoxInvosNumberAndCurrency.SuspendLayout();
             this.groupBoxCustomerInfo.SuspendLayout();
             this.tabPageInvoiceDetails.SuspendLayout();
@@ -174,6 +178,7 @@
             // 
             // tabPageCustomerInfo
             // 
+            this.tabPageCustomerInfo.Controls.Add(this.groupBoxAdditional_information);
             this.tabPageCustomerInfo.Controls.Add(this.label12);
             this.tabPageCustomerInfo.Controls.Add(this.groupBoxInvosNumberAndCurrency);
             this.tabPageCustomerInfo.Controls.Add(this.groupBoxCustomerInfo);
@@ -187,6 +192,41 @@
             this.tabPageCustomerInfo.Text = "    Customer info    ";
             this.tabPageCustomerInfo.UseVisualStyleBackColor = true;
             // 
+            // groupBoxAdditional_information
+            // 
+            this.groupBoxAdditional_information.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBoxAdditional_information.Controls.Add(this.TxtSelectFileName);
+            this.groupBoxAdditional_information.Controls.Add(this.label25);
+            this.groupBoxAdditional_information.Location = new System.Drawing.Point(30, 406);
+            this.groupBoxAdditional_information.Name = "groupBoxAdditional_information";
+            this.groupBoxAdditional_information.Size = new System.Drawing.Size(884, 62);
+            this.groupBoxAdditional_information.TabIndex = 8;
+            this.groupBoxAdditional_information.TabStop = false;
+            // 
+            // TxtSelectFileName
+            // 
+            this.TxtSelectFileName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.TxtSelectFileName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.TxtSelectFileName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TxtSelectFileName.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtSelectFileName.FormattingEnabled = true;
+            this.TxtSelectFileName.ItemHeight = 21;
+            this.TxtSelectFileName.Location = new System.Drawing.Point(166, 22);
+            this.TxtSelectFileName.Margin = new System.Windows.Forms.Padding(2);
+            this.TxtSelectFileName.Name = "TxtSelectFileName";
+            this.TxtSelectFileName.Size = new System.Drawing.Size(507, 29);
+            this.TxtSelectFileName.TabIndex = 9;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(11, 27);
+            this.label25.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(127, 18);
+            this.label25.TabIndex = 10;
+            this.label25.Text = "Info for File Name";
+            // 
             // label12
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -194,11 +234,11 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Tahoma", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label12.Location = new System.Drawing.Point(292, 441);
+            this.label12.Location = new System.Drawing.Point(285, 490);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(408, 57);
+            this.label12.Size = new System.Drawing.Size(437, 57);
             this.label12.TabIndex = 7;
-            this.label12.Text = "New QUOTAION";
+            this.label12.Text = "New QUOTATION";
             // 
             // groupBoxInvosNumberAndCurrency
             // 
@@ -1326,8 +1366,8 @@
             // 
             this.DGVTermsInvose.AllowUserToAddRows = false;
             this.DGVTermsInvose.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.DGVTermsInvose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DGVTermsInvose.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -1649,6 +1689,8 @@
             this.tabControlCustomers.ResumeLayout(false);
             this.tabPageCustomerInfo.ResumeLayout(false);
             this.tabPageCustomerInfo.PerformLayout();
+            this.groupBoxAdditional_information.ResumeLayout(false);
+            this.groupBoxAdditional_information.PerformLayout();
             this.groupBoxInvosNumberAndCurrency.ResumeLayout(false);
             this.groupBoxInvosNumberAndCurrency.PerformLayout();
             this.groupBoxCustomerInfo.ResumeLayout(false);
@@ -1784,5 +1826,8 @@
         private System.Windows.Forms.Button BtnUpdateProductPrice;
         private System.Windows.Forms.Button BtnUpdateConsumablePrice;
         private System.Windows.Forms.CheckBox BtnAddTermsToServerAsNewTerm;
+        private System.Windows.Forms.GroupBox groupBoxAdditional_information;
+        private System.Windows.Forms.ComboBox TxtSelectFileName;
+        private System.Windows.Forms.Label label25;
     }
 }
