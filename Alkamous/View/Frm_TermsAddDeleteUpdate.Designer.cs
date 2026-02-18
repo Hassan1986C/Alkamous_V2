@@ -42,6 +42,7 @@
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.DGVTerms = new System.Windows.Forms.DataGridView();
             this.TxtAutoNumber = new System.Windows.Forms.TextBox();
+            this.BtnTranslateToEnglish = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVTerms)).BeginInit();
             this.SuspendLayout();
@@ -50,7 +51,7 @@
             // 
             this.TxtTerm_En.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.TxtTerm_En.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtTerm_En.Location = new System.Drawing.Point(7, 52);
+            this.TxtTerm_En.Location = new System.Drawing.Point(7, 59);
             this.TxtTerm_En.Multiline = true;
             this.TxtTerm_En.Name = "TxtTerm_En";
             this.TxtTerm_En.Size = new System.Drawing.Size(1051, 112);
@@ -70,7 +71,7 @@
             // 
             this.TxtTerms_Ar.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.TxtTerms_Ar.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtTerms_Ar.Location = new System.Drawing.Point(7, 209);
+            this.TxtTerms_Ar.Location = new System.Drawing.Point(7, 216);
             this.TxtTerms_Ar.Multiline = true;
             this.TxtTerms_Ar.Name = "TxtTerms_Ar";
             this.TxtTerms_Ar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -98,13 +99,14 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.BtnTranslateToEnglish);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.TxtTerm_En);
             this.groupBox1.Controls.Add(this.TxtTerms_Ar);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Location = new System.Drawing.Point(12, 19);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1064, 349);
+            this.groupBox1.Size = new System.Drawing.Size(1064, 363);
             this.groupBox1.TabIndex = 45;
             this.groupBox1.TabStop = false;
             // 
@@ -224,6 +226,7 @@
             this.DGVTerms.MultiSelect = false;
             this.DGVTerms.Name = "DGVTerms";
             this.DGVTerms.ReadOnly = true;
+            this.DGVTerms.RowHeadersWidth = 51;
             this.DGVTerms.RowTemplate.Height = 26;
             this.DGVTerms.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVTerms.Size = new System.Drawing.Size(1089, 352);
@@ -237,6 +240,20 @@
             this.TxtAutoNumber.Size = new System.Drawing.Size(99, 24);
             this.TxtAutoNumber.TabIndex = 55;
             this.TxtAutoNumber.Visible = false;
+            // 
+            // BtnTranslateToEnglish
+            // 
+            this.BtnTranslateToEnglish.BackColor = System.Drawing.Color.DarkBlue;
+            this.BtnTranslateToEnglish.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnTranslateToEnglish.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnTranslateToEnglish.ForeColor = System.Drawing.Color.White;
+            this.BtnTranslateToEnglish.Location = new System.Drawing.Point(685, 181);
+            this.BtnTranslateToEnglish.Name = "BtnTranslateToEnglish";
+            this.BtnTranslateToEnglish.Size = new System.Drawing.Size(240, 31);
+            this.BtnTranslateToEnglish.TabIndex = 67;
+            this.BtnTranslateToEnglish.Text = "Translate the term into English";
+            this.BtnTranslateToEnglish.UseVisualStyleBackColor = false;
+            this.BtnTranslateToEnglish.Click += new System.EventHandler(this.BtnTranslateToEnglish_Click);
             // 
             // Frm_TermsAddDeleteUpdate
             // 
@@ -279,5 +296,6 @@
         private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.DataGridView DGVTerms;
         private System.Windows.Forms.TextBox TxtAutoNumber;
+        private System.Windows.Forms.Button BtnTranslateToEnglish;
     }
 }

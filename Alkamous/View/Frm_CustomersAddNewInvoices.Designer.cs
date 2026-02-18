@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControlCustomers = new System.Windows.Forms.TabControl();
             this.tabPageCustomerInfo = new System.Windows.Forms.TabPage();
             this.groupBoxAdditional_information = new System.Windows.Forms.GroupBox();
@@ -143,6 +143,7 @@
             this.txtSelectAcount = new System.Windows.Forms.ComboBox();
             this.BtnClearAllData = new System.Windows.Forms.Button();
             this.BtnSaveData = new System.Windows.Forms.Button();
+            this.BtnTranslateToEnglish = new System.Windows.Forms.Button();
             this.tabControlCustomers.SuspendLayout();
             this.tabPageCustomerInfo.SuspendLayout();
             this.groupBoxAdditional_information.SuspendLayout();
@@ -1191,6 +1192,7 @@
             // tabPageTermsandconditions
             // 
             this.tabPageTermsandconditions.BackColor = System.Drawing.Color.White;
+            this.tabPageTermsandconditions.Controls.Add(this.BtnTranslateToEnglish);
             this.tabPageTermsandconditions.Controls.Add(this.BtnAddTermsToServerAsNewTerm);
             this.tabPageTermsandconditions.Controls.Add(this.LbCountTerms);
             this.tabPageTermsandconditions.Controls.Add(this.BtnMoveTermRowUp);
@@ -1327,7 +1329,7 @@
             // 
             this.TxtTerms_Ar.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.TxtTerms_Ar.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtTerms_Ar.Location = new System.Drawing.Point(15, 169);
+            this.TxtTerms_Ar.Location = new System.Drawing.Point(15, 177);
             this.TxtTerms_Ar.MaxLength = 5000;
             this.TxtTerms_Ar.Multiline = true;
             this.TxtTerms_Ar.Name = "TxtTerms_Ar";
@@ -1340,7 +1342,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(797, 144);
+            this.label11.Location = new System.Drawing.Point(797, 149);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(115, 23);
             this.label11.TabIndex = 57;
@@ -1366,8 +1368,8 @@
             // 
             this.DGVTermsInvose.AllowUserToAddRows = false;
             this.DGVTermsInvose.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.DGVTermsInvose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DGVTermsInvose.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -1670,6 +1672,20 @@
             this.BtnSaveData.UseVisualStyleBackColor = false;
             this.BtnSaveData.Click += new System.EventHandler(this.BtnSaveData_Click);
             // 
+            // BtnTranslateToEnglish
+            // 
+            this.BtnTranslateToEnglish.BackColor = System.Drawing.Color.DarkBlue;
+            this.BtnTranslateToEnglish.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnTranslateToEnglish.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnTranslateToEnglish.ForeColor = System.Drawing.Color.White;
+            this.BtnTranslateToEnglish.Location = new System.Drawing.Point(551, 144);
+            this.BtnTranslateToEnglish.Name = "BtnTranslateToEnglish";
+            this.BtnTranslateToEnglish.Size = new System.Drawing.Size(240, 31);
+            this.BtnTranslateToEnglish.TabIndex = 65;
+            this.BtnTranslateToEnglish.Text = "Translate the term into English";
+            this.BtnTranslateToEnglish.UseVisualStyleBackColor = false;
+            this.BtnTranslateToEnglish.Click += new System.EventHandler(this.BtnTranslateToEnglish_Click);
+            // 
             // Frm_CustomersAddNewInvoices
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1829,5 +1845,6 @@
         private System.Windows.Forms.GroupBox groupBoxAdditional_information;
         private System.Windows.Forms.ComboBox TxtSelectFileName;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button BtnTranslateToEnglish;
     }
 }

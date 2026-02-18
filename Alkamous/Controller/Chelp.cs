@@ -6,8 +6,11 @@ using System.Data;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -443,6 +446,31 @@ namespace Alkamous.Controller
             };
         }
         #endregion
+
+
+        // Single HttpClient instance (best practice to avoid socket exhaustion)
+        private static readonly HttpClient _client = new HttpClient();
+        public static async Task<string> TranslateText(string text, string from, string to)
+        {
+            string url =
+                $"https://translate.googleapis.com/translate_a/single?client=gtx&sl={from}&tl={to}&dt=t&q={Uri.EscapeDataString(text)}";
+
+            var response = await _client.GetStringAsync(url);
+
+            JsonDocument doc = JsonDocument.Parse(response);
+
+            // Build full translated text (handles multi-line input)
+            var sentences = doc.RootElement[0];
+
+            string fullTranslation = "";
+
+            foreach (var sentence in sentences.EnumerateArray())
+            {
+                fullTranslation += sentence[0].GetString();
+            }
+
+            return fullTranslation;
+        }
     }
 }
 

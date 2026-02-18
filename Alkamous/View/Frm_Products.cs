@@ -405,6 +405,10 @@ namespace Alkamous.View
         }
 
 
+        private void DGVProducts_DoubleClick(object sender, EventArgs e)
+        {
+            SelectProductAndSendParameterToForms();
+        }
 
         int DataHaveBeenloaded = 0;
 
@@ -464,7 +468,7 @@ namespace Alkamous.View
             _cancellationTokenSource?.Dispose();
         }
 
-
+        
 
         private async void LoadDataGroupByItem(string Search)
         {

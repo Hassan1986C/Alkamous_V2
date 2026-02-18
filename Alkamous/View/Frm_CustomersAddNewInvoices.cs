@@ -1,13 +1,15 @@
 ﻿using Alkamous.Controller;
+using Alkamous.Model;
 using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Alkamous.Model;
 using static Alkamous.Model.CTB_Products;
+using System.Text.Json;
 
 namespace Alkamous.View
 {
@@ -27,6 +29,7 @@ namespace Alkamous.View
         private static Frm_CustomersAddNewInvoices frmCustomerAddNewInvoices;
         public static string Invoice_NumberToGetData = "AddNewInvoices";
         public static bool Is_Edit_Invoices_FormOpen = false;
+       
         #endregion
 
         // this methode to make a new form same as orgnal from
@@ -47,7 +50,7 @@ namespace Alkamous.View
         {
             try
             {
-                Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.SqlParameter);
+                Model.CTB_Products MCTB_Products = new Model.CTB_Products(ProductFieldNaming.Plain);
 
                 DGVProducts.RowHeadersVisible = false;
 
@@ -133,7 +136,6 @@ namespace Alkamous.View
                 MessageBox.Show("حدث خطأ أثناء تهيئة الجدول: " + ex.Message);
             }
         }
-
         private void DGVColumnHeaderTextAndWidthProductesConsumable()
         {
             try
@@ -1492,7 +1494,7 @@ namespace Alkamous.View
             if (string.IsNullOrEmpty(TxtExchange.Text))
             {
                 MessageBox.Show("EX.change is required", "Message");
-                TxtExchange.Text="0";
+                TxtExchange.Text = "0";
                 TxtExchange.Focus();
                 return;
             }
@@ -1602,6 +1604,61 @@ namespace Alkamous.View
         {
             BtnAddTermsToServerAsNewTerm.ForeColor = BtnAddTermsToServerAsNewTerm.Checked ? Color.Red : Color.Black;
         }
-               
+
+        private async void BtnTranslateToEnglish_Click(object sender, EventArgs e)
+        {
+            string textToTranslate = TxtTerms_Ar.Text;
+
+            // Validate input
+            if (string.IsNullOrWhiteSpace(textToTranslate))
+            {
+                MessageBox.Show("Please enter Arabic text to translate.",
+                                "Validation",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Disable button to prevent multiple clicks
+            BtnTranslateToEnglish.Enabled = false;
+
+            // Show waiting cursor
+            this.Cursor = Cursors.WaitCursor;
+
+            try
+            {
+                // Call translation method
+                string result = await Chelp.TranslateText(textToTranslate, "ar", "en");
+
+                // Display translated text
+                TxtTerm_En.Text = result;
+            }
+            catch (HttpRequestException)
+            {
+                MessageBox.Show("Network error occurred while connecting to the translation service.",
+                                "Connection Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An unexpected error occurred:\n" + ex.Message,
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Re-enable button after operation completes
+                BtnTranslateToEnglish.Enabled = true;
+
+                // Restore default cursor
+                this.Cursor = Cursors.Default;
+            }
+        }
+      
     }
+
+
 }
+

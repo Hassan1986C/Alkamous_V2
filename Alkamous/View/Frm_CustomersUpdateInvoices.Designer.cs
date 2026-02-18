@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TxtTotalAmount = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.BtnDeleteRowFromDGVProducts = new System.Windows.Forms.Button();
@@ -59,6 +59,9 @@
             this.BtnShowFrm_Terms = new System.Windows.Forms.Button();
             this.DGVTermsInvose = new System.Windows.Forms.DataGridView();
             this.tabPageCustomerInfo = new System.Windows.Forms.TabPage();
+            this.groupBoxAdditional_information = new System.Windows.Forms.GroupBox();
+            this.TxtSelectFileName = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBoxInvosNumberAndCurrency = new System.Windows.Forms.GroupBox();
             this.LBAsPerTerms = new System.Windows.Forms.Label();
@@ -139,13 +142,12 @@
             this.label24 = new System.Windows.Forms.Label();
             this.txtSelectAcount = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.groupBoxAdditional_information = new System.Windows.Forms.GroupBox();
-            this.TxtSelectFileName = new System.Windows.Forms.ComboBox();
-            this.label25 = new System.Windows.Forms.Label();
+            this.BtnTranslateToEnglish = new System.Windows.Forms.Button();
             this.groupBoxAddDataToDGV.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVProducts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGVTermsInvose)).BeginInit();
             this.tabPageCustomerInfo.SuspendLayout();
+            this.groupBoxAdditional_information.SuspendLayout();
             this.groupBoxInvosNumberAndCurrency.SuspendLayout();
             this.groupBoxCustomerInfo.SuspendLayout();
             this.tabPageInvoiceDetails.SuspendLayout();
@@ -156,7 +158,6 @@
             this.tabPageTermsandconditions.SuspendLayout();
             this.tabPageBankAccount.SuspendLayout();
             this.groupBoxAcount.SuspendLayout();
-            this.groupBoxAdditional_information.SuspendLayout();
             this.SuspendLayout();
             // 
             // TxtTotalAmount
@@ -498,7 +499,7 @@
             // 
             this.TxtTerms_Ar.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.TxtTerms_Ar.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtTerms_Ar.Location = new System.Drawing.Point(14, 169);
+            this.TxtTerms_Ar.Location = new System.Drawing.Point(14, 176);
             this.TxtTerms_Ar.MaxLength = 5000;
             this.TxtTerms_Ar.Multiline = true;
             this.TxtTerms_Ar.Name = "TxtTerms_Ar";
@@ -537,8 +538,8 @@
             // 
             this.DGVTermsInvose.AllowUserToAddRows = false;
             this.DGVTermsInvose.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGVTermsInvose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DGVTermsInvose.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -567,6 +568,41 @@
             this.tabPageCustomerInfo.TabIndex = 0;
             this.tabPageCustomerInfo.Text = "    Customer info    ";
             this.tabPageCustomerInfo.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxAdditional_information
+            // 
+            this.groupBoxAdditional_information.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBoxAdditional_information.Controls.Add(this.TxtSelectFileName);
+            this.groupBoxAdditional_information.Controls.Add(this.label25);
+            this.groupBoxAdditional_information.Location = new System.Drawing.Point(28, 406);
+            this.groupBoxAdditional_information.Name = "groupBoxAdditional_information";
+            this.groupBoxAdditional_information.Size = new System.Drawing.Size(884, 62);
+            this.groupBoxAdditional_information.TabIndex = 9;
+            this.groupBoxAdditional_information.TabStop = false;
+            // 
+            // TxtSelectFileName
+            // 
+            this.TxtSelectFileName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.TxtSelectFileName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.TxtSelectFileName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TxtSelectFileName.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtSelectFileName.FormattingEnabled = true;
+            this.TxtSelectFileName.ItemHeight = 21;
+            this.TxtSelectFileName.Location = new System.Drawing.Point(166, 22);
+            this.TxtSelectFileName.Margin = new System.Windows.Forms.Padding(2);
+            this.TxtSelectFileName.Name = "TxtSelectFileName";
+            this.TxtSelectFileName.Size = new System.Drawing.Size(507, 29);
+            this.TxtSelectFileName.TabIndex = 9;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(11, 27);
+            this.label25.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(127, 18);
+            this.label25.TabIndex = 10;
+            this.label25.Text = "Info for File Name";
             // 
             // label12
             // 
@@ -1289,6 +1325,7 @@
             // tabPageTermsandconditions
             // 
             this.tabPageTermsandconditions.BackColor = System.Drawing.Color.White;
+            this.tabPageTermsandconditions.Controls.Add(this.BtnTranslateToEnglish);
             this.tabPageTermsandconditions.Controls.Add(this.BtnAddTermsToServerAsNewTerm);
             this.tabPageTermsandconditions.Controls.Add(this.LbCountTerms);
             this.tabPageTermsandconditions.Controls.Add(this.BtnMoveTermRowUP);
@@ -1616,40 +1653,19 @@
             this.label13.TabIndex = 62;
             this.label13.Text = "Select Bank Name And Account";
             // 
-            // groupBoxAdditional_information
+            // BtnTranslateToEnglish
             // 
-            this.groupBoxAdditional_information.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBoxAdditional_information.Controls.Add(this.TxtSelectFileName);
-            this.groupBoxAdditional_information.Controls.Add(this.label25);
-            this.groupBoxAdditional_information.Location = new System.Drawing.Point(28, 406);
-            this.groupBoxAdditional_information.Name = "groupBoxAdditional_information";
-            this.groupBoxAdditional_information.Size = new System.Drawing.Size(884, 62);
-            this.groupBoxAdditional_information.TabIndex = 9;
-            this.groupBoxAdditional_information.TabStop = false;
-            // 
-            // TxtSelectFileName
-            // 
-            this.TxtSelectFileName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.TxtSelectFileName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.TxtSelectFileName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.TxtSelectFileName.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtSelectFileName.FormattingEnabled = true;
-            this.TxtSelectFileName.ItemHeight = 21;
-            this.TxtSelectFileName.Location = new System.Drawing.Point(166, 22);
-            this.TxtSelectFileName.Margin = new System.Windows.Forms.Padding(2);
-            this.TxtSelectFileName.Name = "TxtSelectFileName";
-            this.TxtSelectFileName.Size = new System.Drawing.Size(507, 29);
-            this.TxtSelectFileName.TabIndex = 9;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(11, 27);
-            this.label25.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(127, 18);
-            this.label25.TabIndex = 10;
-            this.label25.Text = "Info for File Name";
+            this.BtnTranslateToEnglish.BackColor = System.Drawing.Color.DarkBlue;
+            this.BtnTranslateToEnglish.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnTranslateToEnglish.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnTranslateToEnglish.ForeColor = System.Drawing.Color.White;
+            this.BtnTranslateToEnglish.Location = new System.Drawing.Point(550, 142);
+            this.BtnTranslateToEnglish.Name = "BtnTranslateToEnglish";
+            this.BtnTranslateToEnglish.Size = new System.Drawing.Size(240, 31);
+            this.BtnTranslateToEnglish.TabIndex = 66;
+            this.BtnTranslateToEnglish.Text = "Translate the term into English";
+            this.BtnTranslateToEnglish.UseVisualStyleBackColor = false;
+            this.BtnTranslateToEnglish.Click += new System.EventHandler(this.BtnTranslateToEnglish_Click);
             // 
             // Frm_CustomersUpdateInvoices
             // 
@@ -1670,6 +1686,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.DGVTermsInvose)).EndInit();
             this.tabPageCustomerInfo.ResumeLayout(false);
             this.tabPageCustomerInfo.PerformLayout();
+            this.groupBoxAdditional_information.ResumeLayout(false);
+            this.groupBoxAdditional_information.PerformLayout();
             this.groupBoxInvosNumberAndCurrency.ResumeLayout(false);
             this.groupBoxInvosNumberAndCurrency.PerformLayout();
             this.groupBoxCustomerInfo.ResumeLayout(false);
@@ -1686,8 +1704,6 @@
             this.tabPageBankAccount.PerformLayout();
             this.groupBoxAcount.ResumeLayout(false);
             this.groupBoxAcount.PerformLayout();
-            this.groupBoxAdditional_information.ResumeLayout(false);
-            this.groupBoxAdditional_information.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1806,5 +1822,6 @@
         private System.Windows.Forms.GroupBox groupBoxAdditional_information;
         private System.Windows.Forms.ComboBox TxtSelectFileName;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button BtnTranslateToEnglish;
     }
 }
