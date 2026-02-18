@@ -1344,7 +1344,7 @@ namespace Alkamous.View
             TxtSelectFileName.Items.Clear();
 
             // 2. Fetch the data from the external service class
-            string[] items =Chelp.GetPrinterModels();
+            string[] items = Chelp.GetPrinterModels();
 
             // 3. Add the array of items to the ComboBox
             TxtSelectFileName.Items.AddRange(items);
@@ -1489,6 +1489,13 @@ namespace Alkamous.View
 
         private void TxtExchange_Validated(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(TxtExchange.Text))
+            {
+                MessageBox.Show("EX.change is required", "Message");
+                TxtExchange.Text="0";
+                TxtExchange.Focus();
+                return;
+            }
             TxtExchange.Text = Chelp.Format_PriceAndAmount(TxtExchange.Text, TxtCustomer_Currency.Text);
         }
 
@@ -1595,6 +1602,6 @@ namespace Alkamous.View
         {
             BtnAddTermsToServerAsNewTerm.ForeColor = BtnAddTermsToServerAsNewTerm.Checked ? Color.Red : Color.Black;
         }
-
+               
     }
 }

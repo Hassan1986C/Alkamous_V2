@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.LbCount = new System.Windows.Forms.Label();
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.DGVCustomers = new System.Windows.Forms.DataGridView();
-            this.BtnShowQuotationReport = new System.Windows.Forms.Button();
             this.BtnDeleteRowFromDGVProducts = new System.Windows.Forms.Button();
             this.BtnEditRow = new System.Windows.Forms.Button();
             this.BtnExportAsWordFile = new System.Windows.Forms.Button();
@@ -89,14 +88,14 @@
             this.DGVCustomers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DGVCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVCustomers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVCustomers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.DGVCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVCustomers.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.DGVCustomers.Location = new System.Drawing.Point(21, 90);
@@ -111,23 +110,6 @@
             this.DGVCustomers.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DGVCustomers_Scroll);
             this.DGVCustomers.DoubleClick += new System.EventHandler(this.DGVCustomers_DoubleClick);
             // 
-            // BtnShowQuotationReport
-            // 
-            this.BtnShowQuotationReport.BackColor = System.Drawing.Color.Green;
-            this.BtnShowQuotationReport.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnShowQuotationReport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.BtnShowQuotationReport.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.WindowText;
-            this.BtnShowQuotationReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnShowQuotationReport.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnShowQuotationReport.ForeColor = System.Drawing.Color.White;
-            this.BtnShowQuotationReport.Location = new System.Drawing.Point(449, 753);
-            this.BtnShowQuotationReport.Name = "BtnShowQuotationReport";
-            this.BtnShowQuotationReport.Size = new System.Drawing.Size(202, 52);
-            this.BtnShowQuotationReport.TabIndex = 46;
-            this.BtnShowQuotationReport.Text = "Show As PDF";
-            this.BtnShowQuotationReport.UseVisualStyleBackColor = false;
-            this.BtnShowQuotationReport.Click += new System.EventHandler(this.BtnShowQuotationReport_Click);
-            // 
             // BtnDeleteRowFromDGVProducts
             // 
             this.BtnDeleteRowFromDGVProducts.BackColor = System.Drawing.Color.DarkRed;
@@ -140,7 +122,7 @@
             this.BtnDeleteRowFromDGVProducts.Location = new System.Drawing.Point(21, 753);
             this.BtnDeleteRowFromDGVProducts.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.BtnDeleteRowFromDGVProducts.Name = "BtnDeleteRowFromDGVProducts";
-            this.BtnDeleteRowFromDGVProducts.Size = new System.Drawing.Size(202, 52);
+            this.BtnDeleteRowFromDGVProducts.Size = new System.Drawing.Size(244, 52);
             this.BtnDeleteRowFromDGVProducts.TabIndex = 47;
             this.BtnDeleteRowFromDGVProducts.Text = "Delete Row";
             this.BtnDeleteRowFromDGVProducts.UseVisualStyleBackColor = false;
@@ -148,17 +130,17 @@
             // 
             // BtnEditRow
             // 
-            this.BtnEditRow.BackColor = System.Drawing.Color.Navy;
+            this.BtnEditRow.BackColor = System.Drawing.Color.Green;
             this.BtnEditRow.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnEditRow.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.BtnEditRow.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.WindowText;
             this.BtnEditRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnEditRow.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold);
             this.BtnEditRow.ForeColor = System.Drawing.Color.White;
-            this.BtnEditRow.Location = new System.Drawing.Point(877, 753);
+            this.BtnEditRow.Location = new System.Drawing.Point(834, 753);
             this.BtnEditRow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BtnEditRow.Name = "BtnEditRow";
-            this.BtnEditRow.Size = new System.Drawing.Size(202, 52);
+            this.BtnEditRow.Size = new System.Drawing.Size(244, 52);
             this.BtnEditRow.TabIndex = 48;
             this.BtnEditRow.Text = "Edit Row";
             this.BtnEditRow.UseVisualStyleBackColor = false;
@@ -166,14 +148,14 @@
             // 
             // BtnExportAsWordFile
             // 
-            this.BtnExportAsWordFile.BackColor = System.Drawing.Color.Teal;
+            this.BtnExportAsWordFile.BackColor = System.Drawing.Color.Navy;
             this.BtnExportAsWordFile.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnExportAsWordFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnExportAsWordFile.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
             this.BtnExportAsWordFile.ForeColor = System.Drawing.Color.White;
-            this.BtnExportAsWordFile.Location = new System.Drawing.Point(235, 753);
+            this.BtnExportAsWordFile.Location = new System.Drawing.Point(292, 754);
             this.BtnExportAsWordFile.Name = "BtnExportAsWordFile";
-            this.BtnExportAsWordFile.Size = new System.Drawing.Size(202, 52);
+            this.BtnExportAsWordFile.Size = new System.Drawing.Size(244, 52);
             this.BtnExportAsWordFile.TabIndex = 49;
             this.BtnExportAsWordFile.Text = "Save As Word";
             this.BtnExportAsWordFile.UseVisualStyleBackColor = false;
@@ -217,18 +199,18 @@
             // 
             // BtnShowData
             // 
-            this.BtnShowData.BackColor = System.Drawing.Color.SlateGray;
+            this.BtnShowData.BackColor = System.Drawing.Color.Teal;
             this.BtnShowData.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnShowData.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.BtnShowData.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.WindowText;
             this.BtnShowData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnShowData.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnShowData.ForeColor = System.Drawing.Color.White;
-            this.BtnShowData.Location = new System.Drawing.Point(663, 753);
+            this.BtnShowData.Location = new System.Drawing.Point(563, 753);
             this.BtnShowData.Name = "BtnShowData";
-            this.BtnShowData.Size = new System.Drawing.Size(202, 52);
+            this.BtnShowData.Size = new System.Drawing.Size(244, 52);
             this.BtnShowData.TabIndex = 53;
-            this.BtnShowData.Text = "Show Data";
+            this.BtnShowData.Text = "Data display";
             this.BtnShowData.UseVisualStyleBackColor = false;
             this.BtnShowData.Click += new System.EventHandler(this.BtnShowData_Click);
             // 
@@ -245,7 +227,6 @@
             this.Controls.Add(this.BtnExportAsWordFile);
             this.Controls.Add(this.BtnEditRow);
             this.Controls.Add(this.BtnDeleteRowFromDGVProducts);
-            this.Controls.Add(this.BtnShowQuotationReport);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.LbCount);
             this.Controls.Add(this.TxtSearch);
@@ -266,7 +247,6 @@
         public System.Windows.Forms.Label LbCount;
         private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.DataGridView DGVCustomers;
-        private System.Windows.Forms.Button BtnShowQuotationReport;
         private System.Windows.Forms.Button BtnDeleteRowFromDGVProducts;
         private System.Windows.Forms.Button BtnEditRow;
         private System.Windows.Forms.Button BtnExportAsWordFile;

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControlCustomers = new System.Windows.Forms.TabControl();
             this.tabPageCustomerInfo = new System.Windows.Forms.TabPage();
             this.groupBoxAdditional_information = new System.Windows.Forms.GroupBox();
@@ -236,9 +236,9 @@
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label12.Location = new System.Drawing.Point(285, 490);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(437, 57);
+            this.label12.Size = new System.Drawing.Size(381, 57);
             this.label12.TabIndex = 7;
-            this.label12.Text = "New QUOTATION";
+            this.label12.Text = "New Quotation";
             // 
             // groupBoxInvosNumberAndCurrency
             // 
@@ -1366,8 +1366,8 @@
             // 
             this.DGVTermsInvose.AllowUserToAddRows = false;
             this.DGVTermsInvose.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.DGVTermsInvose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DGVTermsInvose.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;

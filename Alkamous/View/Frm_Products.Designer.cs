@@ -88,10 +88,10 @@
             this.TxtSearch.BackColor = System.Drawing.Color.White;
             this.TxtSearch.Font = new System.Drawing.Font("Century Gothic", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtSearch.ForeColor = System.Drawing.Color.Black;
-            this.TxtSearch.Location = new System.Drawing.Point(309, 30);
+            this.TxtSearch.Location = new System.Drawing.Point(232, 30);
             this.TxtSearch.MaxLength = 40;
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(492, 41);
+            this.TxtSearch.Size = new System.Drawing.Size(569, 41);
             this.TxtSearch.TabIndex = 3;
             this.TxtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TxtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
@@ -141,10 +141,10 @@
             this.TxtGroupByItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TxtGroupByItem.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtGroupByItem.FormattingEnabled = true;
-            this.TxtGroupByItem.Location = new System.Drawing.Point(827, 35);
+            this.TxtGroupByItem.Location = new System.Drawing.Point(815, 35);
             this.TxtGroupByItem.Margin = new System.Windows.Forms.Padding(2);
             this.TxtGroupByItem.Name = "TxtGroupByItem";
-            this.TxtGroupByItem.Size = new System.Drawing.Size(367, 32);
+            this.TxtGroupByItem.Size = new System.Drawing.Size(379, 32);
             this.TxtGroupByItem.TabIndex = 30;
             this.TxtGroupByItem.SelectedIndexChanged += new System.EventHandler(this.TxtGroupByItem_SelectedIndexChanged);
             // 
@@ -152,7 +152,7 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(833, 8);
+            this.label4.Location = new System.Drawing.Point(812, 9);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(98, 17);

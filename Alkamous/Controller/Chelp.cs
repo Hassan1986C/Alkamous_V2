@@ -431,13 +431,15 @@ namespace Alkamous.Controller
             "Evolis Zenius",
             "Evolis Zenius 2",
             "Evolis Primacy 2 Single-Sided",
-            "Evolis Primacy 2 Double-Sided",
+            "Evolis Primacy 2",
             "Evolis Primacy 2 Lamination",
             "Evolis Agilia Single-Sided",
-            "Evolis Agilia Double-Sided",
+            "Evolis Agilia",
             "Evolis Agilia Laminator",
-            "Evolis Edikio",
-            "Pre-Printed Card"
+            "Evolis Edikio Flex",
+            "Evolis Edikio Access",
+            "Pre-Printed Card",
+            "Gates"
             };
         }
         #endregion

@@ -60,7 +60,7 @@
             this.DGVProducts.RowHeadersWidth = 51;
             this.DGVProducts.RowTemplate.Height = 26;
             this.DGVProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVProducts.Size = new System.Drawing.Size(1283, 317);
+            this.DGVProducts.Size = new System.Drawing.Size(1283, 246);
             this.DGVProducts.TabIndex = 5;
             // 
             // panel1
@@ -186,13 +186,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DGVProductsConsumable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGVProductsConsumable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGVProductsConsumable.Location = new System.Drawing.Point(12, 480);
+            this.DGVProductsConsumable.Location = new System.Drawing.Point(12, 379);
             this.DGVProductsConsumable.MultiSelect = false;
             this.DGVProductsConsumable.Name = "DGVProductsConsumable";
             this.DGVProductsConsumable.RowHeadersWidth = 51;
             this.DGVProductsConsumable.RowTemplate.Height = 26;
             this.DGVProductsConsumable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVProductsConsumable.Size = new System.Drawing.Size(1283, 182);
+            this.DGVProductsConsumable.Size = new System.Drawing.Size(1283, 283);
             this.DGVProductsConsumable.TabIndex = 7;
             // 
             // Frm_ShowQuotation
