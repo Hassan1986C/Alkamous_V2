@@ -447,7 +447,7 @@ namespace Alkamous.Controller
         }
         #endregion
 
-
+        #region HttpClient instance
         // Single HttpClient instance (best practice to avoid socket exhaustion)
         private static readonly HttpClient _client = new HttpClient();
         public static async Task<string> TranslateText(string text, string from, string to)
@@ -471,6 +471,9 @@ namespace Alkamous.Controller
 
             return fullTranslation;
         }
+
+        #endregion
     }
+
 }
 
