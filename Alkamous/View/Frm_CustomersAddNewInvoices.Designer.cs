@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControlCustomers = new System.Windows.Forms.TabControl();
             this.tabPageCustomerInfo = new System.Windows.Forms.TabPage();
             this.groupBoxAdditional_information = new System.Windows.Forms.GroupBox();
@@ -107,6 +107,7 @@
             this.TxtAmountConsumable = new System.Windows.Forms.TextBox();
             this.DGVProductsConsumable = new System.Windows.Forms.DataGridView();
             this.tabPageTermsandconditions = new System.Windows.Forms.TabPage();
+            this.BtnTranslateToEnglish = new System.Windows.Forms.Button();
             this.BtnAddTermsToServerAsNewTerm = new System.Windows.Forms.CheckBox();
             this.LbCountTerms = new System.Windows.Forms.Label();
             this.BtnMoveTermRowUp = new System.Windows.Forms.Button();
@@ -143,7 +144,6 @@
             this.txtSelectAcount = new System.Windows.Forms.ComboBox();
             this.BtnClearAllData = new System.Windows.Forms.Button();
             this.BtnSaveData = new System.Windows.Forms.Button();
-            this.BtnTranslateToEnglish = new System.Windows.Forms.Button();
             this.tabControlCustomers.SuspendLayout();
             this.tabPageCustomerInfo.SuspendLayout();
             this.groupBoxAdditional_information.SuspendLayout();
@@ -200,7 +200,7 @@
             this.groupBoxAdditional_information.Controls.Add(this.label25);
             this.groupBoxAdditional_information.Location = new System.Drawing.Point(30, 406);
             this.groupBoxAdditional_information.Name = "groupBoxAdditional_information";
-            this.groupBoxAdditional_information.Size = new System.Drawing.Size(884, 62);
+            this.groupBoxAdditional_information.Size = new System.Drawing.Size(884, 65);
             this.groupBoxAdditional_information.TabIndex = 8;
             this.groupBoxAdditional_information.TabStop = false;
             // 
@@ -212,7 +212,7 @@
             this.TxtSelectFileName.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtSelectFileName.FormattingEnabled = true;
             this.TxtSelectFileName.ItemHeight = 21;
-            this.TxtSelectFileName.Location = new System.Drawing.Point(166, 22);
+            this.TxtSelectFileName.Location = new System.Drawing.Point(175, 22);
             this.TxtSelectFileName.Margin = new System.Windows.Forms.Padding(2);
             this.TxtSelectFileName.Name = "TxtSelectFileName";
             this.TxtSelectFileName.Size = new System.Drawing.Size(507, 29);
@@ -1212,6 +1212,20 @@
             this.tabPageTermsandconditions.TabIndex = 2;
             this.tabPageTermsandconditions.Text = "    Terms and conditions    ";
             // 
+            // BtnTranslateToEnglish
+            // 
+            this.BtnTranslateToEnglish.BackColor = System.Drawing.Color.DarkBlue;
+            this.BtnTranslateToEnglish.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnTranslateToEnglish.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnTranslateToEnglish.ForeColor = System.Drawing.Color.White;
+            this.BtnTranslateToEnglish.Location = new System.Drawing.Point(551, 144);
+            this.BtnTranslateToEnglish.Name = "BtnTranslateToEnglish";
+            this.BtnTranslateToEnglish.Size = new System.Drawing.Size(240, 31);
+            this.BtnTranslateToEnglish.TabIndex = 65;
+            this.BtnTranslateToEnglish.Text = "Translate the term into English";
+            this.BtnTranslateToEnglish.UseVisualStyleBackColor = false;
+            this.BtnTranslateToEnglish.Click += new System.EventHandler(this.BtnTranslateToEnglish_Click);
+            // 
             // BtnAddTermsToServerAsNewTerm
             // 
             this.BtnAddTermsToServerAsNewTerm.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -1368,8 +1382,8 @@
             // 
             this.DGVTermsInvose.AllowUserToAddRows = false;
             this.DGVTermsInvose.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVTermsInvose.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.DGVTermsInvose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DGVTermsInvose.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -1671,20 +1685,6 @@
             this.BtnSaveData.Text = "Save All Data";
             this.BtnSaveData.UseVisualStyleBackColor = false;
             this.BtnSaveData.Click += new System.EventHandler(this.BtnSaveData_Click);
-            // 
-            // BtnTranslateToEnglish
-            // 
-            this.BtnTranslateToEnglish.BackColor = System.Drawing.Color.DarkBlue;
-            this.BtnTranslateToEnglish.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnTranslateToEnglish.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnTranslateToEnglish.ForeColor = System.Drawing.Color.White;
-            this.BtnTranslateToEnglish.Location = new System.Drawing.Point(551, 144);
-            this.BtnTranslateToEnglish.Name = "BtnTranslateToEnglish";
-            this.BtnTranslateToEnglish.Size = new System.Drawing.Size(240, 31);
-            this.BtnTranslateToEnglish.TabIndex = 65;
-            this.BtnTranslateToEnglish.Text = "Translate the term into English";
-            this.BtnTranslateToEnglish.UseVisualStyleBackColor = false;
-            this.BtnTranslateToEnglish.Click += new System.EventHandler(this.BtnTranslateToEnglish_Click);
             // 
             // Frm_CustomersAddNewInvoices
             // 

@@ -442,6 +442,9 @@ namespace Alkamous.Controller
             "Evolis Edikio Flex",
             "Evolis Edikio Access",
             "Pre-Printed Card",
+            "Banking Printer",
+            "SOFTWARE",
+            "MAINTENANCE",            
             "Gates"
             };
         }

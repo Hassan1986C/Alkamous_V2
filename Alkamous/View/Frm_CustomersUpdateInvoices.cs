@@ -30,6 +30,13 @@ namespace Alkamous.View
         public static string Invoice_NumberToGetData;
         private bool Is_Edit_Invoices_FormOpen = true;
 
+
+        private Button btnToggleEn;
+        private Button btnToggleAr;
+        private Size originalTextBoxSize;
+        private Point originalTextBoxLocation;
+        private bool isTextBoxMaximized = false;
+
         #endregion
 
         // this methode to make a new form same as orgnal from
@@ -43,6 +50,7 @@ namespace Alkamous.View
         {
             InitializeComponent();
             frmCustomersUpdateInvoices = this;
+            InitializeMaximizeButtons();
         }
 
         #region DGVColumnHeaderTextAndWidth
@@ -1407,6 +1415,118 @@ namespace Alkamous.View
                 this.Cursor = Cursors.Default;
             }
         }
+
+
+        #region Textbox Maximize/Minimize Logic
+        private void InitializeMaximizeButtons()
+        {
+            // Create Toggle English Button
+            btnToggleEn = new Button();
+            btnToggleEn.Text = "🗖";
+            btnToggleEn.Size = new Size(24, 24);
+            btnToggleEn.Cursor = Cursors.Hand;
+            btnToggleEn.FlatStyle = FlatStyle.Flat;
+            btnToggleEn.FlatAppearance.BorderSize = 0;
+            btnToggleEn.BackColor = Color.Navy;
+            btnToggleEn.ForeColor = Color.White;
+            btnToggleEn.Font = new Font("Arial", 10, FontStyle.Bold);
+            btnToggleEn.Location = new Point(TxtTerm_En.Right - btnToggleEn.Width - 2, TxtTerm_En.Top + 2);
+            btnToggleEn.Click += (s, e) => ToggleTextBoxSize(TxtTerm_En, btnToggleEn);
+            tabPageTermsandconditions.Controls.Add(btnToggleEn);
+            btnToggleEn.BringToFront();
+
+            // Create Toggle Arabic Button
+            btnToggleAr = new Button();
+            btnToggleAr.Text = "🗖";
+            btnToggleAr.Size = new Size(24, 24);
+            btnToggleAr.Cursor = Cursors.Hand;
+            btnToggleAr.FlatStyle = FlatStyle.Flat;
+            btnToggleAr.FlatAppearance.BorderSize = 0;
+            btnToggleAr.BackColor = Color.Navy;
+            btnToggleAr.ForeColor = Color.White;
+            btnToggleAr.Font = new Font("Arial", 10, FontStyle.Bold);
+            btnToggleAr.Location = new Point(TxtTerms_Ar.Left + 2, TxtTerms_Ar.Top + 2);
+            btnToggleAr.Click += (s, e) => ToggleTextBoxSize(TxtTerms_Ar, btnToggleAr);
+            tabPageTermsandconditions.Controls.Add(btnToggleAr);
+            btnToggleAr.BringToFront();
+
+            // Handle Dynamic Resizing when form or tabpage size changes (so buttons stay anchored to textboxes)
+            TxtTerm_En.SizeChanged += (s, e) => {
+                if (!isTextBoxMaximized)
+                    btnToggleEn.Location = new Point(TxtTerm_En.Right - btnToggleEn.Width - 2, TxtTerm_En.Top + 2);
+            };
+            TxtTerms_Ar.SizeChanged += (s, e) => {
+                if (!isTextBoxMaximized)
+                    btnToggleAr.Location = new Point(TxtTerms_Ar.Left + 2, TxtTerms_Ar.Top + 2);
+            };
+        }
+
+        private void ToggleTextBoxSize(TextBox txtBox, Button btnToggle)
+        {
+            if (!isTextBoxMaximized)
+            {
+                // Save original bounds
+                originalTextBoxSize = txtBox.Size;
+                originalTextBoxLocation = txtBox.Location;
+
+                // Hide all other controls on the tab page to give full area
+                foreach (Control ctrl in tabPageTermsandconditions.Controls)
+                {
+                    if (ctrl != txtBox && ctrl != btnToggle)
+                    {
+                        ctrl.Visible = false;
+                    }
+                }
+
+                // Maximize the textbox
+                txtBox.Location = new Point(15, 15);
+                txtBox.Size = new Size(tabPageTermsandconditions.Width - 30, tabPageTermsandconditions.Height - 30);
+                txtBox.BringToFront();
+
+                // Position the button on the maximized textbox corner
+                if (txtBox.RightToLeft == RightToLeft.Yes)
+                {
+                    btnToggle.Location = new Point(txtBox.Left + 5, txtBox.Top + 5);
+                }
+                else
+                {
+                    btnToggle.Location = new Point(txtBox.Right - btnToggle.Width - 5, txtBox.Top + 5);
+                }
+                btnToggle.Text = "🗗";
+                btnToggle.BringToFront();
+
+                isTextBoxMaximized = true;
+                txtBox.Focus();
+            }
+            else
+            {
+                // Restore all controls visibility
+                foreach (Control ctrl in tabPageTermsandconditions.Controls)
+                {
+                    ctrl.Visible = true;
+                }
+
+                // Restore textbox bounds
+                txtBox.Size = originalTextBoxSize;
+                txtBox.Location = originalTextBoxLocation;
+
+                // Restore button position
+                if (txtBox.RightToLeft == RightToLeft.Yes)
+                {
+                    btnToggle.Location = new Point(txtBox.Left + 2, txtBox.Top + 2);
+                }
+                else
+                {
+                    btnToggle.Location = new Point(txtBox.Right - btnToggle.Width - 2, txtBox.Top + 2);
+                }
+                btnToggle.Text = "🗖";
+
+                isTextBoxMaximized = false;
+            }
+        }
+        #endregion
+
+
     }
 
 }

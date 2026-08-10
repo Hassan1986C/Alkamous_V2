@@ -578,8 +578,8 @@ namespace Alkamous.Controller
                 StringBuilder builderAR = new StringBuilder();
                 if (dtTB_Terms_InvoicesReport.Rows.Count > 0)
                 {
-                    builderEN.Append("Terms").Append(Environment.NewLine);
-                    builderAR.Append("الشروط").Append(Environment.NewLine);
+                    builderEN.Append("Commercial Terms and Conditions").Append(Environment.NewLine);
+                    builderAR.Append("الشروط والأحكام التجارية").Append(Environment.NewLine);
 
                     for (int i = 0; i < dtTB_Terms_InvoicesReport.Rows.Count; i++)
                     {
@@ -597,6 +597,7 @@ namespace Alkamous.Controller
                     //    builderEN.Append("  -  ").Append(row["Term_En"]).AppendLine();
                     //    builderAR.Append("  -  ").Append(row["Term_Ar"]).AppendLine();
                     //}
+
 
                     // Add terms and conditions (Arabic or English based on selected language)
                     if (Customer_Language == "English")

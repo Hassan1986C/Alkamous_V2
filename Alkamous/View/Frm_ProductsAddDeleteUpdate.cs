@@ -20,10 +20,17 @@ namespace Alkamous.View
 
         private CancellationTokenSource _cancellationTokenSource;
 
+        private Button btnToggleEn;
+        private Button btnToggleAr;
+        private Size originalTextBoxSize;
+        private Point originalTextBoxLocation;
+        private bool isTextBoxMaximized = false;
+
 
         public Frm_ProductsAddDeleteUpdate()
         {
             InitializeComponent();
+            InitializeMaximizeButtons();
         }
 
         private void ReColoreDGV(DataGridView dataGridView)
@@ -536,5 +543,114 @@ namespace Alkamous.View
         //        newColumn.ColumnName = columnName;
         //    }
         //}
+
+        #region Textbox Maximize/Minimize Logic
+        private void InitializeMaximizeButtons()
+        {
+            // Create Toggle English Button
+            btnToggleEn = new Button();
+            btnToggleEn.Text = "🗖";
+            btnToggleEn.Size = new Size(24, 24);
+            btnToggleEn.Cursor = Cursors.Hand;
+            btnToggleEn.FlatStyle = FlatStyle.Flat;
+            btnToggleEn.FlatAppearance.BorderSize = 0;
+            btnToggleEn.BackColor = Color.Navy;
+            btnToggleEn.ForeColor = Color.White;
+            btnToggleEn.Font = new Font("Arial", 10, FontStyle.Bold);
+            btnToggleEn.Location = new Point(TxtProductNameEn.Right - btnToggleEn.Width - 2, TxtProductNameEn.Top + 2);
+            btnToggleEn.Click += (s, e) => ToggleTextBoxSize(TxtProductNameEn, btnToggleEn);
+            groupBox1.Controls.Add(btnToggleEn);
+            btnToggleEn.BringToFront();
+
+            // Create Toggle Arabic Button
+            btnToggleAr = new Button();
+            btnToggleAr.Text = "🗖";
+            btnToggleAr.Size = new Size(24, 24);
+            btnToggleAr.Cursor = Cursors.Hand;
+            btnToggleAr.FlatStyle = FlatStyle.Flat;
+            btnToggleAr.FlatAppearance.BorderSize = 0;
+            btnToggleAr.BackColor = Color.Navy;
+            btnToggleAr.ForeColor = Color.White;
+            btnToggleAr.Font = new Font("Arial", 10, FontStyle.Bold);
+            btnToggleAr.Location = new Point(TxtProductNameAr.Left + 2, TxtProductNameAr.Top + 2);
+            btnToggleAr.Click += (s, e) => ToggleTextBoxSize(TxtProductNameAr, btnToggleAr);
+            groupBox1.Controls.Add(btnToggleAr);
+            btnToggleAr.BringToFront();
+
+            // Handle Dynamic Resizing when form or groupbox size changes (so buttons stay anchored to textboxes)
+            TxtProductNameEn.SizeChanged += (s, e) => {
+                if (!isTextBoxMaximized)
+                    btnToggleEn.Location = new Point(TxtProductNameEn.Right - btnToggleEn.Width - 2, TxtProductNameEn.Top + 2);
+            };
+            TxtProductNameAr.SizeChanged += (s, e) => {
+                if (!isTextBoxMaximized)
+                    btnToggleAr.Location = new Point(TxtProductNameAr.Left + 2, TxtProductNameAr.Top + 2);
+            };
+        }
+
+        private void ToggleTextBoxSize(TextBox txtBox, Button btnToggle)
+        {
+            if (!isTextBoxMaximized)
+            {
+                // Save original bounds
+                originalTextBoxSize = txtBox.Size;
+                originalTextBoxLocation = txtBox.Location;
+
+                // Hide all other controls on the group box to give full area
+                foreach (Control ctrl in groupBox1.Controls)
+                {
+                    if (ctrl != txtBox && ctrl != btnToggle)
+                    {
+                        ctrl.Visible = false;
+                    }
+                }
+
+                // Maximize the textbox
+                txtBox.Location = new Point(15, 15);
+                txtBox.Size = new Size(groupBox1.Width - 30, groupBox1.Height - 30);
+                txtBox.BringToFront();
+
+                // Position the button on the maximized textbox corner
+                if (txtBox.RightToLeft == RightToLeft.Yes)
+                {
+                    btnToggle.Location = new Point(txtBox.Left + 5, txtBox.Top + 5);
+                }
+                else
+                {
+                    btnToggle.Location = new Point(txtBox.Right - btnToggle.Width - 5, txtBox.Top + 5);
+                }
+                btnToggle.Text = "🗗";
+                btnToggle.BringToFront();
+
+                isTextBoxMaximized = true;
+                txtBox.Focus();
+            }
+            else
+            {
+                // Restore all controls visibility
+                foreach (Control ctrl in groupBox1.Controls)
+                {
+                    ctrl.Visible = true;
+                }
+
+                // Restore textbox bounds
+                txtBox.Size = originalTextBoxSize;
+                txtBox.Location = originalTextBoxLocation;
+
+                // Restore button position
+                if (txtBox.RightToLeft == RightToLeft.Yes)
+                {
+                    btnToggle.Location = new Point(txtBox.Left + 2, txtBox.Top + 2);
+                }
+                else
+                {
+                    btnToggle.Location = new Point(txtBox.Right - btnToggle.Width - 2, txtBox.Top + 2);
+                }
+                btnToggle.Text = "🗖";
+
+                isTextBoxMaximized = false;
+            }
+        }
+        #endregion
     }
 }
